@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>login</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <style>
+    body {
+      background-color: #f4f4f9;
+      color: #333;
+      font-family: Arial, sans-serif;
+    }
+
+    .containerr {
+      max-width: 500px;
+      margin: auto;
+      margin-bottom: 50px;
+      margin-top: 50px;
+    }
+
+    .card {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+      background-color: #007bff;
+      color: #fff;
+      text-align: center;
+      font-size: 1.5rem;
+      border-bottom: none;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .form-group label {
+      font-weight: bold;
+    }
+
+    .form-control:focus {
+      box-shadow: none;
+      border-color: #007bff;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #004085;
+    }
+
+    /* Modal Styles */
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); 
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #222;
+  color: white;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s;
+}
+
+.close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ok-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.ok-btn:hover {
+  background-color: #d32f2f;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+/* Spinner Styles */
+.spinner {
+  position: fixed; /* Position it fixed to overlay the entire page */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center exactly */
+  border: 8px solid rgba(0, 0, 0, 0.1); /* Light background */
+  border-radius: 50%; /* Make it circular */
+  border-top: 8px solid #3498db; /* Color of the spinner */
+  width: 50px; /* Size of the spinner */
+  height: 50px; /* Size of the spinner */
+  animation: spin 1s linear infinite; /* Spinning animation */
+  display: none; /* Hide by default */
+}
+
+/* Spinning animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+  </style>
+</head>
+
+<body class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 min-h-screen flex items-center justify-center">
+  <!-- navbar -->
+  <nav class="navbar navbar-expand-lg" style="
+        background: linear-gradient(45deg, #2c3e50, #4c5f70, #bdc3c7);
+        padding: 1rem 2rem;
+      ">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white fw-bold fs-3" href="home.html" style="
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+            font-weight: bolder;
+          ">
+        Donation Platform
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon text-white"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-white fs-5 nav-link-hover" href="home.html"
+              style="padding: 0.5rem 1.5rem; font-weight: 500">Home</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link text-white fs-5 nav-link-hover" href="campaign.html"
+              style="padding: 0.5rem 1.5rem; font-weight: 500">Campaigns</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white fs-5 nav-link-hover" href="about.html"
+              style="padding: 0.5rem 1.5rem; font-weight: 500">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white fs-5 nav-link-hover" href="contact.html"
+              style="padding: 0.5rem 1.5rem; font-weight: 500">Contact</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="
+                border-radius: 30px;
+                padding: 0.5rem 1.5rem;
+                border: none;
+                background-color: #ffffff;
+                color: #2c3e50;
+              " />
+          <button class="btn btn-outline-light" type="submit" style="border-radius: 30px; padding: 0.5rem 1.5rem">
+            Search
+          </button>
+        </form>
+        <ul class="navbar-nav ms-3">
+          <li class="nav-item">
+            <a class="btn btn-light text-dark me-2" href="login.html" style="
+                  padding: 0.5rem 1.5rem;
+                  border-radius: 30px;
+                  font-weight: 700;
+                  transition: background-color 0.3s, color 0.3s;
+                ">
+              Login
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-primary" href="register.html" style="
+                  padding: 0.5rem 1.5rem;
+                  border-radius: 30px;
+                  font-weight: 700;
+                  transition: background-color 0.3s, color 0.3s;
+                ">
+              Register
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+  <!-- login card -->
+
+  <div class="containerr">
+    <div class="row justify-content-center">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+              </div>
+              <button onclick="handleLogin(event)" type="submit" class="btn btn-primary w-100">Login</button>
+              
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- alert modal -->
+  <div id="customAlert" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeAlert()">&times;</span>
+        <p id="alertMessage"></p>
+        <button class="ok-btn" onclick="closeAlert()">OK</button>
+    </div>
+</div>
+<!-- Spinner Element -->
+<div id="spinner" class="spinner"></div>
+
+
+  <footer style="
+        background: #2c3e50;
+        color: #f4d03f;
+        padding: 2rem 0;
+        text-align: center;
+        box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.2);
+      ">
+    <div class="container">
+      <div class="row">
+        <!-- About Section -->
+        <div class="col-md-4 mb-4">
+          <h5 style="font-weight: bold; text-transform: uppercase">
+            About Us
+          </h5>
+          <p style="line-height: 1.7">
+            We are a platform dedicated to making donations easy and
+            transparent. Our mission is to connect donors with those in need,
+            ensuring that every contribution makes a meaningful impact.
+          </p>
+        </div>
+
+        <!-- Links Section -->
+        <div class="col-md-4 mb-4">
+          <h5 style="font-weight: bold; text-transform: uppercase">
+            Quick Links
+          </h5>
+          <ul style="list-style: none; padding: 0">
+            <li>
+              <a href="home.html" style="
+                    color: #f4d03f;
+                    text-decoration: none;
+                    transition: color 0.3s;
+                  ">Home</a>
+            </li>
+            <li>
+              <a href="about.html" style="
+                    color: #f4d03f;
+                    text-decoration: none;
+                    transition: color 0.3s;
+                  ">About Us</a>
+            </li>
+            <li>
+              <a href="campaign.html" style="
+                    color: #f4d03f;
+                    text-decoration: none;
+                    transition: color 0.3s;
+                  ">Campaigns</a>
+            </li>
+            <li>
+              <a href="contact.html" style="
+                    color: #f4d03f;
+                    text-decoration: none;
+                    transition: color 0.3s;
+                  ">Contact</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="col-md-4 mb-4">
+          <h5 style="font-weight: bold; text-transform: uppercase">
+            Contact Us
+          </h5>
+          <p style="line-height: 1.7">
+            <i class="fas fa-map-marker-alt"></i> 123 Donation pt, Charity
+            Dhaka, 4567
+          </p>
+          <p style="line-height: 1.7">
+            <i class="fas fa-phone"></i> +8801626681291
+          </p>
+          <p style="line-height: 1.7">
+            <i class="fas fa-envelope"></i> support@donationplatform.com
+          </p>
+        </div>
+      </div>
+
+      <!-- Social Media Icons -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-facebook fa-lg"></i></a>
+          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-twitter fa-lg"></i></a>
+          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-linkedin fa-lg"></i></a>
+        </div>
+      </div>
+
+      <!-- Copyright Section -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <p style="margin: 0; font-size: 0.9rem">
+            &copy; 2024 Donation Platform. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="./js/login.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

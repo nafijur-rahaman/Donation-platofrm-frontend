@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaigns</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <style>
+    .hero-bg {
+        background-image: url('./img/img.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+</style>
+</head>
+<body class="bg-gray-200">
+
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg" style="
+background: linear-gradient(45deg, #2c3e50, #4c5f70, #bdc3c7);
+padding: 1rem 2rem;
+">
+<div class="container-fluid">
+<a class="navbar-brand text-white fw-bold fs-3" href="home.html" style="
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+    font-weight: bolder;
+  ">
+Donation Platform
+</a>
+<button  class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon text-white"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarNav">
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+  <li class="nav-item">
+    <a class="nav-link text-white fs-5 nav-link-hover" href="home.html"
+      style="padding: 0.5rem 1.5rem; font-weight: 500">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-white fs-5 nav-link-hover" href="#"
+      style="padding: 0.5rem 1.5rem; font-weight: 500">Campaigns</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-white fs-5 nav-link-hover" href="about.html"
+      style="padding: 0.5rem 1.5rem; font-weight: 500">About</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-white fs-5 nav-link-hover" href="contact.html"
+      style="padding: 0.5rem 1.5rem; font-weight: 500">Contact</a>
+  </li>
+</ul>
+
+<div id="conditional-element">
+
+
+</div>
+</div>
+</div>
+</nav>
+
+    <!-- Header Section -->
+    <header class="hero-bg py-32 flex items-center justify-center text-center bg-black bg-opacity-60">
+        <div class="bg-white bg-opacity-80 p-8 rounded-lg shadow-xl">
+            <h1 class="text-4xl font-extrabold mb-4 text-gray-800">Our Campaigns</h1>
+            <p class="text-lg text-gray-600">Discover and support our various impactful campaigns.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto my-8 px-4 lg:px-0">
+        <div class="flex flex-col lg:flex-row">
+            <!-- Filter Section -->
+            <div class="lg:w-1/4 mb-8 lg:mb-0 lg:pr-4">
+                <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">Filter Campaigns</h3>
+                    <form id="filter-form">
+                        <div class="mb-4">
+                            <label for="typeFilter" class="block text-sm font-medium text-gray-700 mb-2">Campaign Type</label>
+                            <select class="block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" id="typeFilter">
+                                <option value="">All Types</option>
+                                <option value="flood">Flood Relief</option>
+                                <option value="education">Education Support</option>
+                                <option value="health">Health Services</option>
+                                <option value="food">Food Distribution</option>
+                                <option value="shelter">Shelter Provision</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="statusFilter" class="block text-sm font-medium text-gray-700 mb-2">Campaign Status</label>
+                            <select class="block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" id="statusFilter">
+                                <option value="">All Statuses</option>
+                                <option value="active">Active</option>
+                                <option value="completed">Completed</option>
+                                <option value="canceled">Canceled</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition duration-300">Apply Filters</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Campaign List Section -->
+            <div class="lg:w-3/4">
+                <div id="campaign-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Campaign cards will be dynamically inserted here -->
+                </div>
+
+                <!-- Pagination Controls -->
+                <nav  class="mt-8 flex justify-between items-center">
+                    <button class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition duration-300" id="prevPage">Previous</button>
+                    <span class="text-lg font-medium text-gray-700" id="currentPage">Page 1</span>
+                    <button class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition duration-300" id="nextPage">Next</button>
+                </nav>
+            </div>
+        </div>
+    </main>
+    <script src="./js/campaign.js"></script>  <!-- footer section -->
+  <footer style="
+  background: #2c3e50;
+  color: #f4d03f;
+  padding: 2rem 0;
+  text-align: center;
+  box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.2);
+">
+<div class="container">
+<div class="row">
+  <!-- About Section -->
+  <div class="col-md-4 mb-4">
+    <h5 style="font-weight: bold; text-transform: uppercase">
+      About Us
+    </h5>
+    <p style="line-height: 1.7">
+      We are a platform dedicated to making donations easy and
+      transparent. Our mission is to connect donors with those in need,
+      ensuring that every contribution makes a meaningful impact.
+    </p>
+  </div>
+
+  <!-- Links Section -->
+  <div class="col-md-4 mb-4">
+    <h5 style="font-weight: bold; text-transform: uppercase">
+      Quick Links
+    </h5>
+    <ul style="list-style: none; padding: 0">
+      <li>
+        <a href="home.html" style="
+              color: #f4d03f;
+              text-decoration: none;
+              transition: color 0.3s;
+            ">Home</a>
+      </li>
+      <li>
+        <a href="about.html" style="
+              color: #f4d03f;
+              text-decoration: none;
+              transition: color 0.3s;
+            ">About Us</a>
+      </li>
+      <li>
+        <a href="campaign.html" style="
+              color: #f4d03f;
+              text-decoration: none;
+              transition: color 0.3s;
+            ">Campaigns</a>
+      </li>
+      <li>
+        <a href="contact.html" style="
+              color: #f4d03f;
+              text-decoration: none;
+              transition: color 0.3s;
+            ">Contact</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Contact Section -->
+  <div class="col-md-4 mb-4">
+    <h5 style="font-weight: bold; text-transform: uppercase">
+      Contact Us
+    </h5>
+    <p style="line-height: 1.7">
+      <i class="fas fa-map-marker-alt"></i> 123 Donation pt, Charity
+      Dhaka, 4567
+    </p>
+    <p style="line-height: 1.7">
+      <i class="fas fa-phone"></i> +8801626681291
+    </p>
+    <p style="line-height: 1.7">
+      <i class="fas fa-envelope"></i> support@donationplatform.com
+    </p>
+  </div>
+</div>
+
+<!-- Social Media Icons -->
+<div class="row mt-4">
+  <div class="col-12">
+    <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-facebook fa-lg"></i></a>
+    <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-twitter fa-lg"></i></a>
+    <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-instagram fa-lg"></i></a>
+    <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-linkedin fa-lg"></i></a>
+  </div>
+</div>
+
+<!-- Copyright Section -->
+<div class="row mt-4">
+  <div class="col-12">
+    <p style="margin: 0; font-size: 0.9rem">
+      &copy; 2024 Donation Platform. All rights reserved.
+    </p>
+  </div>
+</div>
+</div>
+</footer>
+
+   
+<script src="./js/home.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaigns</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+<body class="bg-gray-100">
+
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg" style="
+background: linear-gradient(45deg, #2c3e50, #4c5f70, #bdc3c7);
+padding: 1rem 2rem;
+">
+<div class="container-fluid">
+<a class="navbar-brand text-white fw-bold fs-3" href="home.html" style="
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+    font-weight: bolder;
+  ">
+Donation Platform
+</a>
+<button  class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon text-white"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarNav">
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+  <li class="nav-item">
+    <a class="nav-link text-white fs-5 nav-link-hover" href="home.html"
+      style="padding: 0.5rem 1.5rem; font-weight: 500">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-white fs-5 nav-link-hover" href="campaign.html"
+      style="padding: 0.5rem 1.5rem; font-weight: 500">Campaigns</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-white fs-5 nav-link-hover" href="about.html"
+      style="padding: 0.5rem 1.5rem; font-weight: 500">About</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-white fs-5 nav-link-hover" href="contact.html"
+      style="padding: 0.5rem 1.5rem; font-weight: 500">Contact</a>
+  </li>
+</ul>
+
+<div id="conditional-element">
+
+
+</div>
+</div>
+</div>
+</nav>
+
+
+
+<div class="container mx-auto p-6">
+  <!-- Fundraiser Details -->
+  <div id="campaign-detail" class="bg-white p-6 rounded-lg shadow-lg mb-6">
+ 
+  </div>
+
+  <!-- Donation Form and Recent Donations -->
+  <div class="flex flex-wrap -mx-3">
+      <!-- Donation Form -->
+      <div class="w-full md:w-2/3 px-3 mb-6">
+          <div class="bg-white p-6 rounded-lg shadow-lg">
+              <h2 class="text-2xl font-bold text-gray-800 mb-4">Make a Donation</h2>
+              <form>
+                  <div class="mb-4">
+                      <label for="donation-amount" class="block text-gray-700 font-bold mb-2">Donation Amount</label>
+                      <input type="number" id="donation-amount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter amount in USD">
+                  </div>
+                  <div class="mb-4">
+                      <label for="donor-name" class="block text-gray-700 font-bold mb-2">Name</label>
+                      <input type="text" id="donor-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Name">
+                  </div>
+                  <div class="mb-4">
+                      <label for="donor-email" class="block text-gray-700 font-bold mb-2">Email</label>
+                      <input type="email" id="donor-email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Email">
+                  </div>
+                  <div class="mb-4">
+                      <label for="donor-message" class="block text-gray-700 font-bold mb-2">Message (Optional)</label>
+                      <textarea id="donor-message" rows="
+text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Message"></textarea>
+                  </div>
+                  <div class="mb-4">
+                      <label for="payment-method" class="block text-gray-700 font-bold mb-2">Payment Method</label>
+                      <select id="payment-method" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                          <option value="credit-card">Credit Card</option>
+                          <option value="paypal">PayPal</option>
+                          <option value="bank-transfer">Bank Transfer</option>
+                      </select>
+                  </div>
+                  <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Donate Now</button>
+              </form>
+          </div>
+      </div>
+
+      <!-- Recent Donations -->
+      <div class="w-full md:w-1/3 px-3">
+          <div class="bg-white p-6 rounded-lg shadow-lg overflow-y-auto" style="max-height: 300px;">
+              <h2 class="text-2xl font-bold text-gray-800 mb-4">Recent Donations</h2>
+              <ul>
+                  <li class="mb-4">
+                      <p class="text-gray-800 font-semibold">John Doe</p>
+                      <p class="text-gray-600">$100 - Keep up the good work!</p>
+                  </li>
+                  <li class="mb-4">
+                      <p class="text-gray-800 font-semibold">Jane Smith</p>
+                      <p class="text-gray-600">$50 - Praying for all affected.</p>
+                  </li>
+                  <li class="mb-4">
+                      <p class="text-gray-800 font-semibold">Anonymous</p>
+                      <p class="text-gray-600">$200 - Happy to help!</p>
+                  </li>
+                  <!-- Add more donation entries as needed -->
+              </ul>
+          </div>
+      </div>
+  </div>
+
+  <!-- Become a Fundraiser Section -->
+  <div class="bg-white p-6 rounded-lg shadow-lg mt-6">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Become a Fundraiser</h2>
+      <p class="text-gray-700 mb-4">Interested in starting your own fundraiser? Click the button below to get started!</p>
+      <button id="become-fundraiser-btn" class="bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Become a Fundraiser</button>
+  </div>
+</div>
+
+<!-- Modal for Fundraiser Registration -->
+<div id="fundraiser-modal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+  <div class="flex items-center justify-center min-h-screen px-4">
+      <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+          <div class="p-6">
+              <h3 class="text-lg leading-6 font-medium text-gray-900">Register as a Fundraiser</h3>
+              <div class="mt-2">
+                  <form>
+                      <div class="mb-4">
+                          <label for="username" class="block text-gray-700 font-bold mb-2">Username</label>
+                          <input type="text" id="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                      </div>
+                      <div class="mb-4">
+                          <label for="first-name" class="block text-gray-700 font-bold mb-2">First Name</label>
+                          <input type="text" id="first-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                      </div>
+                      <div class="mb-4">
+                          <label for="last-name" class="block text-gray-700 font-bold mb-2">Last Name</label>
+                          <input type="text" id="last-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                      </div>
+                      <div class="mb-4">
+                          <label for="organization" class="block text-gray-700 font-bold mb-2">Organization (if any)</label>
+                          <input type="text" id="organization" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                      </div>
+                      <div class="mb-4">
+                          <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
+                          <input type="email" id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                      </div>
+                      <div class="mb-4">
+                          <label for="password" class="block text-gray-700 font-bold mb-2">Password</label>
+                          <input type="password" id="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                      </div>
+                      <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Register</button>
+                  </form>
+              </div>
+          </div>
+          <div class="p-4 bg-gray-100 text-right">
+              <button id="close-modal-btn" class="bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- JavaScript to Handle Modal -->
+<script>
+  document.getElementById('become-fundraiser-btn').addEventListener('click', function() {
+      document.getElementById('fundraiser-modal').classList.remove('hidden');
+  });
+
+  document.getElementById('close-modal-btn').addEventListener('click', function() {
+      document.getElementById('fundraiser-modal').classList.add('hidden');
+  });
+</script>
+
+  <!-- footer section -->
+  <footer style="
+        background: #2c3e50;
+        color: #f4d03f;
+        padding: 2rem 0;
+        text-align: center;
+        box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.2);
+      ">
+    <div class="container">
+      <div class="row">
+        <!-- About Section -->
+        <div class="col-md-4 mb-4">
+          <h5 style="font-weight: bold; text-transform: uppercase">
+            About Us
+          </h5>
+          <p style="line-height: 1.7">
+            We are a platform dedicated to making donations easy and
+            transparent. Our mission is to connect donors with those in need,
+            ensuring that every contribution makes a meaningful impact.
+          </p>
+        </div>
+
+        <!-- Links Section -->
+        <div class="col-md-4 mb-4">
+          <h5 style="font-weight: bold; text-transform: uppercase">
+            Quick Links
+          </h5>
+          <ul style="list-style: none; padding: 0">
+            <li>
+              <a href="home.html" style="
+                    color: #f4d03f;
+                    text-decoration: none;
+                    transition: color 0.3s;
+                  ">Home</a>
+            </li>
+            <li>
+              <a href="about.html" style="
+                    color: #f4d03f;
+                    text-decoration: none;
+                    transition: color 0.3s;
+                  ">About Us</a>
+            </li>
+            <li>
+              <a href="campaign.html" style="
+                    color: #f4d03f;
+                    text-decoration: none;
+                    transition: color 0.3s;
+                  ">Campaigns</a>
+            </li>
+            <li>
+              <a href="contact.html" style="
+                    color: #f4d03f;
+                    text-decoration: none;
+                    transition: color 0.3s;
+                  ">Contact</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="col-md-4 mb-4">
+          <h5 style="font-weight: bold; text-transform: uppercase">
+            Contact Us
+          </h5>
+          <p style="line-height: 1.7">
+            <i class="fas fa-map-marker-alt"></i> 123 Donation pt, Charity
+            Dhaka, 4567
+          </p>
+          <p style="line-height: 1.7">
+            <i class="fas fa-phone"></i> +8801626681291
+          </p>
+          <p style="line-height: 1.7">
+            <i class="fas fa-envelope"></i> support@donationplatform.com
+          </p>
+        </div>
+      </div>
+
+      <!-- Social Media Icons -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-facebook fa-lg"></i></a>
+          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-twitter fa-lg"></i></a>
+          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-linkedin fa-lg"></i></a>
+        </div>
+      </div>
+
+      <!-- Copyright Section -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <p style="margin: 0; font-size: 0.9rem">
+            &copy; 2024 Donation Platform. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="./js/home.js"></script>
+  <script src="./js/campaigns_details.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
