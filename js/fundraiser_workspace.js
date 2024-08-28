@@ -1,0 +1,239 @@
+
+function showAlert(message) {
+    document.getElementById("alertMessage").textContent = message;
+    document.getElementById("customAlert").style.display = "flex";
+}
+
+function closeAlert() {
+    document.getElementById("customAlert").style.display = "none";
+}
+
+const loadCampaign =()=>{
+const user_id=window.localStorage.getItem("user_id");
+fetch(`http://127.0.0.1:8000/api/campaign/creator/?user_id=${user_id}`)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`You are not a fundraiser! status: ${res.status}`);
+            }
+            return res.json()
+        })
+        .then(data => {
+
+
+            const creator_id=data.results[0].id;
+            fetch(`http://127.0.0.1:8000/api/campaign/list/?creator=${creator_id}`)
+            .then(res =>{
+                if(!res.ok){
+                    throw new Error(`Campaign not found of this id! status:${res.status}`)
+                }
+                return res.json()
+            })
+
+            .then(data => {
+
+// console.log(data)
+
+// dashboard dynamic data
+
+const dashboard=document.getElementById("dashboard");
+dashboard.innerHTML=`
+
+                      <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-xl font-bold text-gray-700">Total Campaigns</h3>
+                        <p class="text-2xl font-bold text-gray-900 mt-2"> ${data.count} </p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-xl font-bold text-gray-700">Total Donations</h3>
+                        <p class="text-2xl font-bold text-gray-900 mt-2">$25,000</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-xl font-bold text-gray-700">Active Donors</h3>
+                        <p class="text-2xl font-bold text-gray-900 mt-2">150</p>
+                    </div>
+
+
+                    `
+
+
+
+
+
+
+
+
+
+
+// campaign data
+                const campaign_list=document.getElementById("campaign-list");
+                data.results.forEach(campaign => {
+                    const div = document.createElement("div")
+                    div.innerHTML=`
+                   <div  class="bg-white p-4 rounded-lg shadow-lg">
+                      <img src=" ${campaign.image} " alt="Campaign Image" class="w-full h-40 object-cover rounded-md mb-4">
+                      <h3 class="text-xl font-bold text-gray-800 mb-2"> ${campaign.title} </h3>
+                      <p class="text-gray-700 mb-4"> ${campaign.description.slice(0,35)}... </p>
+                      <div class="flex justify-between items-center">
+
+                    <button class="open-modal-btn bg-blue-500 text-white font-bold py-1 px-3 rounded" data-id="${campaign.id}">Edit</button>
+                    <button class="bg-red-500 text-white font-bold py-1 px-3 rounded" onclick="deleteCampaign(${campaign.id})">Delete</button>
+                      </div>
+                  </div>
+                    
+
+                    `;
+                    
+                    campaign_list.appendChild(div)
+                });
+
+                const openModalButtons = document.querySelectorAll('.open-modal-btn');
+                openModalButtons.forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const campaignId = event.target.dataset.id;
+                        openModal(campaignId);
+                    });
+                });
+
+
+            })
+            .catch(error =>{
+                showAlert(error)
+            })
+
+
+
+
+          })
+        .catch(error => {
+            showAlert(error);
+        });
+};
+
+// Function to open the modal
+function openModal(campaignId) {
+    
+// Get the modal and close button elements
+const modal = document.getElementById('campaign-modal');
+const closeModalBtn = document.getElementById('close-modal-btn');
+const form=document.getElementById("edit-campaign-form");
+
+
+    fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}`)
+    .then(res =>{
+        if(!res.ok){
+            throw new Error(`Campaign not found! status:${res.status}`)
+           
+        }
+        return res.json();
+    })
+    .then(campaign =>{
+        document.getElementById('campaign-id').value = campaign.id;
+        document.getElementById('title').value = campaign.title;
+        document.getElementById('goal_amount').value = campaign.goal_amount;
+        document.getElementById('description').value = campaign.description;
+        document.getElementById('location').value = campaign.location;
+        document.getElementById('deadline').value = campaign.deadline;
+        document.getElementById('type').value = campaign.type;
+        document.getElementById('status').value = campaign.status
+        modal.classList.remove('hidden');
+    })
+    .catch(error =>{
+        showAlert(error);
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+}
+
+
+function editCampaign(event){
+    event.preventDefault();
+    const token =window.localStorage.getItem("token");
+    const user_id=window.localStorage.getItem("user_id");
+
+
+    fetch(`http://127.0.0.1:8000/api/campaign/creator/?user_id=${user_id}`)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`You are not a fundraiser! status: ${res.status}`);
+            }
+            return res.json()
+        })
+        .then(data =>{
+
+            const creator_id = data.results[0].id
+            const form = document.getElementById('edit-campaign-form');
+            const formData = new FormData(form);
+            formData.append("creator", parseInt(creator_id));
+            const campaignId = formData.get('campaign-id');
+            fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}/`,{
+                method:"PUT",
+                headers: {
+        
+                    Authorization: `Token ${token}`,
+                },
+                body:formData
+            })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`Failed to update campaign! status: ${res.status}`);
+                }
+                return res.json();
+            })
+            .then(() => {
+                showAlert("Campaign update successfully")
+                loadCampaign(); 
+                closeModal(); 
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+            })
+            .catch(error => {
+                showAlert(error);
+            });
+        });
+
+}
+
+
+function closeModal() {
+    document.getElementById('campaign-modal').classList.add('hidden');
+}
+
+function deleteCampaign(campaignId){
+ const token= window.localStorage.getItem("token");
+    if(confirm('Are you sure to delete campaign?')){
+        fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}/`,{
+            method:"DELETE",
+            headers: {
+        
+                Authorization: `Token ${token}`,
+            },
+
+        })
+        .then(res => {
+            if(!res.ok){
+                throw new Error(`Cannot delete campaign! status: ${res.status} `) 
+            }else{
+                showAlert("Campaign delete successfully");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+
+            }
+            loadCampaign();
+        })
+        
+        .catch(error =>{
+            showAlert(error);
+        })
+        
+    }
+}
+
+
+
+window.onload = loadCampaign();
+
+
+
