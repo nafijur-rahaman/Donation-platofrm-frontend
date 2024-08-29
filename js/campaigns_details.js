@@ -51,7 +51,8 @@ getCampaignDetails()
 document.getElementById('payment-form').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent the default form submission
     const campaign_id=getQueryParams("id");
-    console.log(campaign_id)
+    // console.log(campaign_id)
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const amount = document.getElementById('amount').value;
     const cus_phone = document.getElementById('cus_phone').value;
     const cus_add1 = document.getElementById('cus_add1').value;
@@ -60,11 +61,12 @@ document.getElementById('payment-form').addEventListener('submit', function(even
     
     const token=window.localStorage.getItem("token")
     // Make a request to your backend to initiate payment
-    fetch('http://127.0.0.1:8000/api/order/initiate-payment/', {
+    fetch('http://127.0.0.1:8000/api/transactions/initiate-payment/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Token ${token}`,
+            'X-CSRFToken': csrfToken,
         },
         body: JSON.stringify({
             amount: amount,

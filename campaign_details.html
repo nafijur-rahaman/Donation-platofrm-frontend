@@ -15,6 +15,7 @@
       font-family: 'Roboto', sans-serif;
   }
   </style>
+  <meta name="csrf-token" content="{{ csrf_token }}">
 </head>
 <body class="bg-gray-100">
 
@@ -153,56 +154,6 @@ aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       </div>
   </div>
 
-  <!-- Become a Fundraiser Section -->
-  <div class="bg-white p-6 rounded-lg shadow-lg mt-6">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">Become a Fundraiser</h2>
-      <p class="text-gray-700 mb-4">Interested in starting your own fundraiser? Click the button below to get started!</p>
-      <button id="become-fundraiser-btn" class="bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Become a Fundraiser</button>
-  </div>
-</div>
-
-<!-- Modal for Fundraiser Registration -->
-<div id="fundraiser-modal" class="fixed z-10 inset-0 overflow-y-auto hidden">
-  <div class="flex items-center justify-center min-h-screen px-4">
-      <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
-          <div class="p-6">
-              <h3 class="text-lg leading-6 font-medium text-gray-900">Register as a Fundraiser</h3>
-              <div class="mt-2">
-                  <form>
-                      <div class="mb-4">
-                          <label for="username" class="block text-gray-700 font-bold mb-2">Username</label>
-                          <input type="text" id="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                      </div>
-                      <div class="mb-4">
-                          <label for="first-name" class="block text-gray-700 font-bold mb-2">First Name</label>
-                          <input type="text" id="first-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                      </div>
-                      <div class="mb-4">
-                          <label for="last-name" class="block text-gray-700 font-bold mb-2">Last Name</label>
-                          <input type="text" id="last-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                      </div>
-                      <div class="mb-4">
-                          <label for="organization" class="block text-gray-700 font-bold mb-2">Organization (if any)</label>
-                          <input type="text" id="organization" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                      </div>
-                      <div class="mb-4">
-                          <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
-                          <input type="email" id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                      </div>
-                      <div class="mb-4">
-                          <label for="password" class="block text-gray-700 font-bold mb-2">Password</label>
-                          <input type="password" id="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                      </div>
-                      <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Register</button>
-                  </form>
-              </div>
-          </div>
-          <div class="p-4 bg-gray-100 text-right">
-              <button id="close-modal-btn" class="bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Close</button>
-          </div>
-      </div>
-  </div>
-</div>
 
 <!-- JavaScript to Handle Modal -->
 <script>

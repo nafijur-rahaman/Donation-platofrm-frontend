@@ -35,22 +35,11 @@ fetch(`http://127.0.0.1:8000/api/campaign/creator/?user_id=${user_id}`)
 
 // dashboard dynamic data
 
-const dashboard=document.getElementById("dashboard");
-dashboard.innerHTML=`
+const totalCampaign=document.getElementById("total-campaign");
+totalCampaign.innerHTML=`
 
-                      <div class="bg-white p-4 rounded-lg shadow">
-                        <h3 class="text-xl font-bold text-gray-700">Total Campaigns</h3>
-                        <p class="text-2xl font-bold text-gray-900 mt-2"> ${data.count} </p>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <h3 class="text-xl font-bold text-gray-700">Total Donations</h3>
-                        <p class="text-2xl font-bold text-gray-900 mt-2">$25,000</p>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <h3 class="text-xl font-bold text-gray-700">Active Donors</h3>
-                        <p class="text-2xl font-bold text-gray-900 mt-2">150</p>
-                    </div>
-
+            <h3 class="text-xl font-bold text-gray-700">Total Campaigns</h3>
+            <p class="text-2xl font-bold text-gray-900 mt-2"> ${data.count} </p>                 
 
                     `
 
@@ -81,8 +70,9 @@ dashboard.innerHTML=`
                     
 
                     `;
-                    
+
                     campaign_list.appendChild(div)
+                    loadDonation(campaign.id)
                 });
 
                 const openModalButtons = document.querySelectorAll('.open-modal-btn');
@@ -233,7 +223,73 @@ function deleteCampaign(campaignId){
 
 
 
+
+
+
+
+const loadDonation =(campaignId)=>{
+    const user_id=window.localStorage.getItem("user_id");
+    const token=window.localStorage.getItem("token");
+
+    fetch(`http://127.0.0.1:8000/api/transactions/list/?user= ${user_id} &campaign=${campaignId}`)
+    .then(res =>{
+        if(!res.ok){
+            throw new Error(`Donation cannot load! status:${res.status} `)
+
+        }
+        return res.json()
+    })
+    .then(data=>{
+        let totalAmount=0;
+        data.results.forEach(donation =>{
+            // console.log(donation)
+            const body=document.getElementById("donation-body");
+            const tr=document.createElement("tr");
+            tr.innerHTML=`
+            
+                 <td class="py-2"> ${donation.campaign_name} </td>
+                <td class="py-2">${donation.creator_name}</td>
+                <td class="py-2">${donation.amount} BDT</td>
+                <td class="py-2"> ${donation.created_at} </td>
+            `
+            body.appendChild(tr);
+
+            totalAmount += parseFloat(donation.amount);
+
+        })
+        const totalDonation=document.getElementById("total-amount");
+        totalDonation.innerHTML=`
+        
+            <h3 class="text-xl font-bold text-gray-700">Total Donations</h3>
+            <p class="text-2xl font-bold text-gray-900 mt-2"> ${totalAmount} </p>
+        
+        `
+
+        // console.log (totalAmount)
+    })
+    .catch(error=>showAlert(error))
+}
+
+
+const loadUser =()=>{
+    fetch("http://127.0.0.1:8000/api/users/list/")
+    .then(res =>{
+        if(!res.ok){
+            throw new Error("No user find")
+        }
+        return res.json()
+    })
+    .then(data =>{
+        const totalDonor=document.getElementById("total-donor");
+        totalDonor.innerHTML=`
+        
+        <h3 class="text-xl font-bold text-gray-700">Active Donors</h3>
+            <p class="text-2xl font-bold text-gray-900 mt-2"> ${data.count} </p>
+        `
+
+    })
+    .catch(error=>showAlert(error))
+}
+
 window.onload = loadCampaign();
-
-
-
+window.onload=loadUser()

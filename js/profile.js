@@ -81,9 +81,7 @@ const handleProfile = () => {
                       </div>
                   </div>
               </div>
-              <button
-                  class="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">Edit
-                  Profile</button>
+            
 
 
 `
@@ -211,3 +209,103 @@ const getValue = (id) => {
     const value = document.getElementById(id).value;
     return value;
 };
+
+
+const loadDonation=()=>{
+    const user_id=localStorage.getItem("user_id");
+    fetch(`http://127.0.0.1:8000/api/transactions/list/?user=${user_id}`)
+    .then(res =>{
+        if(!res.ok){
+            throw new Error("No user found!");  
+        }
+        return res.json()
+    })
+    .then(data =>{
+       data.results.forEach(donation => {
+        const userDonor=document.getElementById("user-donor");
+        const li=document.createElement("li")
+        li.innerHTML=`
+        
+                      <div class="text-blue-500"> ${donation.campaign_name} </div>
+                      <div class="text-gray-500 text-sm">Donated: ${donation.amount} | Date: ${donation.created_at} </div>
+       
+        `
+        userDonor.appendChild(li);
+       });
+    })
+    .catch(error=>showAlert(error))
+}
+
+loadDonation()
+
+// password change js
+
+
+document.getElementById('changePasswordForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const oldPassword = document.getElementById('current-password').value;
+    const newPassword = document.getElementById('new-password').value;
+    const newPasswordConfirm = document.getElementById('confirm-password').value;
+    const token=localStorage.getItem("token")
+
+    if(newPassword===newPasswordConfirm){
+
+        if (/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(newPassword)){
+          
+            fetch("http://127.0.0.1:8000/api/users/change-password/",{
+                method: 'PUT',
+                headers: {
+               'Content-Type': 'application/json',
+               'Authorization': `Token ${token}`  
+                                            },
+                body: JSON.stringify({
+                    old_password: oldPassword,
+                    new_password: newPassword,
+                    new_password_confirm: newPasswordConfirm
+                })
+
+            })
+            .then(res=>{
+                
+                if (!res.ok) {
+                
+                    return res.json().then(errorData => {
+                        // Extract error messages
+                        let errorMessage = 'Unknown error';
+                        if (errorData.old_password && Array.isArray(errorData.old_password)) {
+                            errorMessage = errorData.old_password.join(' '); 
+                        }
+                        
+                        showAlert(`Password change failed: ${errorMessage}`);
+                    });
+
+
+                }else{
+                    showAlert("Password change successfully");
+                    setTimeout(() => {
+                        window.location.href = "profile.html";
+                    }, 3000);
+                }
+                
+            })
+
+
+
+
+
+        }else{
+            showAlert("Password must contain at least 8 characters, at least one letter, one number, and one special character.")
+        }
+
+   
+
+
+
+
+    }else{
+        showAlert("password doesn't match");
+    }
+
+
+})

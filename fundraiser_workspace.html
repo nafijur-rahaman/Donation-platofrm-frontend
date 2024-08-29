@@ -184,6 +184,15 @@ padding: 1rem 2rem;
         <h1 class="text-3xl font-bold text-gray-800 mb-4">Dashboard</h1>
         <div id="dashboard" class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <!-- dynamically load -->
+          <div id="total-campaign"  class="bg-white p-4 rounded-lg shadow">
+      
+        </div>
+        <div id="total-amount" class="bg-white p-4 rounded-lg shadow">
+       
+        </div>
+        <div id="total-donor" class="bg-white p-4 rounded-lg shadow">
+            
+        </div>
         </div>
       </div>
 
@@ -213,47 +222,16 @@ padding: 1rem 2rem;
                 <th class="pb-2">Date</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="donation-body">
               <!-- Example Row -->
-              <tr>
-                <td class="py-2">Campaign 1</td>
-                <td class="py-2">John Doe</td>
-                <td class="py-2">$500</td>
-                <td class="py-2">2024-08-24</td>
-              </tr>
+            
               <!-- Repeat for each donation -->
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Profile and Settings -->
-      <div class="mb-6">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">Profile Settings</h2>
-        <div class="bg-white p-4 rounded-lg shadow-lg">
-          <form>
-            <div class="mb-4">
-              <label for="username" class="block text-gray-700 font-bold mb-2">Username</label>
-              <input type="text" id="username"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-            <div class="mb-4">
-              <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
-              <input type="email" id="email"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-            <div class="mb-4">
-              <label for="organization" class="block text-gray-700 font-bold mb-2">Organization (if applicable)</label>
-              <input type="text" id="organization"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-            <div class="flex justify-end">
-              <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button">Update Profile</button>
-            </div>
-          </form>
-        </div>
-      </div>
+  
 
     </div>
   </div>
