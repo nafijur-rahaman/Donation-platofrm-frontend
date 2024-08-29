@@ -242,15 +242,17 @@ const loadDonation =(campaignId)=>{
     .then(data=>{
         let totalAmount=0;
         data.results.forEach(donation =>{
+            const formattedDate = formatDate(donation.created_at);
+
             // console.log(donation)
             const body=document.getElementById("donation-body");
             const tr=document.createElement("tr");
             tr.innerHTML=`
             
                  <td class="py-2"> ${donation.campaign_name} </td>
-                <td class="py-2">${donation.creator_name}</td>
+                <td class="py-2">${donation.donor_name}</td>
                 <td class="py-2">${donation.amount} BDT</td>
-                <td class="py-2"> ${donation.created_at} </td>
+                <td class="py-2">${formattedDate} </td>
             `
             body.appendChild(tr);
 
@@ -293,3 +295,17 @@ const loadUser =()=>{
 
 window.onload = loadCampaign();
 window.onload=loadUser()
+
+
+function formatDate(datetimeString) {
+    const date = new Date(datetimeString);
+    return date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    });
+}

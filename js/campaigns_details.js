@@ -10,7 +10,7 @@ const getCampaignDetails =()=>{
  fetch(`http://127.0.0.1:8000/api/campaign/list/${campaign_id}/`)
  .then(res => res.json())
  .then(data => {
-    console.log(data)
+    // console.log(data)
    const div=document.getElementById('campaign-detail')
   div.innerHTML=`
   
@@ -91,3 +91,52 @@ document.getElementById('payment-form').addEventListener('submit', function(even
         console.error('Error:', error);
     });
 });
+
+
+const loadDonation=()=>{
+    const campaign_id=getQueryParams("id");
+    fetch(`http://127.0.0.1:8000/api/transactions/list/?campaign= ${campaign_id}`)
+    .then(res=>{
+        if(!res.ok){
+            throw new Error("Donation loading failed")
+        }
+        return res.json()
+    })
+    .then(data =>{
+        parent=document.getElementById("donation")
+        parent.innerHTML=''
+        data.results.forEach(donate => {
+
+            const formattedDate = formatDate(donate.created_at);
+
+            li=document.createElement("li");
+            li.innerHTML=`
+            
+             <p class="text-gray-800 font-semibold"> ${donate.donor_name} </p>
+                      <p class="text-gray-600">BDT${donate.amount} - ${formattedDate}</p>
+            
+            `
+            parent.appendChild(li);
+            
+        });
+    })
+    .catch(error=>alert(error))
+}
+
+
+
+loadDonation()
+
+
+function formatDate(datetimeString) {
+    const date = new Date(datetimeString);
+    return date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    });
+}

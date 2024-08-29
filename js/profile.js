@@ -21,10 +21,11 @@ const handleProfile = () => {
 
             div.innerHTML = `
     
-              <div class="image overflow-hidden">
-                  <img  class="h-auto w-full mx-auto rounded-full"
-                      src="${user.image}"
-                      alt="Profile Picture">
+                <img class="w-64 h-64 object-cover mx-auto rounded-full"
+                src="${user.image}"
+                alt="Profile Picture">
+
+
               </div>
               <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">${user.first_name} ${user.last_name}</h1>
               <h3 class="text-gray-600 font-lg text-semibold leading-6">${user.profession}</h3>
@@ -130,8 +131,10 @@ const handleFundraiser = (event) => {
         .then(data => {
             if (data.success) {
                 const form = document.getElementById('fund_raiser_form');
-                form.reset();
                 showAlert(data.message);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
 
             } else {
                 showAlert('A error happened')
@@ -141,7 +144,7 @@ const handleFundraiser = (event) => {
 }
 
 const openModalBtn = document.getElementById('openModalBtn');
-const closeModalBtn = document.getElementById('closeModalBtn');
+const closeModalBtn = document.getElementById('f-closeModalBtn');
 const cancelModalBtn = document.getElementById('cancelModalBtn');
 const fundraiserModal = document.getElementById('fundraiserModal');
 
@@ -168,7 +171,7 @@ const fundRaiser = () => {
     fetch(`http://127.0.0.1:8000/api/campaign/creator-request/?user_id=${user_id}`)
         .then(res => res.json())
         .then(data => {
-            if (data.results[0].status === "approved") {
+            if (data.results && data.results.length > 0 && data.results[0].status === "approved") {
                 const modal = document.getElementById("openModalBtn");
                 modal.classList.add("hidden")
 
@@ -201,8 +204,8 @@ const fundRaiser = () => {
             };
         })
 };
-fundRaiser()
 
+fundRaiser()
 
 
 const getValue = (id) => {
@@ -221,6 +224,7 @@ const loadDonation=()=>{
         return res.json()
     })
     .then(data =>{
+        
        data.results.forEach(donation => {
         const userDonor=document.getElementById("user-donor");
         const li=document.createElement("li")
@@ -277,14 +281,14 @@ document.getElementById('changePasswordForm').addEventListener('submit', async f
                             errorMessage = errorData.old_password.join(' '); 
                         }
                         
-                        showAlert(`Password change failed: ${errorMessage}`);
+                        showToast(`Password change failed: ${errorMessage}`);
                     });
 
 
                 }else{
-                    showAlert("Password change successfully");
+                    showToast("Password change successfully");
                     setTimeout(() => {
-                        window.location.href = "profile.html";
+                       window.location.reload();
                     }, 3000);
                 }
                 
@@ -295,7 +299,7 @@ document.getElementById('changePasswordForm').addEventListener('submit', async f
 
 
         }else{
-            showAlert("Password must contain at least 8 characters, at least one letter, one number, and one special character.")
+            showToast("Password must contain at least 8 characters, at least one letter, one number, and one special character.")
         }
 
    
@@ -304,8 +308,164 @@ document.getElementById('changePasswordForm').addEventListener('submit', async f
 
 
     }else{
-        showAlert("password doesn't match");
+        showToast("password doesn't match");
     }
 
 
 })
+
+
+// profile change
+
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('profileModal');
+    const editProfileBtn = document.getElementById('editProfileBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const form = document.getElementById('profileForm');
+    const submitButton = document.getElementById('submitBtn');
+    
+
+    function fillFormWithExistingData() {
+        const user_id=localStorage.getItem("user_id");
+        const token=localStorage.getItem("token");
+        fetch(`http://127.0.0.1:8000/api/users/list/${user_id}/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`  
+            }
+        })
+        .then(res=>{
+            if(!res.ok){
+                throw new Error("Error fetching profile data")
+            }
+            return res.json();
+        })
+        .then(data => {
+            // console.log(data)
+         
+                document.getElementById('first_name').value = data.first_name;
+                document.getElementById('last_name').value = data.last_name;
+                document.getElementById('h-username').value = data.username;
+                document.getElementById('username').value = data.username;
+                document.getElementById('email').value = data.email;
+                document.getElementById('h-email').value = data.email;
+                document.getElementById('profession').value = data.profession;
+                document.getElementById('phone_number').value = data.phone_number;
+                document.getElementById('bio').value = data.bio;
+                document.getElementById('address').value = data.address;
+               
+           
+        })
+        .catch(error => {
+            
+            showToast(error);
+        });
+    }
+
+  
+    editProfileBtn.addEventListener('click', function () {
+        modal.classList.remove('hidden');
+        fillFormWithExistingData();
+    });
+
+  
+    closeModalBtn.addEventListener('click', function () {
+        modal.classList.add('hidden');
+    });
+
+
+    window.addEventListener('click', function (e) {
+        if (e.target === modal) {
+            modal.classList.add('hidden');
+        }
+    });
+
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const user_id = localStorage.getItem("user_id");
+        const token = localStorage.getItem("token");
+    
+    const firstName = document.getElementById('first_name').value;
+    const lastName = document.getElementById('last_name').value;
+    const profession = document.getElementById('profession').value;
+    const phoneNumber = document.getElementById('phone_number').value;
+    const bio = document.getElementById('bio').value;
+    const address = document.getElementById('address').value;
+    const email = document.getElementById('h-email').value;
+    const username = document.getElementById('h-username').value;
+    console.log(email)
+    console.log(username)
+    
+        if (firstName === '' || lastName === '') {
+            showToast('Please fill out all required fields.', 'error');
+            return;
+        }
+    
+        if (phoneNumber && phoneNumber.length !== 11) {
+            showToast('Phone number must be 11 digits.', 'error');
+            return;
+        }
+    
+        submitButton.disabled = true;
+        submitButton.textContent = 'Updating...';
+    
+        const formData = new FormData(form);
+        formData.append('first_name', firstName);
+        formData.append('last_name', lastName);
+        formData.append('profession', profession);
+        formData.append('phone_number', phoneNumber);
+        formData.append('bio', bio);
+        formData.append('address', address);
+        formData.append('email', email); 
+        formData.append('username', username); 
+        fetch(`http://127.0.0.1:8000/api/users/list/${user_id}/`, {
+            method: 'PUT',
+            body: formData,
+            headers: {
+                'Authorization': `Token ${token}`
+            }
+        })
+        .then(res => {
+            if (!res.ok) {
+                return res.text().then(text => {
+                    throw new Error(text || "Error fetching profile data");
+                });
+            }
+            return res.json();
+        })
+        .then(data => {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Update Profile';
+            showToast('Profile updated successfully!');
+            modal.classList.add('hidden');
+            setTimeout(() => {
+                window.location.reload(); 
+            }, 3000);
+        })
+        .catch(error => {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Update Profile';
+            showToast(error.message || 'An unexpected error occurred.');
+        });
+    });
+    
+
+    
+    
+});
+
+
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg text-white ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
+    toast.textContent = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
