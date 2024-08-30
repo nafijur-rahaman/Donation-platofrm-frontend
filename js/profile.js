@@ -168,44 +168,53 @@ if (cancelModalBtn && fundraiserModal) {
 
 const fundRaiser = () => {
     const user_id = window.localStorage.getItem("user_id");
-    fetch(`http://127.0.0.1:8000/api/campaign/creator-request/?user_id=${user_id}`)
-        .then(res => res.json())
-        .then(data => {
-            if (data.results && data.results.length > 0 && data.results[0].status === "approved") {
-                const modal = document.getElementById("openModalBtn");
-                modal.classList.add("hidden")
+    fetch(`http://127.0.0.1:8000/api/campaign/creator/?user_id= ${user_id}`)
+    .then(res =>{
+        if(!res.ok){
+            throw new Error("You are not a creator");
+        }
+        return res.json();
+    })
+    .then(data=>{
+        if(data[0] && data[0].id){
+            const modal = document.getElementById("openModalBtn");
+            modal.classList.add("hidden")
 
-                let a = document.createElement("a");
-                a.textContent = "Go to fundraiser Workspace";
-                a.style.textDecoration = "none";
-                a.style.textAlign = "center";
-                a.href = "fundraiser_workspace.html"; 
-                a.classList.add(
-                    "block",
-                    "w-full",
-                    "text-white",
-                    "bg-green-500",
-                    "text-sm",
-                    "font-semibold",
-                    "rounded-lg",
-                    "hover:bg-green-700",
-                    "focus:outline-none",
-                    "focus:shadow-outline",
-                    "focus:bg-green-700",
-                    "hover:shadow-xs",
-                    "p-3",
-                    "my-2"
-                );
+            let a = document.createElement("a");
+            a.textContent = "Go to fundraiser Workspace";
+            a.style.textDecoration = "none";
+            a.style.textAlign = "center";
+            a.href = "fundraiser_workspace.html"; 
+            a.classList.add(
+                "block",
+                "w-full",
+                "text-white",
+                "bg-green-500",
+                "text-sm",
+                "font-semibold",
+                "rounded-lg",
+                "hover:bg-green-700",
+                "focus:outline-none",
+                "focus:shadow-outline",
+                "focus:bg-green-700",
+                "hover:shadow-xs",
+                "p-3",
+                "my-2"
+            );
 
-                const action = document.getElementById("profile-action");
-                action.appendChild(a);
+            const action = document.getElementById("profile-action");
+            action.appendChild(a);
 
+        }
+    })
+    .catch(error => showAlert(error))
 
-            };
-        })
 };
 
 fundRaiser()
+
+
+
 
 
 const getValue = (id) => {
@@ -224,18 +233,20 @@ const loadDonation=()=>{
         return res.json()
     })
     .then(data =>{
-        
-       data.results.forEach(donation => {
-        const userDonor=document.getElementById("user-donor");
-        const li=document.createElement("li")
-        li.innerHTML=`
-        
-                      <div class="text-blue-500"> ${donation.campaign_name} </div>
-                      <div class="text-gray-500 text-sm">Donated: ${donation.amount} | Date: ${donation.created_at} </div>
-       
-        `
-        userDonor.appendChild(li);
-       });
+        if(data.results){
+            data.results.forEach(donation => {
+                const userDonor=document.getElementById("user-donor");
+                const li=document.createElement("li")
+                li.innerHTML=`
+                
+                              <div class="text-blue-500"> ${donation.campaign_name} </div>
+                              <div class="text-gray-500 text-sm">Donated: ${donation.amount} | Date: ${donation.created_at} </div>
+               
+                `
+                userDonor.appendChild(li);
+               });
+        }
+      
     })
     .catch(error=>showAlert(error))
 }

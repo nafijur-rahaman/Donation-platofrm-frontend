@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Donation Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+    <!-- Main Content -->
+    <div class="container mx-auto my-8 p-4 bg-white shadow-md rounded">
+        <h1 class="text-3xl font-bold mb-6">Dashboard</h1>
+
+        <!-- Dashboard Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Total Users Card -->
+            <div class="bg-blue-100 p-6 rounded shadow-md">
+                <h3 class="text-xl font-semibold text-blue-700">Total Users</h3>
+                <p class="text-3xl font-bold text-blue-900">1,234</p>
+            </div>
+
+            <!-- Total Donations Card -->
+            <div class="bg-green-100 p-6 rounded shadow-md">
+                <h3 class="text-xl font-semibold text-green-700">Total Donations</h3>
+                <p class="text-3xl font-bold text-green-900">$56,789</p>
+            </div>
+
+            <!-- Pending Requests Card -->
+            <div class="bg-yellow-100 p-6 rounded shadow-md">
+                <h3 class="text-xl font-semibold text-yellow-700">Pending Requests</h3>
+                <p class="text-3xl font-bold text-yellow-900">23</p>
+            </div>
+        </div>
+
+        <!-- User Table -->
+        <div class="bg-white shadow-md rounded">
+            <h2 class="text-2xl font-semibold mb-4 p-4 border-b">User Details</h2>
+            <table class="w-full border border-gray-200">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="p-3 text-left">#</th>
+                        <th class="p-3 text-left">Name</th>
+                        <th class="p-3 text-left">Email</th>
+                        <th class="p-3 text-left">Phone Number</th>
+                        <th class="p-3 text-left">Address</th>
+                        <th class="p-3 text-left">Bio</th>
+                        <th class="p-3 text-left">Status</th>
+                        <th class="p-3 text-left">Joined</th>
+                        <th class="p-3 text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example Row -->
+                    <tr class="border-t border-gray-200">
+                        <td class="p-3">1</td>
+                        <td class="p-3">John Doe</td>
+                        <td class="p-3">john.doe@example.com</td>
+                        <td class="p-3">+1234567890</td>
+                        <td class="p-3">123 Main St, City</td>
+                        <td class="p-3">Lorem ipsum dolor sit amet.</td>
+                        <td class="p-3 text-green-600">Active</td>
+                        <td class="p-3">2024-01-01</td>
+                        <td class="p-3">
+                            <a href="#" class="text-blue-500 hover:underline">View</a>
+                            <a href="#" class="text-red-500 hover:underline ml-2">Delete</a>
+                        </td>
+                    </tr>
+                    <!-- Repeat Rows as Needed -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

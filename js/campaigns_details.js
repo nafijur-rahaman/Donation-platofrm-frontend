@@ -105,7 +105,7 @@ const loadDonation=()=>{
     .then(data =>{
         parent=document.getElementById("donation")
         parent.innerHTML=''
-        data.results.forEach(donate => {
+        data.forEach(donate => {
 
             const formattedDate = formatDate(donate.created_at);
 

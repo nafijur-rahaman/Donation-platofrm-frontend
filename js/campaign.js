@@ -3,12 +3,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const campaignsPerPage = 3;
 
     function fetchCampaigns(type = '', status = '') {
-        fetch(`http://127.0.0.1:8000/api/campaign/list/?type=${type}&status=${status}&page=${currentPage}&per_page=${campaignsPerPage}`)
+        fetch(`http://127.0.0.1:8000/api/campaign/list/?type=${type}&status=${status}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
                 updateCampaignList(data);
-                updatePagination(data.count);
+                updatePagination(data);
             })
             .catch(error => console.error('Error fetching campaigns:', error));
     }
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const campaignList = document.getElementById('campaign-list');
         campaignList.innerHTML = '';
 
-        data.results.forEach(campaign => {
+        data.forEach(campaign => {
             const card = `
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
                     <img src="${campaign.image}" class="w-full h-48 object-cover" alt="${campaign.title}">
@@ -35,11 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function updatePagination(totalCampaigns) {
-        document.getElementById('currentPage').textContent = `Page ${currentPage}`;
-        document.getElementById('prevPage').disabled = currentPage === 1;
-        document.getElementById('nextPage').disabled = (currentPage * campaignsPerPage) >= totalCampaigns;
-    }
+  
 
     document.getElementById('filter-form').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -51,29 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
         currentPage = 1; // Reset to first page on new filter
     });
 
-    document.getElementById('prevPage').addEventListener('click', function() {
-        if (currentPage > 1) {
-            currentPage--;
-            const type = document.getElementById('typeFilter').value;
-            const status = document.getElementById('statusFilter').value;
-            fetchCampaigns(type, status);
-        }
-    });
-
-    document.getElementById('nextPage').addEventListener('click', function() {
-        const type = document.getElementById('typeFilter').value;
-        const status = document.getElementById('statusFilter').value;
-        fetch(`http://127.0.0.1:8000/api/campaign/list/?type=${type}&status=${status}&page=${currentPage + 1}&per_page=${campaignsPerPage}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.results.length > 0) {
-                    currentPage++;
-                    updateCampaignList(data);
-                    updatePagination(data.count);
-                }
-            })
-            .catch(error => console.error('Error fetching next page of campaigns:', error));
-    });
 
     // Initial load
     fetchCampaigns();

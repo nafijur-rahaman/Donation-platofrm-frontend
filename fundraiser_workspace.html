@@ -84,7 +84,30 @@
         opacity: 1;
       }
     }
+
+    #campaign-list {
+  
+      overflow-y: scroll;
+      will-change: transform;
+      /* Force GPU acceleration */
+      transform: translateZ(0);
+      /* Reduce the shadow intensity on cards */
+      box-shadow: none;
+  }
+  
+  #campaign-list .campaign-card {
+      /* Simple border instead of shadow for better performance */
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease-in-out;
+  }
+  
+  #campaign-list .campaign-card:hover {
+      transform: translateY(-2px);
+  }
+  
+  
   </style>
+
 </head>
 
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">

@@ -35,6 +35,33 @@ const handleLogout=()=>{
         })
     }
 }
+const handleAdminLogout=()=>{
+    const token=localStorage.getItem("admin_token")
+    if(token){
+        fetch("http://127.0.0.1:8000/api/manager/logout/",{
+            method:"GET",
+            headers:{
+                'content-type':"application/json",
+                "Authorization": `Token ${token}`,  
+            }
+        })
+        .then(res=>res.json())
+        .then(data =>{
+            if(data.success){
+                showToast(data.message)
+                localStorage.removeItem("admin_token");
+            localStorage.removeItem("user_id")
+            setTimeout(() => {
+                      window.location.href="home.html";
+            }, 3000);
+      
+            }else{
+                showToast(data.message)
+            }
+            
+        })
+    }
+}
 
 
 

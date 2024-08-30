@@ -18,9 +18,9 @@ fetch(`http://127.0.0.1:8000/api/campaign/creator/?user_id=${user_id}`)
             return res.json()
         })
         .then(data => {
+         console.log(data[0])
 
-
-            const creator_id=data.results[0].id;
+            const creator_id=data[0].id;
             fetch(`http://127.0.0.1:8000/api/campaign/list/?creator=${creator_id}`)
             .then(res =>{
                 if(!res.ok){
@@ -39,7 +39,7 @@ const totalCampaign=document.getElementById("total-campaign");
 totalCampaign.innerHTML=`
 
             <h3 class="text-xl font-bold text-gray-700">Total Campaigns</h3>
-            <p class="text-2xl font-bold text-gray-900 mt-2"> ${data.count} </p>                 
+            <p class="text-2xl font-bold text-gray-900 mt-2"> ${data.length} </p>                 
 
                     `
 
@@ -54,7 +54,7 @@ totalCampaign.innerHTML=`
 
 // campaign data
                 const campaign_list=document.getElementById("campaign-list");
-                data.results.forEach(campaign => {
+                data.forEach(campaign => {
                     const div = document.createElement("div")
                     div.innerHTML=`
                    <div  class="bg-white p-4 rounded-lg shadow-lg">
@@ -139,49 +139,35 @@ const form=document.getElementById("edit-campaign-form");
 function editCampaign(event){
     event.preventDefault();
     const token =window.localStorage.getItem("token");
-    const user_id=window.localStorage.getItem("user_id");
+    const form = document.getElementById('edit-campaign-form');
+    const formData = new FormData(form);
+    // formData.append("creator", parseInt(creator_id));
+    const campaignId = formData.get('campaign-id');
+    fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}/`,{
+        method:"PUT",
+        headers: {
 
-
-    fetch(`http://127.0.0.1:8000/api/campaign/creator/?user_id=${user_id}`)
-        .then(res => {
-            if (!res.ok) {
-                throw new Error(`You are not a fundraiser! status: ${res.status}`);
-            }
-            return res.json()
-        })
-        .then(data =>{
-
-            const creator_id = data.results[0].id
-            const form = document.getElementById('edit-campaign-form');
-            const formData = new FormData(form);
-            formData.append("creator", parseInt(creator_id));
-            const campaignId = formData.get('campaign-id');
-            fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}/`,{
-                method:"PUT",
-                headers: {
-        
-                    Authorization: `Token ${token}`,
-                },
-                body:formData
-            })
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`Failed to update campaign! status: ${res.status}`);
-                }
-                return res.json();
-            })
-            .then(() => {
-                showAlert("Campaign update successfully")
-                loadCampaign(); 
-                closeModal(); 
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3000);
-            })
-            .catch(error => {
-                showAlert(error);
-            });
-        });
+            Authorization: `Token ${token}`,
+        },
+        body:formData
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error(`Failed to update campaign! status: ${res.status}`);
+        }
+        return res.json();
+    })
+    .then(() => {
+        showAlert("Campaign update successfully")
+        loadCampaign(); 
+        closeModal(); 
+        setTimeout(() => {
+            window.location.reload();
+        }, 3000);
+    })
+    .catch(error => {
+        showAlert(error);
+    });
 
 }
 
@@ -241,7 +227,7 @@ const loadDonation =(campaignId)=>{
     })
     .then(data=>{
         let totalAmount=0;
-        data.results.forEach(donation =>{
+        data.forEach(donation =>{
             const formattedDate = formatDate(donation.created_at);
 
             // console.log(donation)
@@ -282,11 +268,12 @@ const loadUser =()=>{
         return res.json()
     })
     .then(data =>{
+        console.log(data)
         const totalDonor=document.getElementById("total-donor");
         totalDonor.innerHTML=`
         
         <h3 class="text-xl font-bold text-gray-700">Active Donors</h3>
-            <p class="text-2xl font-bold text-gray-900 mt-2"> ${data.count} </p>
+            <p class="text-2xl font-bold text-gray-900 mt-2"> ${data.length} </p>
         `
 
     })
