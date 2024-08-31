@@ -1,4 +1,3 @@
-// conditionalnavbar
 
 const nav=document.getElementById("conditional-element");
 const token=localStorage.getItem("token");

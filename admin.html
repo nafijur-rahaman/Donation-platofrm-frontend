@@ -93,6 +93,11 @@
           opacity: 1;
         }
       }
+
+      #notificationsDropdown {
+        z-index: 1000; /* Ensure it appears on top of other content */
+    }
+    
     </style>
   </head>
 
@@ -192,41 +197,13 @@
             >
           </li>
           <li>
-            <a
-              style="text-decoration: none"
-              href="#"
-              class="sidebar-item p-4 block"
-              >Donations</a
-            >
-          </li>
+       
+
           <li>
             <a
               style="text-decoration: none"
               href="#"
-              class="sidebar-item p-4 block"
-              >Users</a
-            >
-          </li>
-          <li>
-            <a
-              style="text-decoration: none"
-              href="#"
-              class="sidebar-item p-4 block"
-              >Reports</a
-            >
-          </li>
-          <li>
-            <a
-              style="text-decoration: none"
-              href="#"
-              class="sidebar-item p-4 block"
-              >Settings</a
-            >
-          </li>
-          <li>
-            <a
-              style="text-decoration: none"
-              href="#"
+              onclick="handleAdminLogout()"
               class="sidebar-item p-4 block"
               >Logout</a
             >
@@ -257,38 +234,14 @@
             >
 
             <!-- Notifications Dropdown -->
-            <div
-              id="notificationsDropdown"
-              class="absolute right-0 mt-2 w-64 bg-white border border-gray-300 rounded-lg shadow-lg hidden"
-            >
-              <ul
-                id="notificationsList"
-                class="max-h-64 overflow-y-auto list-none p-0 m-0"
-              >
-                <!-- Notifications will be dynamically added here -->
-              </ul>
-              <div class="flex justify-between p-2">
-                <button
-                  id="prevPage"
-                  class="bg-blue-500 text-white px-4 py-2 rounded"
-                  disabled
-                >
-                  Previous
-                </button>
-                <button
-                  id="nextPage"
-                  class="bg-blue-500 text-white px-4 py-2 rounded"
-                >
-                  Next
-                </button>
+            <div class="relative">
+              <div id="notificationsDropdown" class="absolute right-0 mt-2 w-64 bg-white border border-gray-300 rounded-lg shadow-lg hidden">
+                  <ul id="notificationsList" class="max-h-64 overflow-y-auto list-none p-0 m-0">
+                      <!-- Notifications will be dynamically added here -->
+                  </ul>
               </div>
-            </div>
-
-            <button
-              class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
-            >
-              Profile
-            </button>
+          </div>
+          
           </div>
         </header>
 
@@ -400,7 +353,7 @@
           }
         </style>
 
-        <!-- Add Campaign Modal (Large) -->
+        <!-- Add Campaign Modal -->
         <div
         id="addCampaignModal"
         class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden"
@@ -570,7 +523,7 @@
       </div>
       
 
-        <!-- Edit Campaign Modal (Small) -->
+        <!-- Edit Campaign Modal  -->
         <div
           id="editCampaignModal"
           class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden"
@@ -739,7 +692,12 @@
         </div>
 
         <section id="donations" class="mb-12">
-          <h1 class="text-3xl font-semibold mb-6">Donations Management</h1>
+          <div class="text-center my-8">
+            <h1 class="text-4xl font-bold text-gray-800">Donation Management</h1>
+            <p class="text-lg text-gray-500 mt-2">
+              Overview of donation  and manage
+            </p>
+          </div>
           <div class="bg-white p-4 rounded-lg shadow-md">
             <h2 class="text-xl font-semibold mb-4">View Donations</h2>
             <!-- Scrollable container -->
@@ -749,31 +707,14 @@
                   <tr>
                     <th class="border-b p-2">Donor Name</th>
                     <th class="border-b p-2">Email</th>
-                    <th class="border-b p-2">Phone</th>
                     <th class="border-b p-2">Amount</th>
                     <th class="border-b p-2">Date</th>
                     <th class="border-b p-2">Campaign</th>
-                    <th class="border-b p-2">Actions</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="donate-body">
                   <!-- Example donation row -->
-                  <tr>
-                    <td class="border-b p-2">John Doe</td>
-                    <td class="border-b p-2">john.doe@example.com</td>
-                    <td class="border-b p-2">(123) 456-7890</td>
-                    <td class="border-b p-2">$100</td>
-                    <td class="border-b p-2">08/28/2024</td>
-                    <td class="border-b p-2">Campaign A</td>
-                    <td class="border-b p-2">
-                      <button class="bg-blue-500 text-white py-1 px-3 rounded">
-                        Edit
-                      </button>
-                      <button class="bg-red-500 text-white py-1 px-3 rounded">
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
+                  <!-- dynamically load -->
                   <!-- Add more donation rows as needed -->
                 </tbody>
               </table>
@@ -781,46 +722,45 @@
           </div>
         </section>
 
-        <section id="donors" class="mb-12">
-          <h1 class="text-3xl font-semibold mb-6">Donor Management</h1>
-          <div class="bg-white p-4 rounded-lg shadow-md">
-            <h2 class="text-xl font-semibold mb-4">View Donors</h2>
-            <table class="w-full border-collapse">
-              <thead>
-                <tr>
-                  <th class="border-b p-2">Name</th>
-                  <th class="border-b p-2">Email</th>
-                  <th class="border-b p-2">Phone</th>
-                  <th class="border-b p-2">Total Donated</th>
-                  <th class="border-b p-2">Last Donation Date</th>
-                  <th class="border-b p-2">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- Example donor row -->
-                <tr>
-                  <td class="border-b p-2">Jane Smith</td>
-                  <td class="border-b p-2">jane.smith@example.com</td>
-                  <td class="border-b p-2">(123) 456-7891</td>
-                  <td class="border-b p-2">$500</td>
-                  <td class="border-b p-2">08/27/2024</td>
-                  <td class="border-b p-2">
-                    <button class="bg-blue-500 text-white py-1 px-3 rounded">
-                      Edit
-                    </button>
-                    <button class="bg-red-500 text-white py-1 px-3 rounded">
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-                <!-- Add more donor rows as needed -->
-              </tbody>
-            </table>
-            <button class="bg-green-500 text-white py-2 px-4 rounded mt-4">
-              Add Donor
-            </button>
+
+
+        <div class="text-center my-8">
+          <h1 class="text-4xl font-bold text-gray-800">User Management</h1>
+          <p class="text-lg text-gray-500 mt-2">
+            Overview of donation  and manage
+          </p>
+        </div>
+        <div class="container mx-auto my-8 p-4 bg-white shadow-lg rounded-lg border border-gray-200">
+          
+          <h1 class="text-xl font-semibold text-gray-800 mb-6">User view</h1>
+  
+          <!-- Search Bar -->
+          <div class="mb-6">
+              <input 
+                  type="text" 
+                  id="searchInput" 
+                  class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                  placeholder="Search users by name or email">
           </div>
-        </section>
+  
+          <!-- User Table -->
+          <table class="w-full bg-white border border-gray-200 rounded-lg shadow-lg">
+              <thead>
+                  <tr class="bg-gray-100 border-b border-gray-200">
+                      <th class="p-3 text-left text-gray-600">Name</th>
+                      <th class="p-3 text-left text-gray-600">Email</th>
+                      <th class="p-3 text-left text-gray-600">Profession</th>
+                      <th class="p-3 text-left text-gray-600">Status</th>
+                      <th class="p-3 text-left text-gray-600">Actions</th>
+                  </tr>
+              </thead>
+              <tbody id="userTableBody">
+                  <!-- User rows will be dynamically inserted here -->
+              </tbody>
+          </table>
+      </div>
+  
+
       </div>
     </div>
     <!-- footer section -->

@@ -219,17 +219,35 @@ padding: 1rem 2rem;
         </div>
       </div>
 
-      <!-- Campaigns List -->
-      <div class="mb-6">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">My Campaigns</h2>
-        <!-- Add a wrapper with a fixed height and scrolling -->
+ <!-- Campaigns List -->
 
-        <div id="campaign-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-96 overflow-y-scroll">
-          <!-- Example Campaign Card -->
 
-          <!-- Repeat for each campaign -->
+<div class="mb-6">
+  <h2 class="text-2xl font-bold text-gray-800 mb-4">My Campaigns</h2>
+
+  <div id="campaign-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  
+    <div class="bg-white border border-gray-200 rounded-lg shadow-md flex flex-col overflow-hidden">
+  
+      <div class="relative">
+        <img src="path/to/your/image.jpg" alt="Campaign Image" class="w-full h-32 object-cover">
+     
+      </div>
+       <div class="p-4 flex flex-col flex-grow">
+        <h3 class="text-xl font-semibold mb-2">Campaign Title</h3>
+        <p class="text-gray-600 flex-grow">Campaign description goes here...</p>
+        <div class="mt-4">
+          <span class="text-gray-800 font-semibold">Status: Active</span>
         </div>
       </div>
+    </div>
+ 
+  </div>
+</div>
+
+
+
+
 
 
       <!-- Donation History (Scrollable) -->
@@ -320,7 +338,6 @@ padding: 1rem 2rem;
               <div>
                 <label for="status" class="block text-gray-700 text-sm font-semibold mb-2">Campaign Status</label>
                 <select id="status" name="status" class="w-full p-3 border border-gray-300 rounded-md" required>
-                  <option value="active">Active</option>
                   <option value="completed">Completed</option>
                   <option value="canceled">Canceled</option>
                 </select>

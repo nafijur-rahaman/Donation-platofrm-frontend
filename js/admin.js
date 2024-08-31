@@ -7,39 +7,36 @@ function closeAlert() {
     document.getElementById("customAlert").style.display = "none";
 }
 
+function fetchUnreadCount() {
+    fetch('http://127.0.0.1:8000/api/notification/unread-count/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${token}`,
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.unread_count !== undefined) {
+            unreadCount.textContent = `Unread: ${data.unread_count}`;
+        } else {
+            console.error('Unread count not found in response:', data);
+        }
+    })
+    .catch(error => console.error('Error fetching unread count:', error));
+}
+
 
 document.addEventListener('DOMContentLoaded', function() {
     const notificationsButton = document.getElementById('notificationsButton');
     const notificationsDropdown = document.getElementById('notificationsDropdown');
     const notificationsList = document.getElementById('notificationsList');
     const notificationCount = document.getElementById('notificationCount');
-    const unreadCount = document.getElementById('unreadCount');  
-    const prevButton = document.getElementById('prevPage');
-    const nextButton = document.getElementById('nextPage');
-    let currentPage = 1;
     const token = localStorage.getItem("admin_token");
 
-    function fetchUnreadCount() {
-        fetch('http://127.0.0.1:8000/api/notification/unread-count/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Token ${token}`,
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.unread_count !== undefined) {
-                unreadCount.textContent = `Unread: ${data.unread_count}`;
-            } else {
-                console.error('Unread count not found in response:', data);
-            }
-        })
-        .catch(error => console.error('Error fetching unread count:', error));
-    }
 
-    function fetchNotifications(page = 1) {
-        fetch(`http://127.0.0.1:8000/api/notification/list/?page=${page}`, {
+    function fetchNotifications() {
+        fetch("http://127.0.0.1:8000/api/notification/list/", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -59,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     li.dataset.notificationId = notification.id;
                     li.classList.add('p-2', 'mb-1', 'border-b', 'border-gray-200');
 
-                    li.textContent = `${index + 1 + (page - 1) * 10}. ${notification.message}`;
+                    li.textContent = `${index + 1}. ${notification.message}`;
 
                     if (notification.is_read) {
                         li.classList.add('bg-green-100');
@@ -82,11 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 unreadCount.textContent = `Unread: ${unreadNotificationsCount}`;
-
-                prevButton.disabled = !data.previous;
-                nextButton.disabled = !data.next;
-                prevButton.dataset.page = data.previous ? page - 1 : page;
-                nextButton.dataset.page = data.next ? page + 1 : page;
             } else {
                 notificationCount.textContent = 0;
                 const li = document.createElement('li');
@@ -116,6 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (button) button.remove();
                 notificationCount.textContent = parseInt(notificationCount.textContent) - 1;
                 fetchUnreadCount();
+                window.location.reload()
             } else {
                 console.error('Failed to mark notification as read');
             }
@@ -123,25 +116,26 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error marking notification as read:', error));
     }
 
-    function changePage(event) {
-        const page = event.target.dataset.page;
-        if (page) {
-            currentPage = parseInt(page);
-            fetchNotifications(currentPage);
-        }
+    function toggleDropdown() {
+        notificationsDropdown.classList.toggle('hidden');
     }
 
-    prevButton.addEventListener('click', changePage);
-    nextButton.addEventListener('click', changePage);
-
     notificationsButton.addEventListener('click', () => {
-        notificationsDropdown.classList.toggle('hidden');
-        fetchNotifications(currentPage);
+        toggleDropdown();
+        fetchNotifications(); 
     });
 
-    fetchNotifications(currentPage);
+    document.addEventListener('click', function(event) {
+        if (!notificationsDropdown.contains(event.target) && !notificationsButton.contains(event.target)) {
+            notificationsDropdown.classList.add('hidden');
+        }
+    });
+
+    fetchNotifications();
     fetchUnreadCount();
 });
+
+
 
 
 
@@ -180,7 +174,7 @@ const loadDashboard =()=>{
         .then(donation =>{
             // console.log(donation)
             let total=0;
-            donation.results.forEach(amount=>{
+            donation.forEach(amount=>{
                 total+= parseFloat(amount.amount)
             })
             const dash_donation=document.getElementById("donation");
@@ -246,10 +240,10 @@ const loadCampaign=()=>{
         return res.json();
     })
     .then(data => {
-        console.log(data)
+        // console.log(data)
         const parent=document.getElementById("campaign-body");
         parent.innerHTML='';
-        data.results.forEach(campaign => {
+        data.forEach(campaign => {
             const formattedDate = formatDate(campaign.created_at);
             
           
@@ -286,15 +280,7 @@ loadCampaign()
 
 
 
-function formatDate(datetimeString) {
-    const date = new Date(datetimeString);
-    return date.toLocaleString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-       
-    });
-}
+
 
 
 
@@ -414,7 +400,7 @@ document.getElementById("addCampaignButton").addEventListener("click", function 
 
 
 function deleteCampaign(campaignId){
-    const token= localStorage.getItem("token");
+    const token= localStorage.getItem("admin_token");
        if(confirm('Are you sure to delete campaign?')){
            fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}/`,{
                method:"DELETE",
@@ -501,3 +487,139 @@ const addCampaign = (event) => {
 
 };
 
+
+
+const loadDonation=()=>{
+    fetch("http://127.0.0.1:8000/api/transactions/list/")
+    .then(res =>{
+        if(!res.ok){
+            throw new Error("Campaign not found");
+        }
+        return res.json();
+    })
+    .then(data =>{
+        console.log(data[0])
+        parent=document.getElementById("donate-body")
+        parent.innerHTML=``;
+        data.forEach(donation=>{
+            const formattedDate = formatDatee(donation.created_at);
+            tr=document.createElement("tr");
+            tr.innerHTML=` 
+            
+                    <td class="border-b p-2">${donation.donor_name} </td>
+                    <td class="border-b p-2"> ${donation.donor_email} </td>
+                    <td class="border-b p-2">${donation.amount} BDT </td>
+                    <td class="border-b p-2">${formattedDate}</td>
+                    <td class="border-b p-2">${donation.campaign_name} </td>
+            
+            `;
+            parent.appendChild(tr);
+        })
+    })
+    .catch(error => showAlert(error))
+}
+
+
+loadDonation()
+
+function formatDate(datetimeString) {
+    const date = new Date(datetimeString);
+    return date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+       
+    });
+}
+
+function formatDatee(datetimeString) {
+    const date = new Date(datetimeString);
+    return date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    });
+}
+
+
+
+const apiUrl = 'http://127.0.0.1:8000/api/users/list/';
+        const token = localStorage.getItem("admin_token");
+
+        function fetchUsers() {
+            fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${token}`,
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const userTableBody = document.getElementById('userTableBody');
+                userTableBody.innerHTML = '';
+
+                data.forEach(user => {
+                    const row = document.createElement('tr');
+                    
+                    row.innerHTML = `
+                        <td class="p-3 text-gray-700">${user.first_name} ${user.last_name} </td>
+                        <td class="p-3 text-gray-700">${user.email}</td>
+                        <td class="p-3 text-gray-700">${user.profession}</td>
+                        <td class="p-3 text-gray-700">${user.status}</td>
+                        <td class="p-3">
+                            <button 
+                                class="bg-red-600 text-white px-4 py-2 rounded-lg shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500" 
+                                onclick="deleteUser(${user.id})">
+                                Delete
+                            </button>
+                        </td>
+                    `;
+                    
+                    userTableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching users:', error));
+        }
+
+        function deleteUser(userId) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                fetch(`http://127.0.0.1:8000/api/users/list/${userId}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Token ${token}`,
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('User deleted successfully');
+                        fetchUsers(); 
+                    } else {
+                        console.error('Failed to delete user');
+                    }
+                })
+                .catch(error => console.error('Error deleting user:', error));
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#userTableBody tr');
+            rows.forEach(row => {
+                const name = row.cells[0].textContent.toLowerCase();
+                const email = row.cells[1].textContent.toLowerCase();
+                if (name.includes(searchTerm) || email.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+       
+        fetchUsers();

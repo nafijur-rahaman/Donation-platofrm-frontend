@@ -49,7 +49,7 @@ getCampaignDetails()
 
 
 document.getElementById('payment-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault(); 
     const campaign_id=getQueryParams("id");
     // console.log(campaign_id)
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -59,37 +59,69 @@ document.getElementById('payment-form').addEventListener('submit', function(even
     const cus_city = document.getElementById('cus_city').value;
     const cus_postcode = document.getElementById('cus_postcode').value;
     
-    const token=window.localStorage.getItem("token")
-    // Make a request to your backend to initiate payment
-    fetch('http://127.0.0.1:8000/api/transactions/initiate-payment/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${token}`,
-            'X-CSRFToken': csrfToken,
-        },
-        body: JSON.stringify({
-            amount: amount,
-            campaign_id: campaign_id,
-            cus_phone: cus_phone,
-            cus_add1: cus_add1,
-            cus_city: cus_city,
-            cus_postcode: cus_postcode
-           
+    const token=localStorage.getItem("token")
+    if(token){
+        fetch('http://127.0.0.1:8000/api/transactions/initiate-payment/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${token}`,
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify({
+                amount: amount,
+                campaign_id: campaign_id,
+                cus_phone: cus_phone,
+                cus_add1: cus_add1,
+                cus_city: cus_city,
+                cus_postcode: cus_postcode
+               
+            })
         })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.payment_url) {
-            // Redirect the user to the payment gateway
-            window.location.href = data.payment_url;
-        } else {
-            alert('Payment initiation failed.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            if (data.payment_url) {
+                
+                window.location.href = data.payment_url;
+            } else {
+                alert('Payment initiation failed.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }else{
+        fetch('http://127.0.0.1:8000/api/transactions/initiate-payment/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify({
+                amount: amount,
+                campaign_id: campaign_id,
+                cus_phone: cus_phone,
+                cus_add1: cus_add1,
+                cus_city: cus_city,
+                cus_postcode: cus_postcode
+               
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.payment_url) {
+                
+                window.location.href = data.payment_url;
+            } else {
+                alert('Payment initiation failed.');
+            }
+        })
+        .catch(error => {
+            showAlert(error)
+        });
+    }
+  
+  
 });
 
 
@@ -103,6 +135,7 @@ const loadDonation=()=>{
         return res.json()
     })
     .then(data =>{
+        // console.log(data)
         parent=document.getElementById("donation")
         parent.innerHTML=''
         data.forEach(donate => {

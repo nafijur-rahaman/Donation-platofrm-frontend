@@ -18,7 +18,7 @@ fetch(`http://127.0.0.1:8000/api/campaign/creator/?user_id=${user_id}`)
             return res.json()
         })
         .then(data => {
-         console.log(data[0])
+        //  console.log(data[0])
 
             const creator_id=data[0].id;
             fetch(`http://127.0.0.1:8000/api/campaign/list/?creator=${creator_id}`)
@@ -57,12 +57,15 @@ totalCampaign.innerHTML=`
                 data.forEach(campaign => {
                     const div = document.createElement("div")
                     div.innerHTML=`
-                   <div  class="bg-white p-4 rounded-lg shadow-lg">
+                    
+                   <div class="bg-white border border-gray-200 rounded-lg shadow-md p-4 flex flex-col h-64">
                       <img src=" ${campaign.image} " alt="Campaign Image" class="w-full h-40 object-cover rounded-md mb-4">
                       <h3 class="text-xl font-bold text-gray-800 mb-2"> ${campaign.title} </h3>
                       <p class="text-gray-700 mb-4"> ${campaign.description.slice(0,35)}... </p>
                       <div class="flex justify-between items-center">
-
+                      <div >
+                            <span class="text-gray-800 font-semibold">Status: ${campaign.status} </span>
+                    </div>
                     <button class="open-modal-btn bg-blue-500 text-white font-bold py-1 px-3 rounded" data-id="${campaign.id}">Edit</button>
                     <button class="bg-red-500 text-white font-bold py-1 px-3 rounded" onclick="deleteCampaign(${campaign.id})">Delete</button>
                       </div>
@@ -71,7 +74,7 @@ totalCampaign.innerHTML=`
 
                     `;
 
-                    campaign_list.appendChild(div)
+                    // campaign_list.appendChild(div)
                     loadDonation(campaign.id)
                 });
 
@@ -116,6 +119,7 @@ const form=document.getElementById("edit-campaign-form");
         return res.json();
     })
     .then(campaign =>{
+        // console.log(campaign.status)
         document.getElementById('campaign-id').value = campaign.id;
         document.getElementById('title').value = campaign.title;
         document.getElementById('goal_amount').value = campaign.goal_amount;
@@ -268,7 +272,7 @@ const loadUser =()=>{
         return res.json()
     })
     .then(data =>{
-        console.log(data)
+        // console.log(data)
         const totalDonor=document.getElementById("total-donor");
         totalDonor.innerHTML=`
         

@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentPage = 1;
     const campaignsPerPage = 3;
 
-    function fetchCampaigns(type = '', status = '') {
+    function fetchCampaigns(type = '', status = 'active') {
         fetch(`http://127.0.0.1:8000/api/campaign/list/?type=${type}&status=${status}`)
             .then(response => response.json())
             .then(data => {
