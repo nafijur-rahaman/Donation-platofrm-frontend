@@ -8,10 +8,11 @@ function closeAlert() {
 }
 
 function fetchUnreadCount() {
+    const token=localStorage.getItem("admin_token")
     fetch('http://127.0.0.1:8000/api/notification/unread-count/', {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'campaign/json',
             Authorization: `Token ${token}`,
         }
     })
@@ -39,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch("http://127.0.0.1:8000/api/notification/list/", {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'campaign/json',
                 Authorization: `Token ${token}`,
             }
         })
@@ -96,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`http://127.0.0.1:8000/api/notification/notifications/${notificationId}/read/`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'campaign/json',
                 Authorization: `Token ${token}`,
             }
         })
@@ -144,7 +145,7 @@ const loadDashboard =()=>{
     fetch("http://127.0.0.1:8000/api/campaign/list/")
     .then(res =>{
         if(!res.ok){
-            throw new Error("Campaigns not found");
+            throw new Error("users not found");
         }
         return res.json();
     })
@@ -153,7 +154,7 @@ const loadDashboard =()=>{
         // console.log(campaign);
 
        const dash_campaign =document.getElementById("campaign");
-       dash_campaign.innerHTML= `   <h2 class="text-white text-xl font-semibold">Active Campaigns</h2>
+       dash_campaign.innerHTML= `   <h2 class="text-white text-xl font-semibold">Active users</h2>
                                 <p class="text-white text-3xl font-bold mt-2"> ${campaign.length} </p>`;
 
 
@@ -216,12 +217,7 @@ const loadDashboard =()=>{
         .catch(error => showAlert(error))
         
 
-
-
-
-
     
-
 
 }
 
@@ -231,296 +227,38 @@ loadDashboard()
 
 
 
-const loadCampaign=()=>{
-    fetch("http://127.0.0.1:8000/api/campaign/list/")
-    .then(res =>{
-        if(!res.ok){
-            throw new Error("Campaign not found");
-        }
-        return res.json();
-    })
-    .then(data => {
-        // console.log(data)
-        const parent=document.getElementById("campaign-body");
-        parent.innerHTML='';
-        data.forEach(campaign => {
-            const formattedDate = formatDate(campaign.created_at);
-            
-          
-            const raised = campaign.fund_raised > 0 ? `${campaign.fund_raised} BDT` : '0';
-            
-           
-            const child = document.createElement("tr");
-         
-            child.innerHTML = `
-                <td class="border-b p-2">${campaign.title}</td>
-                <td class="border-b p-2">${campaign.goal_amount} BDT</td>
-                <td class="border-b p-2">${raised}</td>
-                <td class="border-b p-2">${formattedDate}</td>
-                <td class="border-b p-2">${campaign.deadline}</td>
-                <td class="border-b p-2">${campaign.status}</td>
-                <td class="border-b p-2">
-                    <button class="bg-green-500 text-white px-2 py-1 rounded-lg shadow-md hover:bg-green-600" onclick="openEditModal('${campaign.id}')">Edit</button>
-                    <button class="bg-red-500 text-white px-2 py-1 rounded-lg shadow-md hover:bg-red-600 ml-2" onclick="deleteCampaign('${campaign.id}')">Delete</button>
-                </td>
-            `;
-            
-        
-            parent.appendChild(child);
-        });
-        
-    })
 
-    .catch(error => showAlert(error))
-}
-
-
-loadCampaign()
-
-
-
-
-
-
-
-
-
-
-
-// add campaign
-
-
-document.getElementById("addCampaignButton").addEventListener("click", function () {
-     document.getElementById("addCampaignModal").classList.remove("hidden");
-   });
-
- document.getElementById("closeAddModalButton").addEventListener("click", function () {
-     document.getElementById("addCampaignModal").classList.add("hidden");
-   });
-
-//  document.getElementById("add-campaign").addEventListener("submit", function (event) {
-//      event.preventDefault();
-//      // Handle form submission here
-//      alert("Campaign added!");
-//      document.getElementById("addCampaignModal").classList.add("hidden");
-//    });
-
-
-
-
-
-//    editing campaign
- function openEditModal(campaignId) {
-
-//    console.log(campaignId)
-   const modal = document.getElementById("editCampaignModal");
-   const form = document.getElementById("edit-campaign-form");
-
-   fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}`)
-     .then((res) => {
-       if (!res.ok) {
-         throw new Error(`Campaign not found! status:${res.status}`);
-       }
-       return res.json();
-     })
-     .then((campaign) => {
-    //    console.log(campaign)
-       document.getElementById("campaign-id").value = campaign.id;
-       document.getElementById("title").value = campaign.title;
-       document.getElementById("goal_amount").value = campaign.goal_amount;
-       document.getElementById("description").value = campaign.description;
-       document.getElementById("location").value = campaign.location;
-       document.getElementById("deadline").value = campaign.deadline;
-       document.getElementById("type").value = campaign.type;
-       document.getElementById("status").value = campaign.status;
-       modal.classList.remove("hidden");
-     })
-     .catch((error) => {
-       alert("asci")
-       showAlert(error);
-     });
-
-   document.getElementById("editCampaignModal").classList.remove("hidden");
- }
-
- document
-   .getElementById("closeEditModalButton")
-   .addEventListener("click", function () {
-     document.getElementById("editCampaignModal").classList.add("hidden");
-   });
-
-
-
-
-
-   document.getElementById("edit-campaign-form").addEventListener("submit", function (event) {
-    event.preventDefault();
-  
-
-            const token =window.localStorage.getItem("token");
-            const form = document.getElementById('edit-campaign-form');
-            const formData = new FormData(form);
-            // formData.append("creator", parseInt(creator_id));
-            const campaignId = formData.get('campaign-id');
-            fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}/`,{
-                method:"PUT",
-                headers: {
-        
-                    Authorization: `Token ${token}`,
-                },
-                body:formData
-            })
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`Failed to update campaign! status: ${res.status}`);
-                }
-                return res.json();
-            })
-            .then(() => {
-                loadCampaign(); 
-                closeModal(); 
-                showAlert("Campaign update successfully")
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000);
-            })
-            .catch(error => {
-                showAlert(error);
-            });
-      
-    document.getElementById("editCampaignModal").classList.add("hidden");
-  });
-
-
-  function closeModal() {
-    document.getElementById('editCampaignModal').classList.add('hidden');
-}
-
-
-
-
-function deleteCampaign(campaignId){
-    const token= localStorage.getItem("admin_token");
-       if(confirm('Are you sure to delete campaign?')){
-           fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}/`,{
-               method:"DELETE",
-               headers: {
-           
-                   Authorization: `Token ${token}`,
-               },
-   
-           })
-           .then(res => {
-               if(!res.ok){
-                   throw new Error(`Cannot delete campaign! status: ${res.status} `) 
-               }else{
-                   showAlert("Campaign delete successfully");
-                   setTimeout(() => {
-                       window.location.reload();
-                   }, 2000);
-   
-               }
-               loadCampaign();
-           })
-           
-           .catch(error =>{
-               showAlert(error);
-           })
-           
-       }
-   }
-
-
-
-
-const addCampaign = (event) => {
-
-    event.preventDefault();
-    const user_id = localStorage.getItem("user_id");
-    // console.log(user_id)
-    fetch(`http://127.0.0.1:8000/api/campaign/creator/?user_id=${user_id}`)
-        .then(res => {
-            if (!res.ok) {
-                throw new Error(`You are not a fundraiser! status: ${res.status}`);
-            }
-            return res.json()
-        })
-        .then(data => {
-
-            const creator_id = data.results[0].id
-            const form = document.getElementById("add-campaign");
-            const formData = new FormData(form);
-            const token = localStorage.getItem("admin_token");
-            formData.append("creator", parseInt(creator_id));
-            fetch("http://127.0.0.1:8000/api/campaign/list/", {
-
-                method: "POST",
-                headers: {
-
-                    Authorization: `Token ${token}`,
-                },
-
-                body: formData,
-            })
-                .then(res => {
-                    if (!res.ok) {
-                        throw new Error(`Campaign not created! status:${res.status}`);
-                    }
-                    return res.json();
-                })
-                .then(data => {
-                    showAlert("Campaign Create successfully");
-                    loadCampaign()
-                    setTimeout(() => {
-                        window.location.reload()
-                    }, 2000);
-                    
-                })
-                .catch(error => {
-                    showAlert(error)
-                })
-        }
-        )
-        .catch(error => {
-            showAlert(error);
-        });
-
-};
-
-
-
-const loadDonation=()=>{
+const loadDonation = () => {
     fetch("http://127.0.0.1:8000/api/transactions/list/")
-    .then(res =>{
-        if(!res.ok){
-            throw new Error("Campaign not found");
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("Donations not found");
         }
         return res.json();
-    })
-    .then(data =>{
-        console.log(data[0])
-        parent=document.getElementById("donate-body")
-        parent.innerHTML=``;
-        data.forEach(donation=>{
-            const formattedDate = formatDatee(donation.created_at);
-            tr=document.createElement("tr");
-            tr.innerHTML=` 
-            
-                    <td class="border-b p-2">${donation.donor_name} </td>
-                    <td class="border-b p-2"> ${donation.donor_email} </td>
-                    <td class="border-b p-2">${donation.amount} BDT </td>
-                    <td class="border-b p-2">${formattedDate}</td>
-                    <td class="border-b p-2">${donation.campaign_name} </td>
-            
-            `;
-            parent.appendChild(tr);
-        })
-    })
-    .catch(error => showAlert(error))
-}
+      })
+      .then(data => {
+        const parent = document.getElementById("donate-body");
+        parent.innerHTML = "";
+        data.forEach(donation => {
+          const formattedDate = formatDatee(donation.created_at);
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td class="border-b p-4 text-blue-600 font-semibold">${donation.donor_name}</td>
+            <td class="border-b p-4 text-purple-600 font-medium">${donation.donor_email}</td>
+            <td class="border-b p-4 text-green-600 font-semibold">${donation.amount} BDT</td>
+            <td class="border-b p-4 text-indigo-600 font-medium">${formattedDate}</td>
+            <td class="border-b p-4 text-pink-600 font-medium">${donation.campaign_name}</td>
+          `;
+          parent.appendChild(tr);
+        });
+      })
+      .catch(error => showAlert(error));
+  }
 
 
-loadDonation()
+
+  loadDonation();
+
 
 function formatDate(datetimeString) {
     const date = new Date(datetimeString);
@@ -548,78 +286,339 @@ function formatDatee(datetimeString) {
 
 
 const apiUrl = 'http://127.0.0.1:8000/api/users/list/';
-        const token = localStorage.getItem("admin_token");
+const token = localStorage.getItem("admin_token");
 
-        function fetchUsers() {
-            fetch(apiUrl, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Token ${token}`,
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                const userTableBody = document.getElementById('userTableBody');
-                userTableBody.innerHTML = '';
-
-                data.forEach(user => {
-                    const row = document.createElement('tr');
-                    
-                    row.innerHTML = `
-                        <td class="p-3 text-gray-700">${user.first_name} ${user.last_name} </td>
-                        <td class="p-3 text-gray-700">${user.email}</td>
-                        <td class="p-3 text-gray-700">${user.profession}</td>
-                        <td class="p-3 text-gray-700">${user.status}</td>
-                        <td class="p-3">
-                            <button 
-                                class="bg-red-600 text-white px-4 py-2 rounded-lg shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500" 
-                                onclick="deleteUser(${user.id})">
-                                Delete
-                            </button>
-                        </td>
-                    `;
-                    
-                    userTableBody.appendChild(row);
-                });
-            })
-            .catch(error => console.error('Error fetching users:', error));
+function fetchUsers() {
+    fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${token}`,
         }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const userTableBody = document.getElementById('userTableBody');
+        userTableBody.innerHTML = '';
 
-        function deleteUser(userId) {
-            if (confirm('Are you sure you want to delete this user?')) {
-                fetch(`http://127.0.0.1:8000/api/users/list/${userId}/`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Token ${token}`,
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert('User deleted successfully');
-                        fetchUsers(); 
-                    } else {
-                        console.error('Failed to delete user');
-                    }
-                })
-                .catch(error => console.error('Error deleting user:', error));
-            }
-        }
+        data.forEach(user => {
+            const row = document.createElement('tr');
+            row.classList.add('hover:bg-gray-100');
 
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const rows = document.querySelectorAll('#userTableBody tr');
-            rows.forEach(row => {
-                const name = row.cells[0].textContent.toLowerCase();
-                const email = row.cells[1].textContent.toLowerCase();
-                if (name.includes(searchTerm) || email.includes(searchTerm)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
+            row.innerHTML = `
+                <td class="p-3 text-gray-800">${user.first_name} ${user.last_name}</td>
+                <td class="p-3 text-blue-600 font-medium">${user.email}</td>
+                <td class="p-3 text-purple-600">${user.profession}</td>
+                <td class="p-3 text-green-600">${user.status}</td>
+                <td class="p-3">
+                    <button 
+                        class="bg-red-600 text-white px-4 py-2 rounded-lg shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500" 
+                        onclick="deleteUser(${user.id})">
+                        Delete
+                    </button>
+                </td>
+            `;
+            
+            userTableBody.appendChild(row);
         });
+    })
+    .catch(error => console.error('Error fetching users:', error));
+}
 
-       
-        fetchUsers();
+function deleteUser(userId) {
+    if (confirm('Are you sure you want to delete this user?')) {
+        fetch(`http://127.0.0.1:8000/api/users/list/${userId}/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${token}`,
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('User deleted successfully');
+                fetchUsers(); 
+            } else {
+                console.error('Failed to delete user');
+            }
+        })
+        .catch(error => console.error('Error deleting user:', error));
+    }
+}
+
+document.getElementById('searchInput').addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#userTableBody tr');
+    rows.forEach(row => {
+        const name = row.cells[0].textContent.toLowerCase();
+        const email = row.cells[1].textContent.toLowerCase();
+        if (name.includes(searchTerm) || email.includes(searchTerm)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
+
+fetchUsers();
+
+
+
+
+
+
+
+
+//  all reqeust users
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetch("http://127.0.0.1:8000/api/campaign/list/")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to load users');
+        }
+        return response.json();
+      })
+      .then(users => {
+        const tuitionList = document.getElementById('tuition-list').querySelector('tbody');
+
+        users.forEach(campaign => {
+          const tr = document.createElement('tr');
+          tr.classList.add('hover:bg-gray-100', 'even:bg-gray-50', 'odd:bg-white');
+
+          const tdTitle = document.createElement('td');
+          tdTitle.classList.add('px-6', 'py-4', 'text-xl', 'font-semibold', 'text-gray-900', 'border-r');
+          tdTitle.textContent = campaign.title;
+
+          const tdCreator = document.createElement('td');
+          tdCreator.classList.add('px-6', 'py-4', 'text-xl', 'font-medium', 'text-gray-900', 'border-r');
+          tdCreator.textContent = campaign.creator_name;
+
+          const tdStatus = document.createElement('td');
+          tdStatus.classList.add('px-6', 'py-4', 'text-xl', 'font-medium', 'text-gray-900');
+
+          const statusButton = document.createElement('button');
+          statusButton.classList.add('px-4', 'py-2', 'rounded-full', 'text-white', 'transition', 'duration-300');
+
+        
+          switch (campaign.status) {
+            case 'active':
+              statusButton.classList.add('bg-green-600', 'hover:bg-green-700');
+              break;
+            case 'pending':
+              statusButton.classList.add('bg-red-500', 'hover:bg-red-600');
+              break;
+            case 'completed':
+              statusButton.classList.add('bg-blue-600', 'hover:bg-blue-700');
+              break;
+            default:
+              statusButton.classList.add('bg-gray-600', 'hover:bg-gray-700');
+              break;
+          }
+
+          statusButton.textContent = capitalizeFirstLetter(campaign.status);
+          tdStatus.appendChild(statusButton);
+
+      
+          statusButton.addEventListener('click', () => {
+            if (campaign.status === 'pending') {
+                if (confirm('Are you sure you want to active this campaign?')){
+                    updateCampaignStatus(campaign.id, 'active')
+                    .then(() => {
+                      statusButton.textContent = 'Active';
+                      statusButton.classList.replace('bg-yellow-500', 'bg-green-600');
+                      statusButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-700');
+                      showAlert("Campaign activated successfully");
+                      setTimeout(() => window.location.reload(), 3000);
+                    })
+                    .catch(error => {
+                      showAlert("Failed to activate campaign");
+                      console.error(error);
+                    });
+                }
+         
+            }else if(campaign.status==='active'){
+              console.log(campaign)
+                if (campaign.goal_amount=== campaign.fund_raised){
+                    updateCampaignStatus(campaign.id, 'completed')
+                    .then(() => {
+                      statusButton.textContent = 'Active';
+                      statusButton.classList.replace('bg-yellow-500', 'bg-green-600');
+                      statusButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-700');
+                      showAlert("Campaign Completed successfully");
+                      setTimeout(() => window.location.reload(), 3000);
+                    })
+                    .catch(error => {
+                      showAlert("Failed to activate campaign");
+                      console.error(error);
+                    });}else{
+                        showAlert("Campaign did't achived goal amount")
+                    }
+
+
+
+                } else {
+              showAlert("Campaign already active");
+            }
+          });
+
+          tr.appendChild(tdTitle);
+          tr.appendChild(tdCreator);
+          tr.appendChild(tdStatus);
+          tuitionList.appendChild(tr);
+        });
+      })
+      .catch(error => console.error('Error:', error));
+  });
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  function updateCampaignStatus(campaignId, newStatus) {
+    const token = localStorage.getItem("admin_token");
+    return fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}/`, {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify({ status: newStatus })
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error("Status change failed");
+      }
+      return response.json();
+    });
+  }
+
+
+
+//   creator request
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetch("http://127.0.0.1:8000/api/campaign/creator-request/")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to load users');
+        }
+        return response.json();
+      })
+      .then(users => {
+        const tuitionList = document.getElementById('request-list').querySelector('tbody');
+
+        users.forEach(user => {
+            console.log(user)
+          const tr = document.createElement('tr');
+          tr.classList.add('hover:bg-gray-100', 'even:bg-gray-50', 'odd:bg-white');
+
+          const tdTitle = document.createElement('td');
+          tdTitle.classList.add('px-6', 'py-4', 'text-xl', 'font-semibold', 'text-gray-900', 'border-r');
+          tdTitle.textContent = user.requester_name;
+
+          const tdCreator = document.createElement('td');
+          tdCreator.classList.add('px-6', 'py-4', 'text-xl', 'font-medium', 'text-gray-900', 'border-r');
+          tdCreator.textContent = user.message;
+
+          const tdStatus = document.createElement('td');
+          tdStatus.classList.add('px-6', 'py-4', 'text-xl', 'font-medium', 'text-gray-900');
+
+          const statusButton = document.createElement('button');
+          statusButton.classList.add('px-4', 'py-2', 'rounded-full', 'text-white', 'transition', 'duration-300');
+
+        
+          switch (user.status) {
+            case 'approved':
+              statusButton.classList.add('bg-green-600', 'hover:bg-green-700');
+              break;
+            case 'pending':
+              statusButton.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
+              break;
+            case 'rejected':
+                statusButton.classList.add('bg-red-500', 'hover:bg-red-600');
+              break;
+            default:
+              statusButton.classList.add('bg-gray-600', 'hover:bg-gray-700');
+              break;
+          }
+
+          statusButton.textContent = capitalizeFirstLetter(user.status);
+          tdStatus.appendChild(statusButton);
+
+      
+          statusButton.addEventListener('click', () => {
+            if (user.status === 'pending') {
+                if (confirm('Are you sure you want to approve this request?')) {  
+                     updateUserStatus(user.id, 'approved')
+                    .then(() => {
+                      statusButton.textContent = 'Approved';
+                      statusButton.classList.replace('bg-yellow-500', 'bg-green-600');
+                      statusButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-700');
+                      showAlert("Creator make successfully");
+                      setTimeout(() => window.location.reload(), 3000);
+                    })
+                    .catch(error => {
+                      showAlert("Failed to activate user");
+                      console.error(error);
+                    });}
+           
+            }else if(user.status==='approved'){
+                
+                if (confirm('Are you sure you want to reject this request?')) {
+                    updateUserStatus(user.id, 'rejected')
+                      .then(() => {
+                        statusButton.textContent = 'Rejected';
+                        statusButton.classList.replace('bg-green-600', 'bg-red-500');
+                        statusButton.classList.replace('hover:bg-green-700', 'hover:bg-red-600');
+                        showAlert("Request rejected successfully");
+                        setTimeout(() => window.location.reload(), 3000);
+                      })
+                      .catch(error => {
+                        showAlert("Failed to reject request");
+                        console.error(error);
+                      });
+                  } 
+            }
+             else {
+              showAlert("User already creator");
+            }
+          });
+
+          tr.appendChild(tdTitle);
+          tr.appendChild(tdCreator);
+          tr.appendChild(tdStatus);
+          tuitionList.appendChild(tr);
+        });
+      })
+      .catch(error => console.error('Error:', error));
+  });
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  function updateUserStatus(userId, newStatus) {
+    const token = localStorage.getItem("admin_token");
+    return fetch(`http://127.0.0.1:8000/api/campaign/creator-request/${userId}/`, {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify({ status: newStatus })
+    })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error("Status change failed");
+      }
+      return response.json();
+    })
+    .catch(error=>showAlert(error))
+
+  }
+
+
+
+
+

@@ -53,30 +53,60 @@ totalCampaign.innerHTML=`
 
 
 // campaign data
-                const campaign_list=document.getElementById("campaign-list");
-                data.forEach(campaign => {
-                    const div = document.createElement("div")
-                    div.innerHTML=`
-                    
-                   <div class="bg-white border border-gray-200 rounded-lg shadow-md p-4 flex flex-col h-64">
-                      <img src=" ${campaign.image} " alt="Campaign Image" class="w-full h-40 object-cover rounded-md mb-4">
-                      <h3 class="text-xl font-bold text-gray-800 mb-2"> ${campaign.title} </h3>
-                      <p class="text-gray-700 mb-4"> ${campaign.description.slice(0,35)}... </p>
-                      <div class="flex justify-between items-center">
-                      <div >
-                            <span class="text-gray-800 font-semibold">Status: ${campaign.status} </span>
-                    </div>
-                    <button class="open-modal-btn bg-blue-500 text-white font-bold py-1 px-3 rounded" data-id="${campaign.id}">Edit</button>
-                    <button class="bg-red-500 text-white font-bold py-1 px-3 rounded" onclick="deleteCampaign(${campaign.id})">Delete</button>
-                      </div>
-                  </div>
-                    
+const campaign_list = document.getElementById("campaign-list");
 
-                    `;
+// Create a flex container for the cards
+const flexContainer = document.createElement("div");
+flexContainer.classList.add("flex", "space-x-4", "overflow-x-auto");
 
-                    // campaign_list.appendChild(div)
-                    loadDonation(campaign.id)
-                });
+// Append the flex container to the campaign list
+campaign_list.appendChild(flexContainer);
+
+data.forEach(campaign => {
+    // Function to truncate text to a specified number of words
+    function truncateText(text, wordLimit) {
+        const words = text.split(' ');
+        if (words.length > wordLimit) {
+            return words.slice(0, wordLimit).join(' ') + '...';
+        }
+        return text;
+    }
+
+    const truncatedDescription = truncateText(campaign.description, 35);
+
+    const card = document.createElement("div");
+    card.classList.add("w-full", "sm:w-1/2", "md:w-1/3", "lg:w-1/4", "flex-shrink-0");
+
+    card.innerHTML = `
+        <div class="rounded overflow-hidden shadow-lg bg-white flex flex-col h-full">
+            <div class="px-6 py-4 flex flex-col flex-grow">
+                <div class="font-bold text-xl mb-2">${campaign.title}</div>
+                <div class="text-sm font-bold mb-4">
+                    Status: ${campaign.status.charAt(0).toUpperCase() + campaign.status.slice(1)}
+                </div>
+                <p class="text-gray-700 text-base flex-grow">
+                    ${truncatedDescription}
+                </p>
+            </div>
+            <div class="px-6 py-2">
+                <button class="open-modal-btn bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded mr-2" data-id="${campaign.id}">
+                    Edit
+                </button>
+                <button onclick="deleteCampaign(${campaign.id})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">
+                    Delete
+                </button>
+            </div>
+        </div>
+    `;
+
+    // Append the card to the flex container
+    flexContainer.appendChild(card);
+    
+    loadDonation(campaign.id);
+});
+
+
+
 
                 const openModalButtons = document.querySelectorAll('.open-modal-btn');
                 openModalButtons.forEach(button => {

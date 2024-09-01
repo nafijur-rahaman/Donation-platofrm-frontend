@@ -186,7 +186,7 @@
     <!-- Sidebar -->
     <div class="flex flex-wrap">
       <div class="w-1/5 bg-gray-900 text-white min-h-screen p-6">
-        <h2 class="text-2xl font-bold mb-6">Fundraiser Workspace</h2>
+        <h2 class="text-2xl font-bold mb-6">Manager Workspace</h2>
         <ul class="space-y-4">
           <li>
             <a
@@ -196,10 +196,15 @@
               >Dashboard</a
             >
           </li>
+          
           <li>
-       
-
-          <li>
+                <a
+              style="text-decoration: none"
+              href="admin_campaign.html"
+              class="sidebar-item p-4 block"
+              >View Campaigns</a>
+          </li>
+      
             <a
               style="text-decoration: none"
               href="#"
@@ -279,487 +284,139 @@
           </div>
         </div>
 
-        <section id="campaigns" class="mb-12">
-          <div class="text-center my-8">
-            <h1 class="text-3xl font-bold text-gray-800">
-              Campaign Management
-            </h1>
-            <p class="text-gray-600 mt-1">
-              Manage and oversee all your active and past campaigns.
-            </p>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-md">
-            <h2 class="text-xl font-semibold mb-4">View Campaigns</h2>
-            <!-- Scrollable container -->
-            <div class="overflow-x-auto max-h-96">
-              <table class="w-full border-collapse">
-                <thead>
-                  <tr>
-                    <th class="border-b p-2">Campaign Name</th>
-                    <th class="border-b p-2">Target Amount</th>
-                    <th class="border-b p-2">Raised Amount</th>
-                    <th class="border-b p-2">Start Date</th>
-                    <th class="border-b p-2">End Date</th>
-                    <th class="border-b p-2">Status</th>
-                    <th class="border-b p-2">Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="campaign-body">
-                  <!-- Example campaign row -->
-                </tbody>
-              </table>
-            </div>
-            <div class="mb-4 mt-4">
-              <button
-                id="addCampaignButton"
-                class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600"
-              >
-                Add New Campaign
-              </button>
-              
-            </div>
-          </div>
-        </section>
 
-        <style>
-          /* Custom modal size classes */
-          .a-modal-large {
-            max-width: 90%;
-            width: 600px;
-            max-height: 90%;
-            height: auto;
-          }
+<!-- campaign request  -->
+<div class="text-center my-8">
+  <h1 class="text-4xl font-bold text-gray-900">Campaign Request Management</h1>
+  <p class="text-lg text-gray-600 mt-2">Overview of users request for campaign and management</p>
+</div>
 
-          .p-modal-small {
-            max-width: 90%;
-            width: 600px;
-            max-height: 90%;
-            height: auto;
-          }
 
-          /* Ensure the close button is visible */
-          .a-close-button {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            cursor: pointer;
-          }
 
-          .a-modal-content {
-            padding: 1.5rem;
-            position: relative;
-            overflow-y: auto; /* Allows scrolling if content exceeds modal height */
-          }
-        </style>
 
-        <!-- Add Campaign Modal -->
-        <div
-        id="addCampaignModal"
-        class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden"
-      >
-        <div
-          class="bg-white p-6 rounded-lg shadow-md a-modal-large a-modal-content"
-        >
-          <h2 class="text-xl font-semibold text-gray-800 mb-4">
-            Add New Campaign
-          </h2>
-          <form
-            id="add-campaign"
-            onsubmit="addCampaign(event)"
-            class="space-y-4"
-          >
-            <!-- Hidden input field for Campaign ID -->
-            <input type="hidden" id="add-campaign-id" name="campaign-id" />
-      
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label
-                  for="add-title"
-                  class="block text-gray-700 text-sm font-semibold mb-2"
-                  >Campaign Title</label
-                >
-                <input
-                  type="text"
-                  id="add-title"
-                  value= "Campaign For"
-                  name="title"
-                  class="w-full p-3 border border-gray-300 rounded-md"
-                  placeholder="Enter campaign title"
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  for="add-goal-amount"
-                  class="block text-gray-700 text-sm font-semibold mb-2"
-                  >Goal Amount</label
-                >
-                <input
-                  type="number"
-                  id="add-goal-amount"
-                  name="goal_amount"
-                  class="w-full p-3 border border-gray-300 rounded-md"
-                  placeholder="Enter goal amount"
-                  step="0.01"
-                  required
-                />
-              </div>
-            </div>
-            <div class="mb-6">
-              <label
-                for="add-description"
-                class="block text-gray-700 text-sm font-semibold mb-2"
-                >Campaign Description</label
-              >
-              <textarea
-                id="add-description"
-                name="description"
-                rows="4"
-                class="w-full p-3 border border-gray-300 rounded-md"
-                placeholder="Enter campaign description"
-                required
-              ></textarea>
-            </div>
-            <div class="mb-6">
-              <label
-                for="add-image"
-                class="block text-gray-700 text-sm font-semibold mb-2"
-                >Campaign Image</label
-              >
-              <input
-                type="file"
-                id="add-image"
-                name="image"
-                class="w-full p-3 border border-gray-300 rounded-md"
-                accept="image/*"
-                required
-              />
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label
-                  for="add-location"
-                  class="block text-gray-700 text-sm font-semibold mb-2"
-                  >Campaign Location</label
-                >
-                <input
-                  type="text"
-                  id="add-location"
-                  name="location"
-                  class="w-full p-3 border border-gray-300 rounded-md"
-                  placeholder="Enter campaign location"
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  for="add-deadline"
-                  class="block text-gray-700 text-sm font-semibold mb-2"
-                  >Campaign Deadline</label
-                >
-                <input
-                  type="date"
-                  id="add-deadline"
-                  name="deadline"
-                  class="w-full p-3 border border-gray-300 rounded-md"
-                  required
-                />
-              </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label
-                  for="add-type"
-                  class="block text-gray-700 text-sm font-semibold mb-2"
-                  >Campaign Type</label
-                >
-                <select
-                  id="add-type"
-                  name="type"
-                  class="w-full p-3 border border-gray-300 rounded-md"
-                  required
-                >
-                  <option value="" disabled selected>
-                    Select a campaign type
-                  </option>
-                  <option value="flood">Flood Relief</option>
-                  <option value="education">Education Support</option>
-                  <option value="health">Health Services</option>
-                  <option value="food">Food Distribution</option>
-                  <option value="shelter">Shelter Provision</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <div>
-                <label
-                  for="add-status"
-                  class="block text-gray-700 text-sm font-semibold mb-2"
-                  >Campaign Status</label
-                >
-                <select
-                  id="add-status"
-                  name="status"
-                  class="w-full p-3 border border-gray-300 rounded-md"
-                  required
-                >
-                  <option value="active">Active</option>
-                  <option value="completed">Completed</option>
-                  <option value="canceled">Canceled</option>
-                </select>
-              </div>
-            </div>
-            <!-- Button inside the form -->
-            <div class="text-center">
-              <button
-                type="submit"
-                class="bg-blue-500 text-white text-xl font-semibold py-3 px-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                Add Campaign
-              </button>
-            </div>
-          </form>
-          <span id="closeAddModalButton" class="a-close-button">&times;</span>
-        </div>
-      </div>
+
+
+
+
+<section class="container mx-auto p-6 bg-gradient-to-r from-blue-500 via-purple-500 to-purple-500 rounded-lg shadow-lg overflow-x-auto">
+  <div style="margin-bottom: 50px; max-height: 400px; overflow-y: auto;" class="relative">
+     <table id="tuition-list" class="min-w-full bg-white rounded-lg shadow-md">
+       <thead class="bg-gradient-to-r from-purple-600 to-blue-600 text-white sticky top-0">
+         <tr>
+           <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Title</th>
+           <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Creator</th>
+           <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Status</th>
+         </tr>
+       </thead>
+       <tbody class="bg-white divide-y divide-gray-200">
+         <!-- Rows will be dynamically inserted here -->
+       </tbody>
+     </table>
+   </div>
+</section>
+
+<!-- campaign request  -->
+<div class="text-center my-8">
+  <h1 class="text-4xl font-bold text-gray-900">Campaign Creator Request Management</h1>
+  <p class="text-lg text-gray-600 mt-2">Overview of users request for campaign creator and management</p>
+</div>
+
+
+<section class="container mx-auto p-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-purple-500 rounded-lg shadow-lg overflow-x-auto">
+  <div style="margin-bottom: 50px; max-height: 400px; overflow-y: auto;" class="relative">
+     <table id="request-list" class="min-w-full bg-white rounded-lg shadow-md">
+       <thead class="bg-gradient-to-r from-purple-600 to-blue-600 text-white sticky top-0">
+         <tr>
+           <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">User</th>
+           <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Message</th>
+           <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Status</th>
+         </tr>
+       </thead>
+       <tbody class="bg-white divide-y divide-gray-200">
+         <!-- Rows will be dynamically inserted here -->
+       </tbody>
+     </table>
+   </div>
+</section>
+
+
+
+
+
+<section id="donations" class="mb-12">
+  <div class="text-center my-8">
+    <h1 class="text-4xl font-bold text-gray-800">Donation Management</h1>
+    <p class="text-lg text-gray-500 mt-2">
+      Overview of donation and management
+    </p>
+  </div>
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-xl font-semibold mb-4">View Donations</h2>
+    <div class="overflow-x-auto max-h-96">
+      <table class="w-full border-collapse">
+        <thead class="bg-gradient-to-r from-blue-500 to-indigo-500 text-white">
+          <tr>
+            <th class="border-b p-4 text-left">Donor Name</th>
+            <th class="border-b p-4 text-left">Email</th>
+            <th class="border-b p-4 text-left">Amount</th>
+            <th class="border-b p-4 text-left">Date</th>
+            <th class="border-b p-4 text-left">Campaign</th>
+          </tr>
+        </thead>
+        <tbody id="donate-body" class="bg-white divide-y divide-gray-200">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+        
       
 
-        <!-- Edit Campaign Modal  -->
-        <div
-          id="editCampaignModal"
-          class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden"
-        >
-          <div
-            class="bg-white p-6 rounded-lg shadow-md p-modal-small a-modal-content"
-          >
-            <h2 class="text-xl font-semibold text-gray-800 mb-4">
-              Edit Campaign
-            </h2>
-            <form
-              id="edit-campaign-form"
-              class="space-y-4">
-              <input type="hidden" id="campaign-id" name="campaign-id" />
-              <!-- Form fields as before -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label
-                    for="title"
-                    class="block text-gray-700 text-sm font-semibold mb-2"
-                    >Campaign Title</label
-                  >
-                  <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    class="w-full p-3 border border-gray-300 rounded-md"
-                    placeholder="Enter campaign title"
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    for="goal_amount"
-                    class="block text-gray-700 text-sm font-semibold mb-2"
-                    >Goal Amount</label
-                  >
-                  <input
-                    type="number"
-                    id="goal_amount"
-                    name="goal_amount"
-                    class="w-full p-3 border border-gray-300 rounded-md"
-                    placeholder="Enter goal amount"
-                    step="0.01"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="mb-6">
-                <label
-                  for="description"
-                  class="block text-gray-700 text-sm font-semibold mb-2"
-                  >Campaign Description</label
-                >
-                <textarea
-                  id="description"
-                  name="description"
-                  rows="4"
-                  class="w-full p-3 border border-gray-300 rounded-md"
-                  placeholder="Enter campaign description"
-                  required
-                ></textarea>
-              </div>
-              <div class="mb-6">
-                <label
-                  for="image"
-                  class="block text-gray-700 text-sm font-semibold mb-2"
-                  >Campaign Image</label
-                >
-                <input
-                  type="file"
-                  id="image"
-                  name="image"
-                  class="w-full p-3 border border-gray-300 rounded-md"
-                  accept="image/*"
-                  required
-                />
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label
-                    for="location"
-                    class="block text-gray-700 text-sm font-semibold mb-2"
-                    >Campaign Location</label
-                  >
-                  <input
-                    type="text"
-                    id="location"
-                    name="location"
-                    class="w-full p-3 border border-gray-300 rounded-md"
-                    placeholder="Enter campaign location"
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    for="deadline"
-                    class="block text-gray-700 text-sm font-semibold mb-2"
-                    >Campaign Deadline</label
-                  >
-                  <input
-                    type="date"
-                    id="deadline"
-                    name="deadline"
-                    class="w-full p-3 border border-gray-300 rounded-md"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label
-                    for="type"
-                    class="block text-gray-700 text-sm font-semibold mb-2"
-                    >Campaign Type</label
-                  >
-                  <select
-                    id="type"
-                    name="type"
-                    class="w-full p-3 border border-gray-300 rounded-md"
-                    required
-                  >
-                    <option value="" disabled selected>
-                      Select a campaign type
-                    </option>
-                    <option value="flood">Flood Relief</option>
-                    <option value="education">Education Support</option>
-                    <option value="health">Health Services</option>
-                    <option value="food">Food Distribution</option>
-                    <option value="shelter">Shelter Provision</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-                <div>
-                  <label
-                    for="status"
-                    class="block text-gray-700 text-sm font-semibold mb-2"
-                    >Campaign Status</label
-                  >
-                  <select
-                    id="status"
-                    name="status"
-                    class="w-full p-3 border border-gray-300 rounded-md"
-                    required
-                  >
-                    <option value="active">Active</option>
-                    <option value="completed">Completed</option>
-                    <option value="canceled">Canceled</option>
-                  </select>
-                </div>
-              </div>
-              <!-- Button inside the form -->
-              <div class="text-center">
-                <button
-                  type="submit"
-                  class="bg-blue-500 text-white text-xl font-semibold py-3 px-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  Save Changes
-                </button>
-              </div>
-            </form>
-            <span id="closeEditModalButton" class="a-close-button"
-              >&times;</span
-            >
-          </div>
-        </div>
-
-        <section id="donations" class="mb-12">
-          <div class="text-center my-8">
-            <h1 class="text-4xl font-bold text-gray-800">Donation Management</h1>
-            <p class="text-lg text-gray-500 mt-2">
-              Overview of donation  and manage
-            </p>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-md">
-            <h2 class="text-xl font-semibold mb-4">View Donations</h2>
-            <!-- Scrollable container -->
-            <div class="overflow-x-auto max-h-96">
-              <table class="w-full border-collapse">
-                <thead>
-                  <tr>
-                    <th class="border-b p-2">Donor Name</th>
-                    <th class="border-b p-2">Email</th>
-                    <th class="border-b p-2">Amount</th>
-                    <th class="border-b p-2">Date</th>
-                    <th class="border-b p-2">Campaign</th>
-                  </tr>
-                </thead>
-                <tbody id="donate-body">
-                  <!-- Example donation row -->
-                  <!-- dynamically load -->
-                  <!-- Add more donation rows as needed -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
 
 
 
-        <div class="text-center my-8">
-          <h1 class="text-4xl font-bold text-gray-800">User Management</h1>
-          <p class="text-lg text-gray-500 mt-2">
-            Overview of donation  and manage
-          </p>
-        </div>
-        <div class="container mx-auto my-8 p-4 bg-white shadow-lg rounded-lg border border-gray-200">
-          
-          <h1 class="text-xl font-semibold text-gray-800 mb-6">User view</h1>
-  
-          <!-- Search Bar -->
-          <div class="mb-6">
-              <input 
-                  type="text" 
-                  id="searchInput" 
-                  class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                  placeholder="Search users by name or email">
-          </div>
-  
-          <!-- User Table -->
-          <table class="w-full bg-white border border-gray-200 rounded-lg shadow-lg">
-              <thead>
-                  <tr class="bg-gray-100 border-b border-gray-200">
-                      <th class="p-3 text-left text-gray-600">Name</th>
-                      <th class="p-3 text-left text-gray-600">Email</th>
-                      <th class="p-3 text-left text-gray-600">Profession</th>
-                      <th class="p-3 text-left text-gray-600">Status</th>
-                      <th class="p-3 text-left text-gray-600">Actions</th>
-                  </tr>
-              </thead>
-              <tbody id="userTableBody">
-                  <!-- User rows will be dynamically inserted here -->
-              </tbody>
-          </table>
-      </div>
-  
+
+
+
+
+
+<div class="text-center my-8">
+  <h1 class="text-4xl font-bold text-gray-900">User Management</h1>
+  <p class="text-lg text-gray-600 mt-2">Overview of users and management</p>
+</div>
+
+<div class="container mx-auto my-8 p-6 bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg rounded-lg border border-gray-300">
+  <h1 class="text-2xl font-semibold text-white mb-6">User View</h1>
+
+  <!-- Search Bar -->
+  <div class="mb-6">
+      <input 
+          type="text" 
+          id="searchInput" 
+          class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300" 
+          placeholder="Search users by name or email">
+  </div>
+
+  <!-- User Table -->
+  <div class="overflow-x-auto max-h-96">
+      <table class="w-full bg-white border border-gray-200 rounded-lg shadow-lg">
+          <thead>
+              <tr class="bg-gradient-to-r from-purple-600 to-blue-500 text-white">
+                  <th class="p-3 text-left font-semibold">Name</th>
+                  <th class="p-3 text-left font-semibold">Email</th>
+                  <th class="p-3 text-left font-semibold">Profession</th>
+                  <th class="p-3 text-left font-semibold">Status</th>
+                  <th class="p-3 text-left font-semibold">Actions</th>
+              </tr>
+          </thead>
+          <tbody id="userTableBody">
+              <!-- User rows will be dynamically inserted here -->
+          </tbody>
+      </table>
+  </div>
+</div>
+
+
 
       </div>
     </div>

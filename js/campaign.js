@@ -6,9 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`http://127.0.0.1:8000/api/campaign/list/?type=${type}&status=${status}`)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 updateCampaignList(data);
-                updatePagination(data);
             })
             .catch(error => console.error('Error fetching campaigns:', error));
     }

@@ -115,6 +115,20 @@
 .ok-btn:hover {
   background-color: #d32f2f;
 }
+.ok-btn {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.ok-btn:hover {
+  background-color: #116d06;
+}
 
 @keyframes fadeIn {
   from {opacity: 0;}
@@ -258,7 +272,7 @@
   </div>
   
 
-<!-- alert modal -->
+<!-- error alert modal -->
   <div id="customAlert" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeAlert()">&times;</span>
@@ -266,6 +280,16 @@
         <button class="ok-btn" onclick="closeAlert()">OK</button>
     </div>
 </div>
+<!-- success alert modal -->
+  <div id="s-customAlert" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeAlert()">&times;</span>
+        <p id="s-alertMessage"></p>
+        <button class="ok-btn" onclick="closeAlert()">OK</button>
+    </div>
+</div>
+
+
 <!-- Spinner Element -->
 <div id="spinner" class="spinner"></div>
 

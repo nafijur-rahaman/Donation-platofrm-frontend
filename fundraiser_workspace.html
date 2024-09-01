@@ -85,24 +85,27 @@
       }
     }
 
+
     #campaign-list {
-  
-      overflow-y: scroll;
-      will-change: transform;
-      /* Force GPU acceleration */
-      transform: translateZ(0);
-      /* Reduce the shadow intensity on cards */
-      box-shadow: none;
+      display: flex;
+      overflow-x: auto;
   }
   
-  #campaign-list .campaign-card {
-      /* Simple border instead of shadow for better performance */
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s ease-in-out;
+  .campaign-card {
+      height: 400px; /* Set a fixed height for all cards */
+      width: 300px; /* Set a fixed width for all cards */
+      flex-shrink: 0; /* Prevent cards from shrinking */
+      display: flex;
+      flex-direction: column;
+      margin-right: 1rem; /* Space between cards */
   }
   
-  #campaign-list .campaign-card:hover {
-      transform: translateY(-2px);
+  .campaign-card img {
+      height: 150px; /* Set a fixed height for the image */
+  }
+  
+  .campaign-card .flex-grow {
+      flex-grow: 1; /* Make sure description area grows to fill available space */
   }
   
   
@@ -222,28 +225,16 @@ padding: 1rem 2rem;
  <!-- Campaigns List -->
 
 
-<div class="mb-6">
+ <div class="mb-6">
   <h2 class="text-2xl font-bold text-gray-800 mb-4">My Campaigns</h2>
 
-  <div id="campaign-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  
-    <div class="bg-white border border-gray-200 rounded-lg shadow-md flex flex-col overflow-hidden">
-  
-      <div class="relative">
-        <img src="path/to/your/image.jpg" alt="Campaign Image" class="w-full h-32 object-cover">
-     
-      </div>
-       <div class="p-4 flex flex-col flex-grow">
-        <h3 class="text-xl font-semibold mb-2">Campaign Title</h3>
-        <p class="text-gray-600 flex-grow">Campaign description goes here...</p>
-        <div class="mt-4">
-          <span class="text-gray-800 font-semibold">Status: Active</span>
-        </div>
-      </div>
-    </div>
  
+  <div id="campaign-list" class="overflow-x-auto">
+    <!-- Flex container will be dynamically added here -->
   </div>
-</div>
+ </div>
+  
+  
 
 
 

@@ -7,6 +7,15 @@ function closeAlert() {
     document.getElementById("customAlert").style.display = "none";
 }
 
+function su_showAlert(message) {
+    document.getElementById("s-alertMessage").textContent = message;
+    document.getElementById("s-customAlert").style.display = "flex";
+}
+
+function closeAlert() {
+    document.getElementById("s-customAlert").style.display = "none";
+}
+
 
 
 function handleLogin(event) {
@@ -35,7 +44,7 @@ function handleLogin(event) {
                 if(data.token&&data.user_id){
                     localStorage.setItem("admin_token",data.token);
                     localStorage.setItem("user_id",data.user_id);
-                    showAlert("Login successful");
+                    su_showAlert("Login successful");
                     setTimeout(() => {
                         window.location.href = "admin.html";
                     }, 3000);
@@ -68,7 +77,7 @@ function handleLogin(event) {
                 if(data.token&&data.user_id){
                     localStorage.setItem("token",data.token);
                     localStorage.setItem("user_id",data.user_id);
-                    showAlert("Login successful");
+                    su_showAlert("Login successful");
                     setTimeout(() => {
                         window.location.href = "profile.html";
                     }, 3000);
