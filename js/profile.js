@@ -239,7 +239,7 @@ const loadDonation=()=>{
     .then(data =>{
         console.log(data)
         if(data){
-            data.resutls.forEach(donation => {
+            data.forEach(donation => {
                 const userDonor=document.getElementById("user-donor");
                 const li=document.createElement("li")
                 li.innerHTML=`
