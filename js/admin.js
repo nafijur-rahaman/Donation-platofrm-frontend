@@ -493,22 +493,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
          
             }else if(campaign.status==='active'){
-              console.log(campaign)
+              if (confirm('Are you sure you want to Completed this campaign?')){
                 if (campaign.goal_amount=== campaign.fund_raised){
-                    updateCampaignStatus(campaign.id, 'completed')
-                    .then(() => {
-                      statusButton.textContent = 'Active';
-                      statusButton.classList.replace('bg-yellow-500', 'bg-green-600');
-                      statusButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-700');
-                      su_showAlert("Campaign Completed successfully");
-                      setTimeout(() => window.location.reload(), 3000);
-                    })
-                    .catch(error => {
-                      showAlert("Failed to activate campaign");
-                      console.error(error);
-                    });}else{
-                        showAlert("Campaign did't achived goal amount")
-                    }
+                  updateCampaignStatus(campaign.id, 'completed')
+                  .then(() => {
+                    statusButton.textContent = 'Active';
+                    statusButton.classList.replace('bg-yellow-500', 'bg-green-600');
+                    statusButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-700');
+                    su_showAlert("Campaign Completed successfully");
+                    setTimeout(() => window.location.reload(), 3000);
+                  })
+                  .catch(error => {
+                    showAlert("Failed to activate campaign");
+                    console.error(error);
+                  });}else{
+                      showAlert("Campaign did't achived goal amount")
+                  }
+              }
+                
 
 
 
@@ -553,101 +555,117 @@ document.addEventListener('DOMContentLoaded', () => {
 //   creator request
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/creator-request/")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to load users');
-        }
-        return response.json();
-      })
-      .then(users => {
-        const tuitionList = document.getElementById('request-list').querySelector('tbody');
+  fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/creator-request/")
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to load users');
+      }
+      return response.json();
+    })
+    .then(users => {
+      const requestList = document.getElementById('request-list').querySelector('tbody');
 
-        users.forEach(user => {
-            // console.log(user)
-          const tr = document.createElement('tr');
-          tr.classList.add('hover:bg-gray-100', 'even:bg-gray-50', 'odd:bg-white');
+      users.forEach(user => {
+        const tr = document.createElement('tr');
+        tr.classList.add('hover:bg-gray-100', 'even:bg-gray-50', 'odd:bg-white');
 
-          const tdTitle = document.createElement('td');
-          tdTitle.classList.add('px-6', 'py-4', 'text-xl', 'font-semibold', 'text-gray-900', 'border-r');
-          tdTitle.textContent = user.requester_name;
+        const tdTitle = document.createElement('td');
+        tdTitle.classList.add('px-6', 'py-4', 'text-xl', 'font-semibold', 'text-gray-900', 'border-r');
+        tdTitle.textContent = user.requester_name;
 
-          const tdCreator = document.createElement('td');
-          tdCreator.classList.add('px-6', 'py-4', 'text-xl', 'font-medium', 'text-gray-900', 'border-r');
-          tdCreator.textContent = user.message;
+        const tdCreator = document.createElement('td');
+        tdCreator.classList.add('px-6', 'py-4', 'text-xl', 'font-medium', 'text-gray-900', 'border-r');
+        tdCreator.textContent = user.message;
 
-          const tdStatus = document.createElement('td');
-          tdStatus.classList.add('px-6', 'py-4', 'text-xl', 'font-medium', 'text-gray-900');
+        const tdStatus = document.createElement('td');
+        tdStatus.classList.add('px-6', 'py-4', 'text-xl', 'font-medium', 'text-gray-900');
 
-          const statusButton = document.createElement('button');
-          statusButton.classList.add('px-4', 'py-2', 'rounded-full', 'text-white', 'transition', 'duration-300');
-
+        const statusButton = document.createElement('button');
+        statusButton.classList.add('px-4', 'py-2', 'rounded-full', 'text-white', 'transition', 'duration-300');
         
-          switch (user.status) {
+        const updateStatusClasses = (status) => {
+          statusButton.classList.remove('bg-green-600', 'bg-yellow-500', 'bg-red-500', 'bg-gray-600');
+          statusButton.classList.remove('hover:bg-green-700', 'hover:bg-yellow-600', 'hover:bg-red-600', 'hover:bg-gray-700');
+
+          switch (status) {
             case 'approved':
               statusButton.classList.add('bg-green-600', 'hover:bg-green-700');
+              statusButton.textContent = 'Approved';
               break;
             case 'pending':
               statusButton.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
+              statusButton.textContent = 'Pending';
               break;
             case 'rejected':
-                statusButton.classList.add('bg-red-500', 'hover:bg-red-600');
+              statusButton.classList.add('bg-red-500', 'hover:bg-red-600');
+              statusButton.textContent = 'Rejected';
               break;
             default:
               statusButton.classList.add('bg-gray-600', 'hover:bg-gray-700');
+              statusButton.textContent = 'Unknown';
               break;
           }
+        };
+        
+        updateStatusClasses(user.status);
+        tdStatus.appendChild(statusButton);
 
-          statusButton.textContent = capitalizeFirstLetter(user.status);
-          tdStatus.appendChild(statusButton);
+        const tdActions = document.createElement('td');
+        tdActions.classList.add('px-6', 'py-4', 'text-xl', 'font-medium', 'text-gray-900');
+        const actionButton = document.createElement('button');
+        actionButton.classList.add('px-4', 'py-2', 'rounded-full', 'text-white', 'bg-red-500', 'hover:bg-red-700', 'transition', 'duration-300');
+        actionButton.textContent = 'Reject';
+        tdActions.appendChild(actionButton);
 
-      
-          statusButton.addEventListener('click', () => {
-            if (user.status === 'pending') {
-                if (confirm('Are you sure you want to approve this request?')) {  
-                     updateUserStatus(user.id, 'approved')
-                    .then(() => {
-                      statusButton.textContent = 'Approved';
-                      statusButton.classList.replace('bg-yellow-500', 'bg-green-600');
-                      statusButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-700');
-                      su_showAlert("Creator make successfully");
-                      setTimeout(() => window.location.reload(), 3000);
-                    })
-                    .catch(error => {
-                      showAlert("Failed to activate user");
-                      console.error(error);
-                    });}
-           
-            }else if(user.status==='approved'){
-                
-                if (confirm('Are you sure you want to reject this request?')) {
-                    updateUserStatus(user.id, 'rejected')
-                      .then(() => {
-                        statusButton.textContent = 'Rejected';
-                        statusButton.classList.replace('bg-green-600', 'bg-red-500');
-                        statusButton.classList.replace('hover:bg-green-700', 'hover:bg-red-600');
-                        showAlert("Request rejected successfully");
-                        setTimeout(() => window.location.reload(), 3000);
-                      })
-                      .catch(error => {
-                        showAlert("Failed to reject request");
-                        console.error(error);
-                      });
-                  } 
+        statusButton.addEventListener('click', () => {
+          if (user.status === 'pending') {
+            if (confirm('Are you sure you want to approve this request?')) {
+              updateUserStatus(user.id, 'approved')
+                .then(() => {
+                  updateStatusClasses('approved');
+                  su_showAlert("Creator made successfully");
+                })
+                .catch(error => {
+                  showAlert("Failed to activate user");
+                  console.error(error);
+                });
             }
-             else {
-              showAlert("User already creator");
-            }
-          });
+          } else if(user.status === 'approved'){
+            su_showAlert("You already active this creator");
+          }
+          else {
+            showAlert("User already creator");
+          }
 
-          tr.appendChild(tdTitle);
-          tr.appendChild(tdCreator);
-          tr.appendChild(tdStatus);
-          tuitionList.appendChild(tr);
+   
+
+
         });
-      })
-      .catch(error => console.error('Error:', error));
-  });
+
+
+        actionButton.addEventListener('click',()=>{
+          if (confirm('Are you sure you want to reject this request?')) {
+            updateUserStatus(user.id, 'rejected')
+              .then(() => {
+                updateStatusClasses('rejected');
+                su_showAlert("Request rejected successfully");
+              })
+              .catch(error => {
+                showAlert("Failed to reject request");
+                console.error(error);
+              });
+          }
+        })
+
+        tr.appendChild(tdTitle);
+        tr.appendChild(tdCreator);
+        tr.appendChild(tdStatus);
+        tr.appendChild(tdActions);
+        requestList.appendChild(tr);
+      });
+    })
+    .catch(error => console.error('Error:', error));
+});
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -667,7 +685,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!res.ok) {
         throw new Error("Status change failed");
       }
-      return response.json();
+      return res.json();
     })
     .catch(error=>showAlert(error))
 
