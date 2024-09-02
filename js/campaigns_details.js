@@ -69,7 +69,18 @@ document.getElementById('payment-form').addEventListener('submit', function (eve
     event.preventDefault();
     const campaign_id = getQueryParams("id");
     // console.log(campaign_id)
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaign_id}/`)
+    .then(res =>{
+        if(!res.ok){
+            throw new Error("Campaign not found");
+        }
+        return res.json();
+    })
+    .then(data=>{
+        if(data.goal_amount===data.fund_raised){
+            su_showAlert("The Campaign Successfully Completed! You may look for another campaign.")
+        }else{
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const amount = document.getElementById('amount').value;
     const cus_phone = document.getElementById('cus_phone').value;
     const cus_add1 = document.getElementById('cus_add1').value;
@@ -137,6 +148,9 @@ document.getElementById('payment-form').addEventListener('submit', function (eve
                 showAlert(error)
             });
     }
+        }
+    })
+    
 
 
 });

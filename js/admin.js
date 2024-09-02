@@ -189,7 +189,7 @@ const loadDashboard =()=>{
         // console.log(campaign);
 
        const dash_campaign =document.getElementById("campaign");
-       dash_campaign.innerHTML= `   <h2 class="text-white text-xl font-semibold">Active users</h2>
+       dash_campaign.innerHTML= `   <h2 class="text-white text-xl font-semibold">Active Campaign</h2>
                                 <p class="text-white text-3xl font-bold mt-2"> ${campaign.length} </p>`;
 
 
