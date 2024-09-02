@@ -4,22 +4,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>profile</title>
-  <link rel="stylesheet" href="./css/style.css" />
+  <title>Donation platform</title>
+
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <style>
-    .scrollable-history {
-    max-height: 300px; 
-    overflow-y: auto;  
-    border: 1px solid #ddd; 
-    padding: 0.5rem;  
-  
-}
-
-/* Modal Styles */
+     /* Modal Styles */
 .modal {
   display: none; 
   position: fixed;
@@ -77,493 +68,500 @@
   background-color: #d32f2f;
 }
 
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
+/* Success button specific styles */
+.success-btn {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.success-btn:hover {
+  background-color: #116d06;
 }
 
 
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+
+      .navbar {
+          background: linear-gradient(90deg, #4F46E5, #3B82F6);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      .navbar a {
+          transition: color 0.4s ease, transform 0.4s ease;
+      }
+      .navbar a:hover {
+          color: gray;
+          transform: scale(1.05);
+      }
+      .footer {
+          background: #1F2937;
+          color: #E5E7EB;
+      }
+      .footer a {
+          transition: color 0.3s ease;
+      }
+      .footer a:hover {
+          color: #F3F4F6;
+      }
+      .footer-section-title {
+          color: #E5E7EB;
+      }
+
+      .spinner {
+        position: fixed; /* Position it fixed to overlay the entire page */
+        top: 50%; /* Center vertically */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, -50%); /* Center exactly */
+        border: 8px solid rgba(0, 0, 0, 0.1); /* Light background */
+        border-radius: 50%; /* Make it circular */
+        border-top: 8px solid #3498db; /* Color of the spinner */
+        width: 50px; /* Size of the spinner */
+        height: 50px; /* Size of the spinner */
+        animation: spin 1s linear infinite; /* Spinning animation */
+        display: none; /* Hide by default */
+      }
+      
+      /* Spinning animation */
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
   </style>
 </head>
 
-
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
   <!-- navbar -->
-  <nav class="navbar navbar-expand-lg" style="
-        background: linear-gradient(45deg, #2c3e50, #4c5f70, #bdc3c7);
-        padding: 1rem 2rem;
-      ">
-    <div class="container-fluid">
-      <a class="navbar-brand text-white fw-bold fs-3" href="home.html" style="
-            letter-spacing: 2px;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
-            font-weight: bolder;
-          ">
-        Donation Platform
-      </a>
-      <button  class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon text-white"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link text-white fs-5 nav-link-hover" href="home.html"
-              style="padding: 0.5rem 1.5rem; font-weight: 500">Home</a>
-          </li>
-            <li class="nav-item">
-            <a class="nav-link text-white fs-5 nav-link-hover" href="campaign.html"
-              style="padding: 0.5rem 1.5rem; font-weight: 500">Campaigns</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white fs-5 nav-link-hover" href="about.html"
-              style="padding: 0.5rem 1.5rem; font-weight: 500">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white fs-5 nav-link-hover" href="contact.html"
-              style="padding: 0.5rem 1.5rem; font-weight: 500">Contact</a>
-          </li>
-        </ul>
-
-        <div id="conditional-element">
-     
-
-        </div>
-      </div>
-    </div>
+  <nav id="conditional-element" class="navbar fixed w-full top-0 left-0 z-50 bg-gradient-to-r from-indigo-500 to-blue-500 text-white">
   </nav>
 
-<!-- alert modal -->
+ <!-- Main Content -->
+ <section class="pt-20">
+
+
+
+
+
+
+
+<!-- error alert modal -->
 <div id="customAlert" class="modal">
   <div class="modal-content">
-      <span class="close-btn" onclick="closeAlert()">&times;</span>
+      <span class="close-btn" onclick="closeErrorAlert()">&times;</span>
       <p id="alertMessage"></p>
-      <button class="ok-btn" onclick="closeAlert()">OK</button>
+      <button class="ok-btn" onclick="closeErrorAlert()">OK</button>
+  </div>
+</div>
+
+<!-- success alert modal -->
+<div id="s-customAlert" class="modal">
+  <div class="modal-content">
+      <span class="close-btn" onclick="closeSuccessAlert()">&times;</span>
+      <p id="s-alertMessage"></p>
+      <button class="success-btn" onclick="closeSuccessAlert()">OK</button>
   </div>
 </div>
 
 
 
-<!-- profile -->
+<!-- Spinner Element -->
+<div id="spinner" class="spinner"></div>
 
 
-<div class="container mx-auto my-5 p-5">
-  <div class="md:flex no-wrap md:-mx-2">
-      <!-- Left Side -->
-      <div class="w-full md:w-3/12 md:mx-2">
-          <!-- Profile Card -->
-          <div id="profile-card" class="bg-white p-3 border-t-4 border-blue-500 rounded-lg shadow-lg">
-         <!-- dynamically data load -->
-          </div>
-          <!-- End of profile card -->
-      </div>
-      <!-- Right Side -->
-      <div class="w-full md:w-9/12 mx-2 h-64">
-          <!-- Profile tab -->
-          <!-- About Section -->
-          <div id="profile-about" class="bg-white p-3 shadow-lg rounded-lg">
-              
-          </div>
-          <!-- End of about section -->
+  
+  <!-- profile -->
 
-          <div class="my-4"></div>
 
-         <!-- Donor Activity Section -->
-         <div class="bg-white p-3 shadow-lg rounded-lg">
-          <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-              <span class="text-blue-500">
-                  <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                      stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M11 17a4 4 0 100-8 4 4 0 000 8zM21 21l-4.35-4.35" />
-                  </svg>
-              </span>
-              <span class="tracking-wide">Donation History</span>
-          </div>
-          <div class="overflow-y-auto max-h-48">
-              <ul id="user-donor" class="list-inside space-y-2">
+
+
+<div class="container mx-auto px-4 py-8">
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-80 bg-white shadow-lg rounded-lg p-6">
+            <div id="side-profile" class="text-center mb-6">
+               
+            </div>
+            <nav>
+                <ul class="space-y-2" id="profile-action" >
+                    <li>
+                        <a href="./profile.html" class=" text-xl block py-2 px-4 rounded-lg text-gray-700 font-semibold sidebar-link">Profile Overview</a>
+                    </li>
+                    <li>
+                        <button id="editProfileBtn" class=" text-xl block py-2 px-4 rounded-lg text-gray-700 font-semibold sidebar-link">Edit Profile</button>
+                    </li>
+                    <li>
+                        <a href=""id="changePasswordLink" class=" text-xl block py-2 px-4 rounded-lg text-gray-700 font-semibold sidebar-link">Change Password</a>
+                    </li>
+                    <li>
+                        <a href="#" id="openModalBtn" class=" text-xl block py-2 px-4 rounded-lg text-gray-700 font-semibold sidebar-link">Become a Fundraiser</a>
+                    </li>
+                    <li>
+                        <a onclick="handleLogout()" style="cursor: pointer;" class=" text-xl block py-2 px-4 rounded-lg text-gray-700 font-semibold sidebar-link">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+  
+        <div class="flex-1 ml-8">
+            <!-- Profile Header -->
            
-                 
-                  <!-- More items -->
-              </ul>
-          </div>
-      </div>
-      <!-- End of Donor Activity Section -->
-
+            
+  
+            <!-- Profile Details -->
+            <div class="mt-8 bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-3xl font-semibold mb-6 text-gray-900">Profile Details</h2>
+                <div id="profile-details" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+             
+                </div>
+            </div>
+  
+  
+  
+  
+      <!-- Donor Activity Section -->
+      <div style="margin-top:50px;" class="bg-white p-3 shadow-lg rounded-lg">
+        <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+            <span class="text-blue-500">
+                <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M11 17a4 4 0 100-8 4 4 0 000 8zM21 21l-4.35-4.35" />
+                </svg>
+            </span>
+            <span class="tracking-wide">Donation History</span>
+        </div>
+        <div class="overflow-y-auto max-h-48">
+            <ul id="user-donor" class="list-inside space-y-2">
+         
+               
+                <!-- More items -->
+            </ul>
+        </div>
+    </div>
+    <!-- End of Donor Activity Section -->
+  
+        </div>
+    </div>
+  </div>
+  
+  
+  
+  
       
-
-            <!-- Trigger Button -->
-<!-- <button id="editProfileBtn" class="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-  Edit Profile
-</button> -->
-
-<!-- profile change  Modal  -->
-<div id="profileModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
-  <div class="flex items-center justify-center min-h-screen">
-      <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+  
+  
+  
+  <!-- profile change  Modal  -->
+  <div id="profileModal" class="fixed z-50 inset-0 overflow-y-auto hidden">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg mx-auto">
           <div class="flex justify-between items-center mb-4">
-              <h2 class="text-xl font-bold text-gray-800">Profile Changes</h2>
-              <button id="closeModalBtn" class="text-gray-500 text-2xl hover:text-gray-800">&times;</button>
+            <h2 class="text-2xl font-bold text-gray-800">Profile Changes</h2>
+            <button id="closeModalBtn" class="text-gray-500 text-2xl hover:text-gray-800 transition duration-300 ease-in-out">
+              &times;
+            </button>
           </div>
           <form id="profileForm">
-              <div class="mb-4">
-                  <label for="first_name" class="block text-gray-700 font-bold mb-2">First Name</label>
-                  <input type="text" id="first_name" value="{{ first_name "
-                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-              </div>
-              <div class="mb-4">
-                  <label for="last_name" class="block text-gray-700 font-bold mb-2">Last Name</label>
-                  <input type="text" id="last_name" value="last_name "
-                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-              </div>
-              <div class="mb-4">
-                <label for="username" class="block text-gray-700 font-bold mb-2">Username</label>
-                <input type="text" id="username" value="username"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" readonly>
-                <p class="text-red-500 text-sm mt-1">You cannot change the username.</p>
+            <div class="mb-4">
+              <label for="first_name" class="block text-gray-700 font-semibold mb-2">First Name</label>
+              <input type="text" id="first_name" value="{{ first_name }}"
+                class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" required>
             </div>
             <div class="mb-4">
-                <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
-                <input type="email" id="email" value="email"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" readonly>
-                <p class="text-red-500 text-sm mt-1">You cannot change the email.</p>
+              <label for="last_name" class="block text-gray-700 font-semibold mb-2">Last Name</label>
+              <input type="text" id="last_name" value="last_name"
+                class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" required>
             </div>
-
+            <div class="mb-4">
+              <label for="username" class="block text-gray-700 font-semibold mb-2">Username</label>
+              <input type="text" id="username" value="username"
+                class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" readonly>
+              <p class="text-red-500 text-sm mt-1">You cannot change the username.</p>
+            </div>
+            <div class="mb-4">
+              <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
+              <input type="email" id="email" value="email"
+                class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" readonly>
+              <p class="text-red-500 text-sm mt-1">You cannot change the email.</p>
+            </div>
+    
             <input type="hidden" id="h-email" name="email">
             <input type="hidden" id="h-username" name="username">
-              <div class="mb-4">
-                  <label for="profession" class="block text-gray-700 font-bold mb-2">Profession</label>
-                  <input type="text" id="profession" value="profession "
-                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-              </div>
-              <div class="mb-4">
-                  <label for="phone_number" class="block text-gray-700 font-bold mb-2">Phone Number</label>
-                  <input type="tel" id="phone_number" maxlength="11" value="phone_number "
-                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-              </div>
-              <div class="mb-4">
-                  <label for="bio" class="block text-gray-700 font-bold mb-2">Bio</label>
-                  <textarea id="bio" rows="4"
-                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">bio </textarea>
-              </div>
-              <div class="mb-4">
-                  <label for="address" class="block text-gray-700 font-bold mb-2">Address</label>
-                  <input type="text" id="address" value="address "
-                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-              </div>
-           
-              <div class="flex justify-end">
-                  <button id="submitBtn" class="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                      type="submit">Update Profile</button>
-              </div>
-          </form>
-      </div>
-  </div>
-</div>
-
-            
-
-
-          <!-- Profile Actions -->
-          <div style="margin-top: 20px;" id="profile-action" class="bg-white p-3 shadow-lg rounded-lg" >
-              <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                  <span class="text-blue-500">
-                      <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                          stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                  </span>
-                  <span class="tracking-wide">Profile Actions</span>
-              </div>
-              <a href="#" id="changePasswordLink" style="text-decoration: none; text-align:center;"
-              class="block w-full text-white bg-blue-500 text-sm font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:shadow-outline focus:bg-blue-700 hover:shadow-xs p-3 my-2">Change Password
-           </a>
-           
-           <button id="editProfileBtn" class="block w-full text-white bg-purple-500 text-sm font-semibold rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline focus:bg-purple-700 hover:shadow-xs p-3 my-2">
-             Edit Profile
-         </button>
-  
-                <a href="#" style="text-decoration: none; text-align:center;"
-              class="block w-full text-white bg-red-500 text-sm font-semibold rounded-lg hover:bg-red-700 focus:outline-none focus:shadow-outline focus:bg-red-700 hover:shadow-xs p-3 my-2">
-              Delete Account
-                  </a>
-
-                  <button id="openModalBtn" class="block w-full text-white bg-green-500 text-sm font-semibold rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline focus:bg-green-700 hover:shadow-xs p-3 my-2">
-                    Become a Fundraiser
-                </button>
-          </div>
-          <!-- End of Profile Actions -->
-      </div>
-  </div>
-</div>
-
-<!-- Trigger Button -->
-
-
-<!-- Modal -->
-<div id="fundraiserModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-  <div class="flex items-center justify-center min-h-screen">
-      <div class="fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-
-      <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full p-6">
-          <div class="flex justify-between items-center mb-4">
-              <h2 class="text-xl font-semibold text-gray-800">Become a Fundraiser</h2>
-              <button id="f-closeModalBtn" class="text-gray-500 hover:text-gray-700">
-                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                  </svg>
-              </button>
-          </div>
-          <p class="text-gray-600 mb-4">Sign up to become a fundraiser and start creating campaigns to raise funds for important causes.</p>
-
-          <form id="fund_raiser_form" >
+    
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="organization">
-                    Organization
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="organization" type="text" placeholder="Enter organization name">
+              <label for="profession" class="block text-gray-700 font-semibold mb-2">Profession</label>
+              <input type="text" id="profession" value="profession"
+                class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
-
-              <div class="mb-4">
-                  <label class="block text-gray-700 text-sm font-bold mb-2" for="last-name">
-                      Work experience
-                  </label>
-                  <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="work" type="text" placeholder="Enter your last name">
-              </div>
-
-              <div class="mb-4">
-                  <label class="block text-gray-700 text-sm font-bold mb-2" for="last-name">
-                      Service Area
-                  </label>
-                  <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="service" type="text" placeholder="Enter your last name">
-              </div>
-
-              <div class="mb-4">
-                  <label class="block text-gray-700 text-sm font-bold mb-2" for="phone-number">
-                      Message
-                  </label>
-                  <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="message" type="text" placeholder="Enter your phone number"></textarea>
-              </div>
-              <div class="flex items-center justify-between">
-                  <button onclick="handleFundraiser(event)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                      Submit
-                  </button>
-                  <button id="cancelModalBtn" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                      Cancel
-                  </button>
-              </div>
+            <div class="mb-4">
+              <label for="phone_number" class="block text-gray-700 font-semibold mb-2">Phone Number</label>
+              <input type="tel" id="phone_number" maxlength="11" value="phone_number"
+                class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+              <label for="bio" class="block text-gray-700 font-semibold mb-2">Bio</label>
+              <textarea id="bio" rows="4"
+                class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">bio</textarea>
+            </div>
+            <div class="mb-4">
+              <label for="address" class="block text-gray-700 font-semibold mb-2">Address</label>
+              <input type="text" id="address" value="address"
+                class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+    
+            <div class="flex justify-end">
+              <button id="submitBtn" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-blue-700 transition duration-300 ease-in-out" type="submit">
+                Update Profile
+              </button>
+            </div>
           </form>
-      </div>
-  </div>
-</div>
-<style>
-  /* Optional: Custom styling for the modal */
-  .cp-modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 50; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-/* Modal content styling */
-.cp-modal-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full viewport height */
-}
-.cp-form-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 350px; /* Set a maximum width for the form */
-    width: 100%; /* Full width up to max-width */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: shadow */
-    position: relative; /* For positioning the close button */
-}
-.cp-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: #aaa;
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
-}
-.cp-close:hover,
-.cp-close:focus {
-    color: black;
-    text-decoration: none;
-}
-
-</style>
- <!-- change pass Modal -->
- <div id="passwordModal" class="cp-modal">
-  <div class="cp-modal-content">
-      <div class="cp-form-container">
-          <span class="cp-close">&times;</span>
-          <h2 class="text-xl font-bold text-gray-700 text-center mb-4">Change Your Password</h2>
-          <form id="changePasswordForm">
-              <div class="mb-3">
-                  <label for="current-password" class="block text-gray-600 font-medium mb-1">Current Password</label>
-                  <input type="password" id="current-password" name="current_password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Enter your current password">
-              </div>
-              <div class="mb-3">
-                  <label for="new-password" class="block text-gray-600 font-medium mb-1">New Password</label>
-                  <input type="password" id="new-password" name="new_password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Enter your new password">
-              </div>
-              <div class="mb-3">
-                  <label for="confirm-password" class="block text-gray-600 font-medium mb-1">Confirm New Password</label>
-                  <input type="password" id="confirm-password" name="confirm_password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Confirm your new password">
-              </div>
-              <div class="mt-4">
-                  <button type="submit" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                      Change Password
-                  </button>
-              </div>
-          </form>
-      </div>
-  </div>
-</div>
-  <!-- footer section -->
-  <footer style="
-        background: #2c3e50;
-        color: #f4d03f;
-        padding: 2rem 0;
-        text-align: center;
-        box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.2);
-        margin-top:270px;
-      ">
-    <div class="container">
-      <div class="row">
-        <!-- About Section -->
-        <div class="col-md-4 mb-4">
-          <h5 style="font-weight: bold; text-transform: uppercase">
-            About Us
-          </h5>
-          <p style="line-height: 1.7">
-            We are a platform dedicated to making donations easy and
-            transparent. Our mission is to connect donors with those in need,
-            ensuring that every contribution makes a meaningful impact.
-          </p>
-        </div>
-
-        <!-- Links Section -->
-        <div class="col-md-4 mb-4">
-          <h5 style="font-weight: bold; text-transform: uppercase">
-            Quick Links
-          </h5>
-          <ul style="list-style: none; padding: 0">
-            <li>
-              <a href="home.html" style="
-                    color: #f4d03f;
-                    text-decoration: none;
-                    transition: color 0.3s;
-                  ">Home</a>
-            </li>
-            <li>
-              <a href="about.html" style="
-                    color: #f4d03f;
-                    text-decoration: none;
-                    transition: color 0.3s;
-                  ">About Us</a>
-            </li>
-            <li>
-              <a href="campaign.html" style="
-                    color: #f4d03f;
-                    text-decoration: none;
-                    transition: color 0.3s;
-                  ">Campaigns</a>
-            </li>
-            <li>
-              <a href="contact.html" style="
-                    color: #f4d03f;
-                    text-decoration: none;
-                    transition: color 0.3s;
-                  ">Contact</a>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Contact Section -->
-        <div class="col-md-4 mb-4">
-          <h5 style="font-weight: bold; text-transform: uppercase">
-            Contact Us
-          </h5>
-          <p style="line-height: 1.7">
-            <i class="fas fa-map-marker-alt"></i> 123 Donation pt, Charity
-            Dhaka, 4567
-          </p>
-          <p style="line-height: 1.7">
-            <i class="fas fa-phone"></i> +8801626681291
-          </p>
-          <p style="line-height: 1.7">
-            <i class="fas fa-envelope"></i> support@donationplatform.com
-          </p>
-        </div>
-      </div>
-
-      <!-- Social Media Icons -->
-      <div class="row mt-4">
-        <div class="col-12">
-          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-facebook fa-lg"></i></a>
-          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-twitter fa-lg"></i></a>
-          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-instagram fa-lg"></i></a>
-          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-linkedin fa-lg"></i></a>
-        </div>
-      </div>
-
-      <!-- Copyright Section -->
-      <div class="row mt-4">
-        <div class="col-12">
-          <p style="margin: 0; font-size: 0.9rem">
-            &copy; 2024 Donation Platform. All rights reserved.
-          </p>
         </div>
       </div>
     </div>
-  </footer>
-  <script src="./js/home.js"></script>
-<script src="./js/logout.js"></script>
-<script src="./js/profile.js"></script>
+    
+  
+              
+  
+  
+  
+  
+  
+  <!-- Modal -->
+  <div id="fundraiserModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+  
+        <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-gray-800">Become a Fundraiser</h2>
+                <button id="f-closeModalBtn" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <p class="text-gray-600 mb-4">Sign up to become a fundraiser and start creating campaigns to raise funds for important causes.</p>
+  
+            <form id="fund_raiser_form" >
+              <div class="mb-4">
+                  <label class="block text-gray-700 text-sm font-bold mb-2" for="organization">
+                      Organization
+                  </label>
+                  <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="organization" type="text" placeholder="Enter organization name">
+              </div>
+  
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="last-name">
+                        Work experience
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="work" type="text" placeholder="Enter your last name">
+                </div>
+  
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="last-name">
+                        Service Area
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="service" type="text" placeholder="Enter your last name">
+                </div>
+  
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="phone-number">
+                        Message
+                    </label>
+                    <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="message" type="text" placeholder="Enter your phone number"></textarea>
+                </div>
+                <div class="flex items-center justify-between">
+                    <button onclick="handleFundraiser(event)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                        Submit
+                    </button>
+                    <button id="cancelModalBtn" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+  
+  
+  
+  <style>
+  
+    .cp-modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 50; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  .cp-modal-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; 
+  }
+  .cp-form-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 350px; 
+      width: 100%; 
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+      position: relative; 
+  }
+  .cp-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: #aaa;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+  }
+  .cp-close:hover,
+  .cp-close:focus {
+      color: black;
+      text-decoration: none;
+  }
+  
+  </style>
+  
+  
+   <!-- change pass Modal -->
+   <div id="passwordModal" class="cp-modal">
+    <div class="cp-modal-content">
+        <div class="cp-form-container">
+            <span class="cp-close">&times;</span>
+            <h2 class="text-xl font-bold text-gray-700 text-center mb-4">Change Your Password</h2>
+            <form id="changePasswordForm">
+                <div class="mb-3">
+                    <label for="current-password" class="block text-gray-600 font-medium mb-1">Current Password</label>
+                    <input type="password" id="current-password" name="current_password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Enter your current password">
+                </div>
+                <div class="mb-3">
+                    <label for="new-password" class="block text-gray-600 font-medium mb-1">New Password</label>
+                    <input type="password" id="new-password" name="new_password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Enter your new password">
+                </div>
+                <div class="mb-3">
+                    <label for="confirm-password" class="block text-gray-600 font-medium mb-1">Confirm New Password</label>
+                    <input type="password" id="confirm-password" name="confirm_password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Confirm your new password">
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        Change Password
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ </section>
+   <!-- Footer -->
+   <footer class="footer mt-20 py-12">
+    <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row md:justify-between">
+            <div class="mb-6 md:mb-0">
+                <h4 class="text-3xl font-bold footer-section-title">DonationPlatform</h4>
+                <p class="mt-2">Empowering communities through compassion and generosity. Join us in making a difference today!</p>
+            </div>
+            <div class="flex flex-col md:flex-row md:space-x-8">
+                <div class="mb-6 md:mb-0">
+                    <h5 class="text-xl font-semibold footer-section-title">Quick Links</h5>
+                    <ul class="mt-2 space-y-2">
+                        <li><a href="./home.html" class="hover:underline">Home</a></li>
+                        <li><a href="./about.html" class="hover:underline">About</a></li>
+                        <li><a href="./campaign.html" class="hover:underline">Campaign</a></li>
+                        <li><a href="./contact.html" class="hover:underline">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-xl font-semibold footer-section-title">Contact Us</h5>
+                    <p class="mt-2">14 no road Rupnogor<br>mirpur, Dhaka, 2</p>
+                    <p>Email: <a href="mailto:support@DonationPlatform.com" class="hover:underline">support@DonationPlatform.com</a><br>Phone: +8801626681291</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-8">
+            <p class="text-gray-400">© 2024 DonationPlatform. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
 <script>
-  // Get modal element
+     
   const modal = document.getElementById("passwordModal");
-  // Get open modal link
+
   const link = document.getElementById("changePasswordLink");
-  // Get close button element
+
   const closeBtn = document.getElementsByClassName("cp-close")[0];
 
-  // Open modal
+ 
   link.onclick = function(e) {
-      e.preventDefault(); // Prevent default link action
+      e.preventDefault(); 
       modal.style.display = "block";
   }
 
-  // Close modal
+
   closeBtn.onclick = function() {
       modal.style.display = "none";
   }
 
-  // Close modal when clicking outside of the modal content
   window.onclick = function(event) {
       if (event.target == modal) {
           modal.style.display = "none";
       }
   }
 </script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="./js/profile.js"></script>
+<script src="./js/login.js"></script>
+ <script src="./js/home.js"></script>
+  <script src="./js/logout.js"></script>
 </body>
 
 </html>

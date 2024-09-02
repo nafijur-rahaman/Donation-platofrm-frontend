@@ -1,11 +1,4 @@
-function showAlert(message) {
-    document.getElementById("alertMessage").textContent = message;
-    document.getElementById("customAlert").style.display = "flex";
-}
 
-function closeAlert() {
-    document.getElementById("customAlert").style.display = "none";
-}
 const handleRegistration =(event) =>{
 event.preventDefault();
 
@@ -44,7 +37,7 @@ document.getElementById("password_error").innerText = "";
 if(password===confirm_password){
     if (/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(password)){
         document.getElementById("spinner").style.display = 'block';
-        fetch('http://127.0.0.1:8000/api/users/register/',{
+        fetch('https://donation-platform-backend-rmqk.onrender.com/api/users/register/',{
             method:"POST",
             body:info,
         })
@@ -53,7 +46,7 @@ if(password===confirm_password){
             console.log(data)
             if(data.success){
                 document.getElementById("spinner").style.display = 'none';
-                showAlert(data.message);
+                su_showAlert(data.message);
                 setTimeout(() => {
                     window.location.href = "login.html";
                 }, 3000);

@@ -1,20 +1,20 @@
 function showAlert(message) {
     document.getElementById("alertMessage").textContent = message;
     document.getElementById("customAlert").style.display = "flex";
-}
-
-function closeAlert() {
-    document.getElementById("customAlert").style.display = "none";
-}
-
-function su_showAlert(message) {
+  }
+  
+  function su_showAlert(message) {
     document.getElementById("s-alertMessage").textContent = message;
     document.getElementById("s-customAlert").style.display = "flex";
-}
-
-function closeAlert() {
+  }
+  
+  function closeErrorAlert() {
+    document.getElementById("customAlert").style.display = "none";
+  }
+  
+  function closeSuccessAlert() {
     document.getElementById("s-customAlert").style.display = "none";
-}
+  }
 
 
 
@@ -34,7 +34,7 @@ function handleLogin(event) {
     
         if (email && password){
             document.getElementById("spinner").style.display = 'block';
-            fetch("http://127.0.0.1:8000/api/manager/login/",{
+            fetch("https://donation-platform-backend-rmqk.onrender.com/api/manager/login/",{
                 method:"POST",
                 headers:{"content-type":"application/json"},
                 body:JSON.stringify({email,password})
@@ -47,7 +47,7 @@ function handleLogin(event) {
                     su_showAlert("Login successful");
                     setTimeout(() => {
                         window.location.href = "admin.html";
-                    }, 3000);
+                    }, 2000);
                 }else{
                     showAlert("Login failed! Please check you credentials")
                     document.getElementById("spinner").style.display = 'none';
@@ -67,7 +67,7 @@ function handleLogin(event) {
      
         if (email && password){
             document.getElementById("spinner").style.display = 'block';
-            fetch("http://127.0.0.1:8000/api/users/login/",{
+            fetch("https://donation-platform-backend-rmqk.onrender.com/api/users/login/",{
                 method:"POST",
                 headers:{"content-type":"application/json"},
                 body:JSON.stringify({email,password})
@@ -80,14 +80,14 @@ function handleLogin(event) {
                     su_showAlert("Login successful");
                     setTimeout(() => {
                         window.location.href = "profile.html";
-                    }, 3000);
+                    }, 2000);
                 }else{
                     showAlert("Login failed! Please check you credentials")
                     document.getElementById("spinner").style.display = 'none';
                 }
             })
             .catch(error => {
-                // Hide the spinner in case of an error
+              
                 document.getElementById("spinner").style.display = 'none';
                 showAlert("An error occurred. Please try again.");
                 console.error('Error:', error);

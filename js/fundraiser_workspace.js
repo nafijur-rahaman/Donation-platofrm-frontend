@@ -1,16 +1,25 @@
-
 function showAlert(message) {
     document.getElementById("alertMessage").textContent = message;
     document.getElementById("customAlert").style.display = "flex";
-}
-
-function closeAlert() {
+  }
+  
+  function su_showAlert(message) {
+    document.getElementById("s-alertMessage").textContent = message;
+    document.getElementById("s-customAlert").style.display = "flex";
+  }
+  
+  function closeErrorAlert() {
     document.getElementById("customAlert").style.display = "none";
-}
+  }
+  
+  function closeSuccessAlert() {
+    document.getElementById("s-customAlert").style.display = "none";
+  }
+
 
 const loadCampaign =()=>{
 const user_id=window.localStorage.getItem("user_id");
-fetch(`http://127.0.0.1:8000/api/campaign/creator/?user_id=${user_id}`)
+fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/creator/?user_id=${user_id}`)
         .then(res => {
             if (!res.ok) {
                 throw new Error(`You are not a fundraiser! status: ${res.status}`);
@@ -21,7 +30,7 @@ fetch(`http://127.0.0.1:8000/api/campaign/creator/?user_id=${user_id}`)
         //  console.log(data[0])
 
             const creator_id=data[0].id;
-            fetch(`http://127.0.0.1:8000/api/campaign/list/?creator=${creator_id}`)
+            fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/?creator=${creator_id}`)
             .then(res =>{
                 if(!res.ok){
                     throw new Error(`Campaign not found of this id! status:${res.status}`)
@@ -52,18 +61,17 @@ totalCampaign.innerHTML=`
 
 
 
-// campaign data
+
 const campaign_list = document.getElementById("campaign-list");
 
-// Create a flex container for the cards
 const flexContainer = document.createElement("div");
 flexContainer.classList.add("flex", "space-x-4", "overflow-x-auto");
 
-// Append the flex container to the campaign list
+
 campaign_list.appendChild(flexContainer);
 
 data.forEach(campaign => {
-    // Function to truncate text to a specified number of words
+
     function truncateText(text, wordLimit) {
         const words = text.split(' ');
         if (words.length > wordLimit) {
@@ -99,7 +107,6 @@ data.forEach(campaign => {
         </div>
     `;
 
-    // Append the card to the flex container
     flexContainer.appendChild(card);
     
     loadDonation(campaign.id);
@@ -131,16 +138,16 @@ data.forEach(campaign => {
         });
 };
 
-// Function to open the modal
+
 function openModal(campaignId) {
     
-// Get the modal and close button elements
+
 const modal = document.getElementById('campaign-modal');
 const closeModalBtn = document.getElementById('close-modal-btn');
 const form=document.getElementById("edit-campaign-form");
 
 
-    fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}`)
+    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}`)
     .then(res =>{
         if(!res.ok){
             throw new Error(`Campaign not found! status:${res.status}`)
@@ -157,7 +164,6 @@ const form=document.getElementById("edit-campaign-form");
         document.getElementById('location').value = campaign.location;
         document.getElementById('deadline').value = campaign.deadline;
         document.getElementById('type').value = campaign.type;
-        document.getElementById('status').value = campaign.status
         modal.classList.remove('hidden');
     })
     .catch(error =>{
@@ -177,7 +183,7 @@ function editCampaign(event){
     const formData = new FormData(form);
     // formData.append("creator", parseInt(creator_id));
     const campaignId = formData.get('campaign-id');
-    fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}/`,{
+    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}/`,{
         method:"PUT",
         headers: {
 
@@ -192,7 +198,7 @@ function editCampaign(event){
         return res.json();
     })
     .then(() => {
-        showAlert("Campaign update successfully")
+        su_showAlert("Campaign update successfully")
         loadCampaign(); 
         closeModal(); 
         setTimeout(() => {
@@ -213,7 +219,7 @@ function closeModal() {
 function deleteCampaign(campaignId){
  const token= window.localStorage.getItem("token");
     if(confirm('Are you sure to delete campaign?')){
-        fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}/`,{
+        fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}/`,{
             method:"DELETE",
             headers: {
         
@@ -251,7 +257,7 @@ const loadDonation =(campaignId)=>{
     const user_id=window.localStorage.getItem("user_id");
     const token=window.localStorage.getItem("token");
 
-    fetch(`http://127.0.0.1:8000/api/transactions/list/?user= ${user_id} &campaign=${campaignId}`)
+    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/transactions/list/?user= ${user_id} &campaign=${campaignId}`)
     .then(res =>{
         if(!res.ok){
             throw new Error(`Donation cannot load! status:${res.status} `)
@@ -294,7 +300,7 @@ const loadDonation =(campaignId)=>{
 
 
 const loadUser =()=>{
-    fetch("http://127.0.0.1:8000/api/users/list/")
+    fetch("https://donation-platform-backend-rmqk.onrender.com/api/users/list/")
     .then(res =>{
         if(!res.ok){
             throw new Error("No user find")

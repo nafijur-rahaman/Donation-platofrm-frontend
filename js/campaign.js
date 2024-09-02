@@ -1,9 +1,26 @@
+function showAlert(message) {
+    document.getElementById("alertMessage").textContent = message;
+    document.getElementById("customAlert").style.display = "flex";
+  }
+  
+  function su_showAlert(message) {
+    document.getElementById("s-alertMessage").textContent = message;
+    document.getElementById("s-customAlert").style.display = "flex";
+  }
+  
+  function closeErrorAlert() {
+    document.getElementById("customAlert").style.display = "none";
+  }
+  
+  function closeSuccessAlert() {
+    document.getElementById("s-customAlert").style.display = "none";
+  }
 document.addEventListener('DOMContentLoaded', function() {
     let currentPage = 1;
     const campaignsPerPage = 3;
 
     function fetchCampaigns(type = '', status = 'active') {
-        fetch(`http://127.0.0.1:8000/api/campaign/list/?type=${type}&status=${status}`)
+        fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/?type=${type}&status=${status}`)
             .then(response => response.json())
             .then(data => {
                 // console.log(data)

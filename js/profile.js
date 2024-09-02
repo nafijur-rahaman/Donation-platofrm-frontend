@@ -1,11 +1,20 @@
 function showAlert(message) {
     document.getElementById("alertMessage").textContent = message;
     document.getElementById("customAlert").style.display = "flex";
-}
-
-function closeAlert() {
+  }
+  
+  function su_showAlert(message) {
+    document.getElementById("s-alertMessage").textContent = message;
+    document.getElementById("s-customAlert").style.display = "flex";
+  }
+  
+  function closeErrorAlert() {
     document.getElementById("customAlert").style.display = "none";
-}
+  }
+  
+  function closeSuccessAlert() {
+    document.getElementById("s-customAlert").style.display = "none";
+  }
 
 
 
@@ -13,79 +22,73 @@ function closeAlert() {
 const handleProfile = () => {
     const user_id = localStorage.getItem("user_id")
 
-    fetch(`http://127.0.0.1:8000/api/users/list/${user_id}`)
+    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/users/list/${user_id}`)
         .then(res => res.json())
         .then(data => {
             const user = data;
-            const div = document.getElementById("profile-card")
+            
+            const sideProfile = document.getElementById("side-profile")
+            const profileDetails=document.getElementById("profile-details")
+       
+            sideProfile.innerHTML=`
+            
+             <img class="w-32 h-32 rounded-full mx-auto border-4 border-gray-200" src=" ${user.image} " alt="Profile Picture">
+              <h1 class="text-2xl font-semibold mt-2 text-gray-900">${user.first_name} ${user.last_name} </h1>
+              <p class="text-gray-600">${user.profession}</</p>
+            `
 
-            div.innerHTML = `
-    
-                <img class="w-64 h-64 object-cover mx-auto rounded-full"
-                src="${user.image}"
-                alt="Profile Picture">
 
 
-              </div>
-              <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">${user.first_name} ${user.last_name}</h1>
-              <h3 class="text-gray-600 font-lg text-semibold leading-6">${user.profession}</h3>
-              <p class="text-sm text-gray-500 hover:text-gray-600 leading-6">
-              ${user.bio}
-              </p>
-              <ul class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
-                  <li class="flex items-center py-3">
-                      <span>Status</span>
-                      <span class="ml-auto"><span
-                              class="bg-blue-500 py-1 px-2 rounded text-white text-sm">${user.status}</span></span>
-                  </li>
-                  <li class="flex items-center py-3">
-                      <span>Member since</span>
-                      <span class="ml-auto">${user.created}</span>
-                  </li>
-              </ul>
-    
-    `
-            const section = document.getElementById("profile-about")
-            section.innerHTML = `
 
-<div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                  <span class="text-blue-500">
-                      <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                          stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M5.121 17.804A13.937 13.937 0 0112 15c2.045 0 3.987.307 5.878.804M19 10V5a2 2 0 00-2-2h-1a2 2 0 00-2 2v1M5 10V5a2 2 0 012-2h1a2 2 0 012 2v1m0 9v5a2 2 0 002 2h4a2 2 0 002-2v-5M12 15v2m0 4h.01" />
-                      </svg>
-                  </span>
-                  <span class="tracking-wide">About</span>
-              </div>
-              <div>
-                  <div class="text-gray-700">
-                      <div class="grid md:grid-cols-2 text-sm">
-                          <div class="grid grid-cols-2">
-                              <div class="px-4 py-2 font-semibold">Full Name</div>
-                              <div class="px-4 py-2">${user.first_name}  ${user.last_name}</div>
-                          </div>
-                          <div class="grid grid-cols-2">
-                              <div class="px-4 py-2 font-semibold">Email</div>
-                              <div class="px-4 py-2">
-                                  <a class="text-blue-500 hover:underline" href="mailto:${user.email}">${user.email}</a>
-                              </div>
-                          </div>
-                          <div class="grid grid-cols-2">
-                              <div class="px-4 py-2 font-semibold">Phone</div>
-                              <div class="px-4 py-2">${user.phone_number}</div>
-                          </div>
-                          <div class="grid grid-cols-2">
-                              <div class="px-4 py-2 font-semibold">Address</div>
-                              <div class="px-4 py-2">${user.address}</div>
-                          </div>
+
+
+           
+            
+
+            profileDetails.innerHTML=`
+            
+            
+                   <div class="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg shadow-md">
+                      <div class="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl">
+                          <i class="fas fa-phone"></i>
+                      </div>
+                      <div>
+                          <h3 class="font-semibold text-gray-800">Phone</h3>
+                          <p class="text-gray-600">${user.phone_number}</p>
                       </div>
                   </div>
-              </div>
+                  <div class="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg shadow-md">
+                      <div class="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center text-white text-2xl">
+                          <i class="fas fa-map-marker-alt"></i>
+                      </div>
+                      <div>
+                          <h3 class="font-semibold text-gray-800">Address</h3>
+                          <p class="text-gray-600">${user.address}</</p>
+                      </div>
+                  </div>
+                  <div class="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg shadow-md">
+                      <div class="w-14 h-14 bg-yellow-500 rounded-full flex items-center justify-center text-white text-2xl">
+                          <i class="fas fa-envelope"></i>
+                      </div>
+                      <div>
+                          <h3 class="font-semibold text-gray-800">Email</h3>
+                          <p class="text-gray-600">${user.email}</p>
+                      </div>
+                  </div>
+                  <div class="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg shadow-md">
+                      <div class="w-14 h-14 bg-red-500 rounded-full flex items-center justify-center text-white text-2xl">
+                          <i class="fas fa-calendar-alt"></i>
+                      </div>
+                      <div>
+                          <h3 class="font-semibold text-gray-800">Joined</h3>
+                          <p class="text-gray-600">${user.created}</p>
+                      </div>
+                  </div>
+            `
+
             
 
 
-`
 
 
 
@@ -118,7 +121,7 @@ const handleFundraiser = (event) => {
 
 
 
-    fetch("http://127.0.0.1:8000/api/campaign/creator-request/", {
+    fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/creator-request/", {
 
         method: "POST",
         body: info,
@@ -168,7 +171,7 @@ if (cancelModalBtn && fundraiserModal) {
 
 const fundRaiser = () => {
     const user_id = window.localStorage.getItem("user_id");
-    fetch(`http://127.0.0.1:8000/api/campaign/creator/?user_id= ${user_id}`)
+    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/creator/?user_id= ${user_id}`)
     .then(res =>{
         if(!res.ok){
             throw new Error("You are not a creator");
@@ -190,8 +193,8 @@ const fundRaiser = () => {
                 "w-full",
                 "text-white",
                 "bg-green-500",
-                "text-sm",
-                "font-semibold",
+                "text-lg",
+                "font-bold",
                 "rounded-lg",
                 "hover:bg-green-700",
                 "focus:outline-none",
@@ -225,7 +228,7 @@ const getValue = (id) => {
 
 const loadDonation=()=>{
     const user_id=localStorage.getItem("user_id");
-    fetch(`http://127.0.0.1:8000/api/transactions/list/?user=${user_id}`)
+    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/transactions/list/?user=${user_id}`)
     .then(res =>{
         if(!res.ok){
             throw new Error("No user found!");  
@@ -268,7 +271,7 @@ document.getElementById('changePasswordForm').addEventListener('submit', async f
 
         if (/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(newPassword)){
           
-            fetch("http://127.0.0.1:8000/api/users/change-password/",{
+            fetch("https://donation-platform-backend-rmqk.onrender.com/api/users/change-password/",{
                 method: 'PUT',
                 headers: {
                'Content-Type': 'application/json',
@@ -292,12 +295,12 @@ document.getElementById('changePasswordForm').addEventListener('submit', async f
                             errorMessage = errorData.old_password.join(' '); 
                         }
                         
-                        showToast(`Password change failed: ${errorMessage}`);
+                        showAlert(`Password change failed: ${errorMessage}`);
                     });
 
 
                 }else{
-                    showToast("Password change successfully");
+                    su_showAlert("Password change successfully");
                     setTimeout(() => {
                        window.location.reload();
                     }, 3000);
@@ -310,7 +313,7 @@ document.getElementById('changePasswordForm').addEventListener('submit', async f
 
 
         }else{
-            showToast("Password must contain at least 8 characters, at least one letter, one number, and one special character.")
+            showAlert("Password must contain at least 8 characters, at least one letter, one number, and one special character.")
         }
 
    
@@ -319,7 +322,7 @@ document.getElementById('changePasswordForm').addEventListener('submit', async f
 
 
     }else{
-        showToast("password doesn't match");
+        showAlert("password doesn't match");
     }
 
 
@@ -339,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function fillFormWithExistingData() {
         const user_id=localStorage.getItem("user_id");
         const token=localStorage.getItem("token");
-        fetch(`http://127.0.0.1:8000/api/users/list/${user_id}/`, {
+        fetch(`https://donation-platform-backend-rmqk.onrender.com/api/users/list/${user_id}/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -370,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => {
             
-            showToast(error);
+            showAlert(error);
         });
     }
 
@@ -431,7 +434,7 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('address', address);
         formData.append('email', email); 
         formData.append('username', username); 
-        fetch(`http://127.0.0.1:8000/api/users/list/${user_id}/`, {
+        fetch(`https://donation-platform-backend-rmqk.onrender.com/api/users/list/${user_id}/`, {
             method: 'PUT',
             body: formData,
             headers: {
@@ -449,7 +452,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             submitButton.disabled = false;
             submitButton.textContent = 'Update Profile';
-            showToast('Profile updated successfully!');
+            su_showAlert('Profile updated successfully!');
             modal.classList.add('hidden');
             setTimeout(() => {
                 window.location.reload(); 

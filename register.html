@@ -4,314 +4,177 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>register</title>
-  <link rel="stylesheet" href="./css/style.css" />
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <title>Register</title>
 
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <style>
-    body {
-      background-color: #f4f4f9;
-      color: #333;
-      font-family: Arial, sans-serif;
-    }
-
-    .containerr {
-      max-width: 600px;
-      margin: auto;
-      margin-top: 50px;
-      margin-bottom: 50px;
-    }
-
-    .card {
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-header {
-      background-color: #007bff;
-      color: #fff;
-      text-align: center;
-      font-size: 1.5rem;
-      border-bottom: none;
-      border-radius: 10px 10px 0 0;
-    }
-
-    .form-group label {
-      font-weight: bold;
-    }
-
-    .form-control:focus {
-      box-shadow: none;
-      border-color: #007bff;
-    }
-
-    .btn-primary {
-      background-color: #007bff;
-      border-color: #007bff;
-    }
-
-    .btn-primary:hover {
-      background-color: #0056b3;
-      border-color: #004085;
-    }
-    .error-message {
-      color: red;
-      font-size: 0.9em;
-      margin-top: 5px;
-      display: block;
-  }
-   /* Modal Styles */
-   .modal {
-    display: none; 
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4); 
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-content {
-    background-color: #222;
-    color: white;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 400px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 0.3s;
-  }
-  
-  .close-btn {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close-btn:hover,
-  .close-btn:focus {
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  
-  .ok-btn {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  .ok-btn:hover {
-    background-color: #d32f2f;
-  }
-  
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  } 
-
-.spinner {
-  position: fixed; /* Position it fixed to overlay the entire page */
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
-  transform: translate(-50%, -50%); /* Center exactly */
-  border: 8px solid rgba(0, 0, 0, 0.1); /* Light background */
-  border-radius: 50%; /* Make it circular */
-  border-top: 8px solid #3498db; /* Color of the spinner */
-  width: 50px; /* Size of the spinner */
-  height: 50px; /* Size of the spinner */
-  animation: spin 1s linear infinite; /* Spinning animation */
-  display: none; /* Hide by default */
+     /* Modal Styles */
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); 
+  justify-content: center;
+  align-items: center;
 }
 
-/* Spinning animation */
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.modal-content {
+  background-color: #222;
+  color: white;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s;
 }
 
-  
+.close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ok-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.ok-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Success button specific styles */
+.success-btn {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.success-btn:hover {
+  background-color: #116d06;
+}
+
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+
+      .navbar {
+          background: linear-gradient(90deg, #4F46E5, #3B82F6);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      .navbar a {
+          transition: color 0.4s ease, transform 0.4s ease;
+      }
+      .navbar a:hover {
+          color: gray;
+          transform: scale(1.05);
+      }
+      .footer {
+          background: #1F2937;
+          color: #E5E7EB;
+      }
+      .footer a {
+          transition: color 0.3s ease;
+      }
+      .footer a:hover {
+          color: #F3F4F6;
+      }
+      .footer-section-title {
+          color: #E5E7EB;
+      }
+
+      .spinner {
+        position: fixed; /* Position it fixed to overlay the entire page */
+        top: 50%; /* Center vertically */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, -50%); /* Center exactly */
+        border: 8px solid rgba(0, 0, 0, 0.1); /* Light background */
+        border-radius: 50%; /* Make it circular */
+        border-top: 8px solid #3498db; /* Color of the spinner */
+        width: 50px; /* Size of the spinner */
+        height: 50px; /* Size of the spinner */
+        animation: spin 1s linear infinite; /* Spinning animation */
+        display: none; /* Hide by default */
+      }
+      
+      /* Spinning animation */
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
   </style>
 </head>
 
-<body>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
   <!-- navbar -->
-  <nav class="navbar navbar-expand-lg" style="
-        background: linear-gradient(45deg, #2c3e50, #4c5f70, #bdc3c7);
-        padding: 1rem 2rem;
-      ">
-    <div class="container-fluid">
-      <a class="navbar-brand text-white fw-bold fs-3" href="home.html" style="
-            letter-spacing: 2px;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
-            font-weight: bolder;
-          ">
-        Donation Platform
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon text-white"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link text-white fs-5 nav-link-hover" href="home.html"
-              style="padding: 0.5rem 1.5rem; font-weight: 500">Home</a>
-          </li>
-            <li class="nav-item">
-            <a class="nav-link text-white fs-5 nav-link-hover" href="campaign.html"
-              style="padding: 0.5rem 1.5rem; font-weight: 500">Campaigns</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white fs-5 nav-link-hover" href="about.html"
-              style="padding: 0.5rem 1.5rem; font-weight: 500">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white fs-5 nav-link-hover" href="contact.html"
-              style="padding: 0.5rem 1.5rem; font-weight: 500">Contact</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="
-                border-radius: 30px;
-                padding: 0.5rem 1.5rem;
-                border: none;
-                background-color: #ffffff;
-                color: #2c3e50;
-              " />
-          <button class="btn btn-outline-light" type="submit" style="border-radius: 30px; padding: 0.5rem 1.5rem">
-            Search
-          </button>
-        </form>
-        <ul class="navbar-nav ms-3">
-          <li class="nav-item">
-            <a class="btn btn-light text-dark me-2" href="login.html" style="
-                  padding: 0.5rem 1.5rem;
-                  border-radius: 30px;
-                  font-weight: 700;
-                  transition: background-color 0.3s, color 0.3s;
-                ">
-              Login
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="btn btn-primary" href="register.html" style="
-                  padding: 0.5rem 1.5rem;
-                  border-radius: 30px;
-                  font-weight: 700;
-                  transition: background-color 0.3s, color 0.3s;
-                ">
-              Register
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+  <nav id="conditional-element" class="navbar fixed w-full top-0 left-0 z-50 bg-gradient-to-r from-indigo-500 to-blue-500 text-white">
   </nav>
 
-<!-- alert modal -->
+ <!-- Main Content -->
+ <section class="pt-20">
+
+
+
+
+
+
+
+<!-- error alert modal -->
 <div id="customAlert" class="modal">
   <div class="modal-content">
-      <span class="close-btn" onclick="closeAlert()">&times;</span>
+      <span class="close-btn" onclick="closeErrorAlert()">&times;</span>
       <p id="alertMessage"></p>
-      <button class="ok-btn" onclick="closeAlert()">OK</button>
+      <button class="ok-btn" onclick="closeErrorAlert()">OK</button>
   </div>
 </div>
-  <!-- registration  -->
 
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card shadow-lg">
-                <div class="card-header bg-dark text-white">
-                    <h4 class="mb-0"><i class="fas fa-user-plus"></i> Register</h4>
-                </div>
-                <div class="card-body p-4">
-                    <form onsubmit="handleRegistration(event)">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
-                                <span id="username_error" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="first_name" class="form-label">First Name</label>
-                                <input type="text" class="form-control" id="first_name" placeholder="Enter your first name" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="last_name" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" id="last_name" placeholder="Enter your last name" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="email" class="form-label">Email Address</label>
-                                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
-                                <span id="email_error" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="image" class="form-label">Profile Picture</label>
-                                <input type="file" class="form-control" id="image" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="profession" class="form-label">Your Profession</label>
-                                <input type="text" class="form-control" id="profession" placeholder="Enter your profession" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="address" class="form-label">Address</label>
-                                <input type="text" class="form-control" id="address" placeholder="Enter your address" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="phone" class="form-label">Phone</label>
-                                <input type="text" class="form-control" id="phone" placeholder="Enter your phone number" required>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="bio" class="form-label">Bio</label>
-                            <textarea class="form-control" id="bio" rows="3" placeholder="Tell us about yourself"></textarea>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="confirm_password" class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirm_password" placeholder="Confirm your password" required>
-                                <span id="password_error" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <button type="submit" style="font-size: larger;" class="btn btn-dark w-100">Sign Up</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- success alert modal -->
+<div id="s-customAlert" class="modal">
+  <div class="modal-content">
+      <span class="close-btn" onclick="closeSuccessAlert()">&times;</span>
+      <p id="s-alertMessage"></p>
+      <button class="success-btn" onclick="closeSuccessAlert()">OK</button>
+  </div>
 </div>
-
-
-
 
 
 
@@ -319,114 +182,116 @@
 <div id="spinner" class="spinner"></div>
 
 
-  <!-- footer -->
+  
+  
+  
+  
+  
+  
 
-  <footer style="
-      background: #2c3e50;
-      color: #f4d03f;
-      padding: 2rem 0;
-      text-align: center;
-      box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.2);
-    ">
-    <div class="container">
-      <div class="row">
-        <!-- About Section -->
-        <div class="col-md-4 mb-4">
-          <h5 style="font-weight: bold; text-transform: uppercase">
-            About Us
-          </h5>
-          <p style="line-height: 1.7">
-            We are a platform dedicated to making donations easy and
-            transparent. Our mission is to connect donors with those in need,
-            ensuring that every contribution makes a meaningful impact.
-          </p>
-        </div>
+  
+ <!-- registration  -->
 
-        <!-- Links Section -->
-        <div class="col-md-4 mb-4">
-          <h5 style="font-weight: bold; text-transform: uppercase">
-            Quick Links
-          </h5>
-          <ul style="list-style: none; padding: 0">
-            <li>
-              <a href="home.html" style="
-                  color: #f4d03f;
-                  text-decoration: none;
-                  transition: color 0.3s;
-                ">Home</a>
-            </li>
-            <li>
-              <a href="about.html" style="
-                  color: #f4d03f;
-                  text-decoration: none;
-                  transition: color 0.3s;
-                ">About Us</a>
-            </li>
-            <li>
-              <a href="campaign.html" style="
-                  color: #f4d03f;
-                  text-decoration: none;
-                  transition: color 0.3s;
-                ">Campaigns</a>
-            </li>
-            <li>
-              <a href="contact.html" style="
-                  color: #f4d03f;
-                  text-decoration: none;
-                  transition: color 0.3s;
-                ">Contact</a>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Contact Section -->
-        <div class="col-md-4 mb-4">
-          <h5 style="font-weight: bold; text-transform: uppercase">
-            Contact Us
-          </h5>
-          <p style="line-height: 1.7">
-            <i class="fas fa-map-marker-alt"></i> 123 Donation pt, Charity
-            Dhaka, 4567
-          </p>
-          <p style="line-height: 1.7">
-            <i class="fas fa-phone"></i> +8801626681291
-          </p>
-          <p style="line-height: 1.7">
-            <i class="fas fa-envelope"></i> support@donationplatform.com
-          </p>
-        </div>
-      </div>
-
-      <!-- Social Media Icons -->
-      <div class="row mt-4">
-        <div class="col-12">
-          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-facebook fa-lg"></i></a>
-          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-twitter fa-lg"></i></a>
-          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-instagram fa-lg"></i></a>
-          <a href="#" style="color: #f4d03f; margin: 0 10px"><i class="fab fa-linkedin fa-lg"></i></a>
-        </div>
-      </div>
-
-      <!-- Copyright Section -->
-      <div class="row mt-4">
-        <div class="col-12">
-          <p style="margin: 0; font-size: 0.9rem">
-            &copy; 2024 Donation Platform. All rights reserved.
-          </p>
-        </div>
-      </div>
+ <div class="flex items-center justify-center min-h-screen bg-gray-200 p-4">
+  <div class="w-full max-w-md bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden">
+    <div class="bg-green-600 text-white py-4 px-6 text-center">
+      <h4 class="text-xl font-semibold"><i class="fas fa-user-plus"></i> Register</h4>
     </div>
-  </footer>
+    <div class="p-6">
+      <form onsubmit="handleRegistration(event)" class="space-y-4">
+        <div class="grid grid-cols-1 gap-4">
+          <div>
+            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+            <input type="text" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="username" placeholder="Enter your username" required>
+            <span id="username_error" class="text-red-500 text-xs"></span>
+          </div>
+          <div>
+            <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
+            <input type="text" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="first_name" placeholder="Enter your first name" required>
+          </div>
+          <div>
+            <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
+            <input type="text" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="last_name" placeholder="Enter your last name" required>
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+            <input type="email" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="email" placeholder="Enter your email" required>
+            <span id="email_error" class="text-red-500 text-xs"></span>
+          </div>
+          <div>
+            <label for="image" class="block text-sm font-medium text-gray-700">Profile Picture</label>
+            <input type="file" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="image" required>
+          </div>
+          <div>
+            <label for="profession" class="block text-sm font-medium text-gray-700">Your Profession</label>
+            <input type="text" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="profession" placeholder="Enter your profession" required>
+          </div>
+          <div>
+            <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+            <input type="text" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="address" placeholder="Enter your address" required>
+          </div>
+          <div>
+            <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+            <input type="text" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="phone" placeholder="Enter your phone number" required>
+          </div>
+          <div>
+            <label for="bio" class="block text-sm font-medium text-gray-700">Bio</label>
+            <textarea class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="bio" rows="3" placeholder="Tell us about yourself"></textarea>
+          </div>
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="password" placeholder="Enter your password" required>
+          </div>
+          <div>
+            <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+            <input type="password" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="confirm_password" placeholder="Confirm your password" required>
+            <span id="password_error" class="text-red-500 text-xs"></span>
+          </div>
+        </div>
+        <button type="submit" class="w-full py-3 bg-green-600 text-white font-semibold rounded-lg shadow-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 text-base">Sign Up</button>
+      </form>
+    </div>
+  </div>
+</div>
 
 
-  <script src="./js/register.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+
+
+ </section>
+   <!-- Footer -->
+   <footer class="footer mt-20 py-12">
+    <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row md:justify-between">
+            <div class="mb-6 md:mb-0">
+                <h4 class="text-3xl font-bold footer-section-title">DonationPlatform</h4>
+                <p class="mt-2">Empowering communities through compassion and generosity. Join us in making a difference today!</p>
+            </div>
+            <div class="flex flex-col md:flex-row md:space-x-8">
+                <div class="mb-6 md:mb-0">
+                    <h5 class="text-xl font-semibold footer-section-title">Quick Links</h5>
+                    <ul class="mt-2 space-y-2">
+                        <li><a href="./home.html" class="hover:underline">Home</a></li>
+                        <li><a href="./about.html" class="hover:underline">About</a></li>
+                        <li><a href="./campaign.html" class="hover:underline">Campaign</a></li>
+                        <li><a href="./contact.html" class="hover:underline">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-xl font-semibold footer-section-title">Contact Us</h5>
+                    <p class="mt-2">14 no road Rupnogor<br>mirpur, Dhaka, 2</p>
+                    <p>Email: <a href="mailto:support@DonationPlatform.com" class="hover:underline">support@DonationPlatform.com</a><br>Phone: +8801626681291</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-8">
+            <p class="text-gray-400">© 2024 DonationPlatform. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+<script src="./js/login.js"></script>
+ <script src="./js/home.js"></script>
+  <script src="./js/logout.js"></script>
 </body>
 
 </html>

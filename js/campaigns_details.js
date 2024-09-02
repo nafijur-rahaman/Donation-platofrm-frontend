@@ -1,3 +1,20 @@
+function showAlert(message) {
+    document.getElementById("alertMessage").textContent = message;
+    document.getElementById("customAlert").style.display = "flex";
+  }
+  
+  function su_showAlert(message) {
+    document.getElementById("s-alertMessage").textContent = message;
+    document.getElementById("s-customAlert").style.display = "flex";
+  }
+  
+  function closeErrorAlert() {
+    document.getElementById("customAlert").style.display = "none";
+  }
+  
+  function closeSuccessAlert() {
+    document.getElementById("s-customAlert").style.display = "none";
+  }
 const getQueryParams = (param) => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
@@ -7,7 +24,7 @@ const getQueryParams = (param) => {
 const getCampaignDetails = () => {
     const campaign_id = getQueryParams("id");
     // console.log(campaign_id);
-    fetch(`http://127.0.0.1:8000/api/campaign/list/${campaign_id}/`)
+    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaign_id}/`)
         .then(res => res.json())
         .then(data => {
             // console.log(data)
@@ -61,7 +78,7 @@ document.getElementById('payment-form').addEventListener('submit', function (eve
 
     const token = localStorage.getItem("token")
     if (token) {
-        fetch('http://127.0.0.1:8000/api/transactions/initiate-payment/', {
+        fetch('https://donation-platform-backend-rmqk.onrender.com/api/transactions/initiate-payment/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -91,7 +108,7 @@ document.getElementById('payment-form').addEventListener('submit', function (eve
                 console.error('Error:', error);
             });
     } else {
-        fetch('http://127.0.0.1:8000/api/transactions/initiate-payment/', {
+        fetch('https://donation-platform-backend-rmqk.onrender.com/api/transactions/initiate-payment/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -127,34 +144,33 @@ document.getElementById('payment-form').addEventListener('submit', function (eve
 
 const loadDonation = () => {
     const campaign_id = getQueryParams("id");
-    fetch(`http://127.0.0.1:8000/api/transactions/list/?campaign= ${campaign_id}`)
+    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/transactions/list/?campaign=${campaign_id}`)
         .then(res => {
             if (!res.ok) {
-                throw new Error("Donation loading failed")
+                throw new Error("Donation loading failed");
             }
-            return res.json()
+            return res.json();
         })
         .then(data => {
-            // console.log(data)
-            parent = document.getElementById("donation")
-            parent.innerHTML = ''
-            data.forEach(donate => {
+           
+            data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
+            const parent = document.getElementById("donation");
+            parent.innerHTML = '';
+            data.forEach(donate => {
                 const formattedDate = formatDate(donate.created_at);
 
-                li = document.createElement("li");
+                const li = document.createElement("li");
                 li.innerHTML = `
-            
-             <p class="text-gray-800 text-lg font-bold"> ${donate.donor_name} </p>
-                      <p class="text-green-600 font-semibold">BDT${donate.amount} - ${formattedDate}</p>
-            
-            `
+                    <p class="text-gray-800 text-lg font-bold">${donate.donor_name}</p>
+                    <p class="text-green-600 font-semibold">BDT${donate.amount} - ${formattedDate}</p>
+                `;
                 parent.appendChild(li);
-
             });
         })
-        .catch(error => alert(error))
+        .catch(error => alert(error));
 }
+
 
 
 
@@ -199,7 +215,7 @@ form.addEventListener('submit', function (event) {
 
 
 
-    fetch('http://127.0.0.1:8000/api/campaign/review/', {
+    fetch('https://donation-platform-backend-rmqk.onrender.com/api/campaign/review/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -213,9 +229,12 @@ form.addEventListener('submit', function (event) {
         return res.json();
     })
     .then(data =>{
-        alert('review submit successfully')
+        su_showAlert('review submit successfully')
+        setTimeout(() => {
+            window.location.reload()
+        }, 1000);
     })
-    .catch(error =>alert(error))
+    .catch(error =>showAlert(error))
 
 
 
@@ -232,7 +251,7 @@ form.addEventListener('submit', function (event) {
 
 const loadReviews=()=>{
     const campaignID=getQueryParams("id");
-    fetch(`http://127.0.0.1:8000/api/campaign/review/?campaign=${campaignID}`)
+    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/review/?campaign=${campaignID}`)
     .then(res =>{
         if(!res.ok){
             throw new Error("Campaign not found");
@@ -257,7 +276,7 @@ const loadReviews=()=>{
         
 
     })
-    .catch(error=>alert(error))
+    .catch(error=>ShowAlert(error))
 }
 
 

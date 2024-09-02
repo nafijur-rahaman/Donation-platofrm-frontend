@@ -1,15 +1,24 @@
 function showAlert(message) {
     document.getElementById("alertMessage").textContent = message;
     document.getElementById("customAlert").style.display = "flex";
-}
-
-function closeAlert() {
+  }
+  
+  function su_showAlert(message) {
+    document.getElementById("s-alertMessage").textContent = message;
+    document.getElementById("s-customAlert").style.display = "flex";
+  }
+  
+  function closeErrorAlert() {
     document.getElementById("customAlert").style.display = "none";
-}
+  }
+  
+  function closeSuccessAlert() {
+    document.getElementById("s-customAlert").style.display = "none";
+  }
 
 
 const loadCampaign = () => {
-    fetch("http://127.0.0.1:8000/api/campaign/list/")
+    fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/")
     .then(res => {
         if (!res.ok) {
             throw new Error("Campaign not found");
@@ -73,12 +82,7 @@ document.getElementById("addCampaignButton").addEventListener("click", function 
      document.getElementById("addCampaignModal").classList.add("hidden");
    });
 
-//  document.getElementById("add-campaign").addEventListener("submit", function (event) {
-//      event.preventDefault();
-//      // Handle form submission here
-//      alert("Campaign added!");
-//      document.getElementById("addCampaignModal").classList.add("hidden");
-//    });
+
 
 
 
@@ -91,7 +95,7 @@ document.getElementById("addCampaignButton").addEventListener("click", function 
    const modal = document.getElementById("editCampaignModal");
    const form = document.getElementById("edit-campaign-form");
 
-   fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}`)
+   fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}`)
      .then((res) => {
        if (!res.ok) {
          throw new Error(`Campaign not found! status:${res.status}`);
@@ -137,7 +141,7 @@ document.getElementById("addCampaignButton").addEventListener("click", function 
             const formData = new FormData(form);
             // formData.append("creator", parseInt(creator_id));
             const campaignId = formData.get('campaign-id');
-            fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}/`,{
+            fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}/`,{
                 method:"PUT",
                 headers: {
         
@@ -154,7 +158,7 @@ document.getElementById("addCampaignButton").addEventListener("click", function 
             .then(() => {
                 loadCampaign(); 
                 closeModal(); 
-                showAlert("Campaign update successfully")
+                su_showAlert("Campaign update successfully")
                 setTimeout(() => {
                     window.location.reload();
                 }, 2000);
@@ -177,7 +181,7 @@ document.getElementById("addCampaignButton").addEventListener("click", function 
 function deleteCampaign(campaignId){
     const token= localStorage.getItem("admin_token");
        if(confirm('Are you sure to delete campaign?')){
-           fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}/`,{
+           fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}/`,{
                method:"DELETE",
                headers: {
            
@@ -189,7 +193,7 @@ function deleteCampaign(campaignId){
                if(!res.ok){
                    throw new Error(`Cannot delete campaign! status: ${res.status} `) 
                }else{
-                   showAlert("Campaign delete successfully");
+                su_showAlert("Campaign delete successfully");
                    setTimeout(() => {
                        window.location.reload();
                    }, 2000);
@@ -213,7 +217,7 @@ const addCampaign = (event) => {
     event.preventDefault();
     const user_id = localStorage.getItem("user_id");
     // console.log(user_id)
-    fetch(`http://127.0.0.1:8000/api/campaign/creator/?user_id=${user_id}`)
+    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/creator/?user_id=${user_id}`)
         .then(res => {
             if (!res.ok) {
                 throw new Error(`You are not a fundraiser! status: ${res.status}`);
@@ -227,7 +231,7 @@ const addCampaign = (event) => {
             const formData = new FormData(form);
             const token = localStorage.getItem("admin_token");
             formData.append("creator", parseInt(creator_id));
-            fetch("http://127.0.0.1:8000/api/campaign/list/", {
+            fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/", {
 
                 method: "POST",
                 headers: {
@@ -244,7 +248,7 @@ const addCampaign = (event) => {
                     return res.json();
                 })
                 .then(data => {
-                    showAlert("Campaign Create successfully");
+                    su_showAlert("Campaign Create successfully");
                     loadCampaign()
                     setTimeout(() => {
                         window.location.reload()

@@ -1,15 +1,25 @@
+
 function showAlert(message) {
-    document.getElementById("alertMessage").textContent = message;
-    document.getElementById("customAlert").style.display = "flex";
+  document.getElementById("alertMessage").textContent = message;
+  document.getElementById("customAlert").style.display = "flex";
 }
 
-function closeAlert() {
-    document.getElementById("customAlert").style.display = "none";
+function su_showAlert(message) {
+  document.getElementById("s-alertMessage").textContent = message;
+  document.getElementById("s-customAlert").style.display = "flex";
+}
+
+function closeErrorAlert() {
+  document.getElementById("customAlert").style.display = "none";
+}
+
+function closeSuccessAlert() {
+  document.getElementById("s-customAlert").style.display = "none";
 }
 
 function fetchUnreadCount() {
     const token=localStorage.getItem("admin_token")
-    fetch('http://127.0.0.1:8000/api/notification/unread-count/', {
+    fetch('https://donation-platform-backend-rmqk.onrender.com/api/notification/unread-count/', {
         method: 'GET',
         headers: {
             'Content-Type': 'campaign/json',
@@ -21,10 +31,10 @@ function fetchUnreadCount() {
         if (data.unread_count !== undefined) {
             unreadCount.textContent = `Unread: ${data.unread_count}`;
         } else {
-            console.error('Unread count not found in response:', data);
+            showAlert('Unread count not found in response:', data);
         }
     })
-    .catch(error => console.error('Error fetching unread count:', error));
+    .catch(error => showAlert('Error fetching unread count:', error));
 }
 
 
@@ -37,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     function fetchNotifications() {
-        fetch("http://127.0.0.1:8000/api/notification/list/", {
+        fetch("https://donation-platform-backend-rmqk.onrender.com/api/notification/list/", {
             method: 'GET',
             headers: {
                 'Content-Type': 'campaign/json',
@@ -94,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function markAsRead(notificationId, listItem) {
-        fetch(`http://127.0.0.1:8000/api/notification/notifications/${notificationId}/read/`, {
+        fetch(`https://donation-platform-backend-rmqk.onrender.com/api/notification/notifications/${notificationId}/read/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'campaign/json',
@@ -111,10 +121,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 fetchUnreadCount();
                 window.location.reload()
             } else {
-                console.error('Failed to mark notification as read');
+                showAlert('Failed to mark notification as read');
             }
         })
-        .catch(error => console.error('Error marking notification as read:', error));
+        .catch(error => showAlert('Error marking notification as read:', error));
     }
 
     function toggleDropdown() {
@@ -142,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const loadDashboard =()=>{
     // campaign load
-    fetch("http://127.0.0.1:8000/api/campaign/list/")
+    fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/")
     .then(res =>{
         if(!res.ok){
             throw new Error("users not found");
@@ -165,7 +175,7 @@ const loadDashboard =()=>{
 
 
     //   donation load
-        fetch("http://127.0.0.1:8000/api/transactions/list/")
+        fetch("https://donation-platform-backend-rmqk.onrender.com/api/transactions/list/")
         .then(res =>{
             if(!res.ok){
                 throw new Error("Donations not found");
@@ -199,7 +209,7 @@ const loadDashboard =()=>{
 
 
         // users load
-        fetch("http://127.0.0.1:8000/api/users/list/")
+        fetch("https://donation-platform-backend-rmqk.onrender.com/api/users/list/")
         .then(res =>{
             if(!res.ok){
                 throw new Error("Campaign not found");
@@ -229,7 +239,7 @@ loadDashboard()
 
 
 const loadDonation = () => {
-    fetch("http://127.0.0.1:8000/api/transactions/list/")
+    fetch("https://donation-platform-backend-rmqk.onrender.com/api/transactions/list/")
       .then(res => {
         if (!res.ok) {
           throw new Error("Donations not found");
@@ -285,7 +295,7 @@ function formatDatee(datetimeString) {
 
 
 
-const apiUrl = 'http://127.0.0.1:8000/api/users/list/';
+const apiUrl = 'https://donation-platform-backend-rmqk.onrender.com/api/users/list/';
 const token = localStorage.getItem("admin_token");
 
 function fetchUsers() {
@@ -327,7 +337,7 @@ function fetchUsers() {
 
 function deleteUser(userId) {
     if (confirm('Are you sure you want to delete this user?')) {
-        fetch(`http://127.0.0.1:8000/api/users/list/${userId}/`, {
+        fetch(`https://donation-platform-backend-rmqk.onrender.com/api/users/list/${userId}/`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -336,13 +346,13 @@ function deleteUser(userId) {
         })
         .then(response => {
             if (response.ok) {
-                alert('User deleted successfully');
+                su_showAlert('User deleted successfully');
                 fetchUsers(); 
             } else {
                 console.error('Failed to delete user');
             }
         })
-        .catch(error => console.error('Error deleting user:', error));
+        .catch(error => showAlert('Error deleting user:', error));
     }
 }
 
@@ -373,7 +383,7 @@ fetchUsers();
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetch("http://127.0.0.1:8000/api/campaign/list/")
+    fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/")
       .then(response => {
         if (!response.ok) {
           throw new Error('Failed to load users');
@@ -429,7 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
                       statusButton.textContent = 'Active';
                       statusButton.classList.replace('bg-yellow-500', 'bg-green-600');
                       statusButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-700');
-                      showAlert("Campaign activated successfully");
+                      su_showAlert("Campaign activated successfully");
                       setTimeout(() => window.location.reload(), 3000);
                     })
                     .catch(error => {
@@ -446,7 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
                       statusButton.textContent = 'Active';
                       statusButton.classList.replace('bg-yellow-500', 'bg-green-600');
                       statusButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-700');
-                      showAlert("Campaign Completed successfully");
+                      su_showAlert("Campaign Completed successfully");
                       setTimeout(() => window.location.reload(), 3000);
                     })
                     .catch(error => {
@@ -478,7 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateCampaignStatus(campaignId, newStatus) {
     const token = localStorage.getItem("admin_token");
-    return fetch(`http://127.0.0.1:8000/api/campaign/list/${campaignId}/`, {
+    return fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}/`, {
       method: 'PATCH',
       headers: {
         "Content-Type": "application/json",
@@ -490,7 +500,8 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error("Status change failed");
       }
       return response.json();
-    });
+    })
+    .catch(error=>showAlert(error))
   }
 
 
@@ -498,7 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //   creator request
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetch("http://127.0.0.1:8000/api/campaign/creator-request/")
+    fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/creator-request/")
       .then(response => {
         if (!response.ok) {
           throw new Error('Failed to load users');
@@ -555,7 +566,7 @@ document.addEventListener('DOMContentLoaded', () => {
                       statusButton.textContent = 'Approved';
                       statusButton.classList.replace('bg-yellow-500', 'bg-green-600');
                       statusButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-700');
-                      showAlert("Creator make successfully");
+                      su_showAlert("Creator make successfully");
                       setTimeout(() => window.location.reload(), 3000);
                     })
                     .catch(error => {
@@ -600,7 +611,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateUserStatus(userId, newStatus) {
     const token = localStorage.getItem("admin_token");
-    return fetch(`http://127.0.0.1:8000/api/campaign/creator-request/${userId}/`, {
+    return fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/creator-request/${userId}/`, {
       method: 'PATCH',
       headers: {
         "Content-Type": "application/json",
