@@ -237,14 +237,15 @@ const loadDonation=()=>{
         return res.json()
     })
     .then(data =>{
-        if(data.results){
-            data.results.forEach(donation => {
+        console.log(data)
+        if(data){
+            data.forEach(donation => {
                 const userDonor=document.getElementById("user-donor");
                 const li=document.createElement("li")
                 li.innerHTML=`
                 
-                              <div class="text-blue-500"> ${donation.campaign_name} </div>
-                              <div class="text-gray-500 text-sm">Donated: ${donation.amount} | Date: ${donation.created_at} </div>
+                              <div class="text-blue-500"> Campaign Title: ${donation.campaign_name} </div>
+                              <div class="text-gray-500 text-sm font-bold">Donated: ${donation.amount} | Date: ${donation.created_at} </div>
                
                 `
                 userDonor.appendChild(li);
