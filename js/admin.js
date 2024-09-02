@@ -18,23 +18,47 @@ function closeSuccessAlert() {
 }
 
 function fetchUnreadCount() {
-    const token=localStorage.getItem("admin_token")
-    fetch('https://donation-platform-backend-rmqk.onrender.com/api/notification/unread-count/', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'campaign/json',
-            Authorization: `Token ${token}`,
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.unread_count !== undefined) {
-            unreadCount.textContent = `Unread: ${data.unread_count}`;
-        } else {
-            showAlert('Unread count not found in response:', data);
-        }
-    })
-    .catch(error => showAlert('Error fetching unread count:', error));
+  const token=window.localStorage.getItem("admin_token");
+  fetch("https://donation-platform-backend-rmqk.onrender.com/api/notification/list/", {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'campaign/json',
+          Authorization: `Token ${token}`,
+      }
+  })
+  .then(response => response.json())
+  .then(data => {
+    // console.log(data)
+      let unreadNotificationsCount = 0;
+
+      if (data.length > 0) {
+       
+       
+          data.forEach((notification, index) => {
+            const li = document.createElement('li');
+            li.dataset.notificationId = notification.id;
+            li.classList.add('p-2', 'mb-1', 'border-b', 'border-gray-200');
+              if (!notification.is_read) {
+                li.classList.add('bg-red-100');
+                unreadNotificationsCount++;
+
+                const markReadButton = document.createElement('button');
+                markReadButton.textContent = 'Mark as Read';
+                markReadButton.classList.add('text-blue-500', 'ml-2');
+
+                markReadButton.addEventListener('click', function() {
+                    markAsRead(notification.id, li);
+                });
+
+                li.appendChild(markReadButton);
+              } 
+
+          });
+
+          unreadCount.textContent = `Unread: ${unreadNotificationsCount}`;
+      } 
+  })
+  .catch(error => console.error('Error fetching notifications:', error));
 }
 
 
@@ -56,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(data => {
+          // console.log(data)
             notificationsList.innerHTML = '';
             let unreadNotificationsCount = 0;
 
@@ -295,11 +320,11 @@ function formatDatee(datetimeString) {
 
 
 
-const apiUrl = 'https://donation-platform-backend-rmqk.onrender.com/api/users/list/';
-const token = localStorage.getItem("admin_token");
+
 
 function fetchUsers() {
-    fetch(apiUrl, {
+  const token = localStorage.getItem("admin_token");
+    fetch('https://donation-platform-backend-rmqk.onrender.com/api/users/list/', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -411,7 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const statusButton = document.createElement('button');
           statusButton.classList.add('px-4', 'py-2', 'rounded-full', 'text-white', 'transition', 'duration-300');
 
-        
+        // console.log(campaign.status)
           switch (campaign.status) {
             case 'active':
               statusButton.classList.add('bg-green-600', 'hover:bg-green-700');
@@ -422,6 +447,8 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'completed':
               statusButton.classList.add('bg-blue-600', 'hover:bg-blue-700');
               break;
+            case 'Pending':
+              statusButton.classList.add('bg-red-500', 'hover:bg-red-600');
             default:
               statusButton.classList.add('bg-gray-600', 'hover:bg-gray-700');
               break;
@@ -433,6 +460,23 @@ document.addEventListener('DOMContentLoaded', () => {
       
           statusButton.addEventListener('click', () => {
             if (campaign.status === 'pending') {
+                if (confirm('Are you sure you want to active this campaign?')){
+                    updateCampaignStatus(campaign.id, 'active')
+                    .then(() => {
+                      statusButton.textContent = 'Active';
+                      statusButton.classList.replace('bg-yellow-500', 'bg-green-600');
+                      statusButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-700');
+                      su_showAlert("Campaign activated successfully");
+                      setTimeout(() => window.location.reload(), 3000);
+                    })
+                    .catch(error => {
+                      showAlert("Failed to activate campaign");
+                      console.error(error);
+                    });
+                }
+         
+            }
+            else if (campaign.status === 'Pending') {
                 if (confirm('Are you sure you want to active this campaign?')){
                     updateCampaignStatus(campaign.id, 'active')
                     .then(() => {
@@ -520,7 +564,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tuitionList = document.getElementById('request-list').querySelector('tbody');
 
         users.forEach(user => {
-            console.log(user)
+            // console.log(user)
           const tr = document.createElement('tr');
           tr.classList.add('hover:bg-gray-100', 'even:bg-gray-50', 'odd:bg-white');
 

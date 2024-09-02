@@ -136,7 +136,7 @@ document.getElementById("addCampaignButton").addEventListener("click", function 
     event.preventDefault();
   
 
-            const token =window.localStorage.getItem("token");
+            const token =window.localStorage.getItem("admin_token");
             const form = document.getElementById('edit-campaign-form');
             const formData = new FormData(form);
             // formData.append("creator", parseInt(creator_id));
@@ -225,8 +225,9 @@ const addCampaign = (event) => {
             return res.json()
         })
         .then(data => {
-
-            const creator_id = data.results[0].id
+        //    console.log(data)
+            const creator_id = data[0].id
+            // console.log(creator_id)
             const form = document.getElementById("add-campaign");
             const formData = new FormData(form);
             const token = localStorage.getItem("admin_token");
@@ -248,6 +249,7 @@ const addCampaign = (event) => {
                     return res.json();
                 })
                 .then(data => {
+                    // console.log(data)
                     su_showAlert("Campaign Create successfully");
                     loadCampaign()
                     setTimeout(() => {

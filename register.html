@@ -192,67 +192,76 @@
   
  <!-- registration  -->
 
- <div class="flex items-center justify-center min-h-screen bg-gray-200 p-4">
-  <div class="w-full max-w-md bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden">
-    <div class="bg-green-600 text-white py-4 px-6 text-center">
-      <h4 class="text-xl font-semibold"><i class="fas fa-user-plus"></i> Register</h4>
+ <div class="flex items-center justify-center min-h-screen bg-gray-100 p-6">
+  <div class="w-full max-w-4xl bg-white border border-gray-300 rounded-xl shadow-lg">
+    <div class="bg-gradient-to-r from-green-500 to-green-600 text-white py-5 px-8 rounded-t-xl">
+      <h4 class="text-2xl font-bold text-center"><i class="fas fa-user-plus"></i> Register</h4>
     </div>
-    <div class="p-6">
-      <form onsubmit="handleRegistration(event)" class="space-y-4">
-        <div class="grid grid-cols-1 gap-4">
-          <div>
-            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-            <input type="text" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="username" placeholder="Enter your username" required>
-            <span id="username_error" class="text-red-500 text-xs"></span>
+    <div class="p-8">
+      <form onsubmit="handleRegistration(event)" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+       
+          <div class="space-y-8">
+            <div>
+              <label for="username" class="block text-sm font-medium text-gray-600">Username</label>
+              <input type="text" class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2.5 px-4" id="username" placeholder="Enter your username" required>
+              <span id="username_error" class="text-red-500 text-xs"></span>
+            </div>
+            <div>
+              <label for="first_name" class="block text-sm font-medium text-gray-600">First Name</label>
+              <input type="text" class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2.5 px-4" id="first_name" placeholder="Enter your first name" required>
+            </div>
+            <div>
+              <label for="last_name" class="block text-sm font-medium text-gray-600">Last Name</label>
+              <input type="text" class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2.5 px-4" id="last_name" placeholder="Enter your last name" required>
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-600">Email Address</label>
+              <input type="email" class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2.5 px-4" id="email" placeholder="Enter your email" required>
+              <span id="email_error" class="text-red-500 text-xs"></span>
+            </div>
+            <div>
+              <label for="image" class="block text-sm font-medium text-gray-600">Profile Picture</label>
+              <input type="file" class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2.5 px-4" id="image" required>
+            </div>
           </div>
-          <div>
-            <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
-            <input type="text" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="first_name" placeholder="Enter your first name" required>
-          </div>
-          <div>
-            <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
-            <input type="text" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="last_name" placeholder="Enter your last name" required>
-          </div>
-          <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-            <input type="email" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="email" placeholder="Enter your email" required>
-            <span id="email_error" class="text-red-500 text-xs"></span>
-          </div>
-          <div>
-            <label for="image" class="block text-sm font-medium text-gray-700">Profile Picture</label>
-            <input type="file" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="image" required>
-          </div>
-          <div>
-            <label for="profession" class="block text-sm font-medium text-gray-700">Your Profession</label>
-            <input type="text" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="profession" placeholder="Enter your profession" required>
-          </div>
-          <div>
-            <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
-            <input type="text" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="address" placeholder="Enter your address" required>
-          </div>
-          <div>
-            <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
-            <input type="text" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="phone" placeholder="Enter your phone number" required>
-          </div>
-          <div>
-            <label for="bio" class="block text-sm font-medium text-gray-700">Bio</label>
-            <textarea class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="bio" rows="3" placeholder="Tell us about yourself"></textarea>
-          </div>
-          <div>
-            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-            <input type="password" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="password" placeholder="Enter your password" required>
-          </div>
-          <div>
-            <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-            <input type="password" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2 px-3" id="confirm_password" placeholder="Confirm your password" required>
-            <span id="password_error" class="text-red-500 text-xs"></span>
+
+        
+          <div class="space-y-3">
+            <div>
+              <label for="profession" class="block text-sm font-medium text-gray-600">Your Profession</label>
+              <input type="text" class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2.5 px-4" id="profession" placeholder="Enter your profession" required>
+            </div>
+            <div>
+              <label for="address" class="block text-sm font-medium text-gray-600">Address</label>
+              <input type="text" class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2.5 px-4" id="address" placeholder="Enter your address" required>
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-600">Phone</label>
+              <input type="text" class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2.5 px-4" id="phone" placeholder="Enter your phone number" required>
+            </div>
+            <div>
+              <label for="bio" class="block text-sm font-medium text-gray-600">Bio</label>
+              <textarea class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2.5 px-4" id="bio" rows="4" placeholder="Tell us about yourself"></textarea>
+            </div>
+            <div>
+              <label for="password" class="block text-sm font-medium text-gray-600">Password</label>
+              <input type="password" class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2.5 px-4" id="password" placeholder="Enter your password" required>
+            </div>
+            <div>
+              <label for="confirm_password" class="block text-sm font-medium text-gray-600">Confirm Password</label>
+              <input type="password" class="mt-2 block w-full border border-gray-300 rounded-lg shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm py-2.5 px-4" id="confirm_password" placeholder="Confirm your password" required>
+              <span id="password_error" class="text-red-500 text-xs"></span>
+            </div>
           </div>
         </div>
-        <button type="submit" class="w-full py-3 bg-green-600 text-white font-semibold rounded-lg shadow-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 text-base">Sign Up</button>
+        <button type="submit" class="w-full py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-lg shadow-lg hover:bg-gradient-to-l focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 text-base">Sign Up</button>
       </form>
     </div>
   </div>
 </div>
+
+
 
 
 
@@ -289,7 +298,7 @@
         </div>
     </div>
 </footer>
-<script src="./js/login.js"></script>
+<script src="./js/register.js"></script>
  <script src="./js/home.js"></script>
   <script src="./js/logout.js"></script>
 </body>

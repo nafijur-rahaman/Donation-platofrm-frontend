@@ -88,12 +88,13 @@ data.forEach(campaign => {
     card.innerHTML = `
         <div class="rounded overflow-hidden shadow-lg bg-white flex flex-col h-full">
             <div class="px-6 py-4 flex flex-col flex-grow">
+            <img src="${campaign.image}" class="w-full h-48 object-cover" alt="${campaign.title}">
                 <div class="font-bold text-xl mb-2">${campaign.title}</div>
                 <div class="text-sm font-bold mb-4">
                     Status: ${campaign.status.charAt(0).toUpperCase() + campaign.status.slice(1)}
                 </div>
                 <p class="text-gray-700 text-base flex-grow">
-                    ${truncatedDescription}
+                  Description:  ${truncatedDescription}
                 </p>
             </div>
             <div class="px-6 py-2">
@@ -108,8 +109,7 @@ data.forEach(campaign => {
     `;
 
     flexContainer.appendChild(card);
-    
-    loadDonation(campaign.id);
+   
 });
 
 
@@ -203,7 +203,7 @@ function editCampaign(event){
         closeModal(); 
         setTimeout(() => {
             window.location.reload();
-        }, 3000);
+        }, 2000);
     })
     .catch(error => {
         showAlert(error);
@@ -231,7 +231,7 @@ function deleteCampaign(campaignId){
             if(!res.ok){
                 throw new Error(`Cannot delete campaign! status: ${res.status} `) 
             }else{
-                showAlert("Campaign delete successfully");
+                su_showAlert("Campaign delete successfully");
                 setTimeout(() => {
                     window.location.reload();
                 }, 3000);
@@ -253,11 +253,11 @@ function deleteCampaign(campaignId){
 
 
 
-const loadDonation =(campaignId)=>{
+const loadDonation =()=>{
     const user_id=window.localStorage.getItem("user_id");
     const token=window.localStorage.getItem("token");
 
-    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/transactions/list/?user= ${user_id} &campaign=${campaignId}`)
+    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/transactions/list/?user= ${user_id}`)
     .then(res =>{
         if(!res.ok){
             throw new Error(`Donation cannot load! status:${res.status} `)
@@ -268,6 +268,8 @@ const loadDonation =(campaignId)=>{
     .then(data=>{
         let totalAmount=0;
         data.forEach(donation =>{
+           
+        
             const formattedDate = formatDate(donation.created_at);
 
             // console.log(donation)
@@ -285,19 +287,24 @@ const loadDonation =(campaignId)=>{
             totalAmount += parseFloat(donation.amount);
 
         })
-        const totalDonation=document.getElementById("total-amount");
-        totalDonation.innerHTML=`
-        
-            <h3 class="text-xl font-bold text-gray-700">Total Donations</h3>
-            <p class="text-2xl font-bold text-gray-900 mt-2"> ${totalAmount} </p>
-        
-        `
+     
+            const totalDonation=document.getElementById("total-amount");
+            totalDonation.innerHTML=""
+            totalDonation.innerHTML=`
+            
+                <h3 class="text-xl font-bold text-gray-700">Total Donations</h3>
+                <p class="text-2xl font-bold text-gray-900 mt-2"> ${totalAmount} </p>
+            
+            `  
+
+      
 
         // console.log (totalAmount)
     })
     .catch(error=>showAlert(error))
 }
 
+loadDonation()
 
 const loadUser =()=>{
     fetch("https://donation-platform-backend-rmqk.onrender.com/api/users/list/")

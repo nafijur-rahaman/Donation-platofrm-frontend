@@ -134,7 +134,7 @@ const handleFundraiser = (event) => {
         .then(data => {
             if (data.success) {
                 const form = document.getElementById('fund_raiser_form');
-                showAlert(data.message);
+                su_showAlert(data.message);
                 setTimeout(() => {
                     window.location.reload();
                 }, 2000);
@@ -179,6 +179,7 @@ const fundRaiser = () => {
         return res.json();
     })
     .then(data=>{
+      
         if(data[0] && data[0].id){
             const modal = document.getElementById("openModalBtn");
             modal.classList.add("hidden")
@@ -471,15 +472,5 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-function showToast(message, type = 'success') {
-    const toast = document.createElement('div');
-    toast.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg text-white ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
-    toast.textContent = message;
 
-    document.body.appendChild(toast);
-
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
-}
 
