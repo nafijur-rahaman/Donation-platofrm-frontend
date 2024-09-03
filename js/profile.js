@@ -237,10 +237,12 @@ const loadDonation=()=>{
         return res.json()
     })
     .then(data =>{
-        console.log(data)
+        // console.log(data)
         if(data){
             data.forEach(donation => {
-                const userDonor=document.getElementById("user-donor");
+                if(donation.payment_status==="completed"){
+
+                    const userDonor=document.getElementById("user-donor");
                 const li=document.createElement("li")
                 li.innerHTML=`
                 
@@ -249,6 +251,7 @@ const loadDonation=()=>{
                
                 `
                 userDonor.appendChild(li);
+                }
                });
         }
       
@@ -411,8 +414,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const address = document.getElementById('address').value;
     const email = document.getElementById('h-email').value;
     const username = document.getElementById('h-username').value;
-    console.log(email)
-    console.log(username)
+    // console.log(email)
+    // console.log(username)
     
         if (firstName === '' || lastName === '') {
             showToast('Please fill out all required fields.', 'error');

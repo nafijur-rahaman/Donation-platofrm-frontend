@@ -268,23 +268,26 @@ const loadDonation =()=>{
     .then(data=>{
         let totalAmount=0;
         data.forEach(donation =>{
-           
+            if(donation.payment_status==="completed"){
+
+                const formattedDate = formatDate(donation.created_at);
+
+                // console.log(donation)
+                const body=document.getElementById("donation-body");
+                const tr=document.createElement("tr");
+                tr.innerHTML=`
+                
+                     <td class="py-2"> ${donation.campaign_name} </td>
+                    <td class="py-2">${donation.donor_name}</td>
+                    <td class="py-2">${donation.amount} BDT</td>
+                    <td class="py-2">${formattedDate} </td>
+                `
+                body.appendChild(tr);
+    
+                totalAmount += parseFloat(donation.amount);
+            }
         
-            const formattedDate = formatDate(donation.created_at);
-
-            // console.log(donation)
-            const body=document.getElementById("donation-body");
-            const tr=document.createElement("tr");
-            tr.innerHTML=`
-            
-                 <td class="py-2"> ${donation.campaign_name} </td>
-                <td class="py-2">${donation.donor_name}</td>
-                <td class="py-2">${donation.amount} BDT</td>
-                <td class="py-2">${formattedDate} </td>
-            `
-            body.appendChild(tr);
-
-            totalAmount += parseFloat(donation.amount);
+           
 
         })
      

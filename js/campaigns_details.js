@@ -77,95 +77,72 @@ document.getElementById('payment-form').addEventListener('submit', function (eve
         return res.json();
     })
     .then(data=>{
+        
         if(data.goal_amount===data.fund_raised){
             su_showAlert("The Campaign Successfully Completed! You may look for another campaign.")
         }else{
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            const cus_phone = document.getElementById('cus_phone').value;
-            const cus_add1 = document.getElementById('cus_add1').value;
-            const cus_city = document.getElementById('cus_city').value;
-            const cus_postcode = document.getElementById('cus_postcode').value;
-    const amount = document.getElementById('amount').value;
-    console.log(amount)
-    if(amount>data.goal_amount){
+          
+            const amount = parseFloat(document.getElementById('amount').value);
+    // console.log(amount)
+    if (amount > data.goal_amount) {
         showAlert("You can't donate over the goal amount");
-    }else if(amount<0){
-        showAlert("You can't donate negative amount");
-    }else if(amount===0){
-        console.log(amount)
-        showAlert("You can't 0 amount");
+    } else if (amount < 0) {
+        showAlert("You can't donate a negative amount");
+    } else if (amount === 0) {
+        showAlert("You can't donate 0 amount");
+    } else {
+        initiatePayment(amount,data.id);
     }
-    else{
-        const token = localStorage.getItem("token")
-        if (token) {
-            fetch('https://donation-platform-backend-rmqk.onrender.com/api/transactions/initiate-payment/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Token ${token}`,
-                    'X-CSRFToken': csrfToken,
-                },
-                body: JSON.stringify({
-                    amount: amount,
-                    campaign_id: campaign_id,
-                    cus_phone: cus_phone,
-                    cus_add1: cus_add1,
-                    cus_city: cus_city,
-                    cus_postcode: cus_postcode
-    
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.payment_url) {
-    
-                        window.location.href = data.payment_url;
-                    } else {
-                        alert('Payment initiation failed.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        } else {
-            fetch('https://donation-platform-backend-rmqk.onrender.com/api/transactions/initiate-payment/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken,
-                },
-                body: JSON.stringify({
-                    amount: amount,
-                    campaign_id: campaign_id,
-                    cus_phone: cus_phone,
-                    cus_add1: cus_add1,
-                    cus_city: cus_city,
-                    cus_postcode: cus_postcode
-    
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.payment_url) {
-    
-                        window.location.href = data.payment_url;
-                    } else {
-                        showAlert('Payment initiation failed.');
-                    }
-                })
-                .catch(error => {
-                    showAlert(error)
-                });
         }
+
+        })
+});
+
+
+
+
+
+function initiatePayment(amount,campaign_id) {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const cus_phone = document.getElementById('cus_phone').value;
+    const cus_add1 = document.getElementById('cus_add1').value;
+    const cus_city = document.getElementById('cus_city').value;
+    const cus_postcode = document.getElementById('cus_postcode').value;
+    const token = localStorage.getItem("token");
+    const headers = {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
+    };
+
+    if (token) {
+        headers['Authorization'] = `Token ${token}`;
     }
 
-    
+    fetch('https://donation-platform-backend-rmqk.onrender.com/api/transactions/initiate-payment/', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({
+            amount: amount,
+            campaign_id: campaign_id,
+            cus_phone: cus_phone,
+            cus_add1: cus_add1,
+            cus_city: cus_city,
+            cus_postcode: cus_postcode
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.payment_url) {
+            window.location.href = data.payment_url;
+        } else {
+            showAlert('Payment initiation failed.');
         }
     })
-    
+    .catch(error => {
+        showAlert('Error: ' + error.message); 
+    });
+}
 
-
-});
 
 
 const loadDonation = () => {

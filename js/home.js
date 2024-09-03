@@ -70,8 +70,11 @@ if (userToken) {
   nav.innerHTML = guestNavbarHTML;
 }
 
-// Toggle menu function for mobile responsiveness
+
 function toggleMenu() {
   const navContent = document.getElementById("nav-content");
   navContent.classList.toggle("hidden");
 }
+
+
+

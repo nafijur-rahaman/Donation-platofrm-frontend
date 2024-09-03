@@ -275,16 +275,19 @@ const loadDonation = () => {
         const parent = document.getElementById("donate-body");
         parent.innerHTML = "";
         data.forEach(donation => {
-          const formattedDate = formatDatee(donation.created_at);
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td class="border-b p-4 text-blue-600 font-semibold">${donation.donor_name}</td>
-            <td class="border-b p-4 text-purple-600 font-medium">${donation.donor_email}</td>
-            <td class="border-b p-4 text-green-600 font-semibold">${donation.amount} BDT</td>
-            <td class="border-b p-4 text-indigo-600 font-medium">${formattedDate}</td>
-            <td class="border-b p-4 text-pink-600 font-medium">${donation.campaign_name}</td>
-          `;
-          parent.appendChild(tr);
+          if(donation.payment_status==="completed"){
+            const formattedDate = formatDatee(donation.created_at);
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td class="border-b p-4 text-blue-600 font-semibold">${donation.donor_name}</td>
+              <td class="border-b p-4 text-purple-600 font-medium">${donation.donor_email}</td>
+              <td class="border-b p-4 text-green-600 font-semibold">${donation.amount} BDT</td>
+              <td class="border-b p-4 text-indigo-600 font-medium">${formattedDate}</td>
+              <td class="border-b p-4 text-pink-600 font-medium">${donation.campaign_name}</td>
+            `;
+            parent.appendChild(tr);
+          }
+         
         });
       })
       .catch(error => showAlert(error));
