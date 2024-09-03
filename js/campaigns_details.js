@@ -86,11 +86,13 @@ document.getElementById('payment-form').addEventListener('submit', function (eve
             const cus_city = document.getElementById('cus_city').value;
             const cus_postcode = document.getElementById('cus_postcode').value;
     const amount = document.getElementById('amount').value;
+    console.log(amount)
     if(amount>data.goal_amount){
         showAlert("You can't donate over the goal amount");
     }else if(amount<0){
         showAlert("You can't donate negative amount");
     }else if(amount===0){
+        console.log(amount)
         showAlert("You can't 0 amount");
     }
     else{
@@ -148,7 +150,7 @@ document.getElementById('payment-form').addEventListener('submit', function (eve
     
                         window.location.href = data.payment_url;
                     } else {
-                        alert('Payment initiation failed.');
+                        showAlert('Payment initiation failed.');
                     }
                 })
                 .catch(error => {
@@ -182,13 +184,17 @@ const loadDonation = () => {
             const parent = document.getElementById("donation");
             parent.innerHTML = '';
             data.forEach(donate => {
+                
                 const formattedDate = formatDate(donate.created_at);
 
                 const li = document.createElement("li");
+               if(donate.payment_status==='completed'){
                 li.innerHTML = `
-                    <p class="text-gray-800 text-lg font-bold">${donate.donor_name}</p>
-                    <p class="text-green-600 font-semibold">BDT${donate.amount} - ${formattedDate}</p>
-                `;
+                <p class="text-gray-800 text-lg font-bold">${donate.donor_name}</p>
+                <p class="text-green-600 font-semibold">BDT${donate.amount} - ${formattedDate}</p>
+            `;
+               }
+                
                 parent.appendChild(li);
             });
         })
