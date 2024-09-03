@@ -119,6 +119,8 @@
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
   <!-- navbar -->
   <nav id="conditional-element" class="navbar fixed w-full top-0 left-0 z-50 bg-gradient-to-r from-indigo-500 to-blue-500 text-white">
+
+
   </nav>
 
  <!-- Main Content -->
@@ -327,40 +329,44 @@
 
 
 
- </section>
-   <!-- Footer -->
-   <footer class="footer  py-12">
-    <div class="container mx-auto px-6">
-        <div class="flex flex-col md:flex-row md:justify-between">
-            <div class="mb-6 md:mb-0">
-                <h4 class="text-3xl font-bold footer-section-title">DonationPlatform</h4>
-                <p class="mt-2">Empowering communities through compassion and generosity. Join us in making a difference today!</p>
-            </div>
-            <div class="flex flex-col md:flex-row md:space-x-8">
-                <div class="mb-6 md:mb-0">
-                    <h5 class="text-xl font-semibold footer-section-title">Quick Links</h5>
-                    <ul class="mt-2 space-y-2">
-                        <li><a href="./home.html" class="hover:underline">Home</a></li>
-                        <li><a href="./about.html" class="hover:underline">About</a></li>
-                        <li><a href="./campaign.html" class="hover:underline">Campaign</a></li>
-                        <li><a href="./contact.html" class="hover:underline">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="text-xl font-semibold footer-section-title">Contact Us</h5>
-                    <p class="mt-2">14 no road Rupnogor<br>mirpur, Dhaka, 2</p>
-                    <p>Email: <a href="mailto:support@DonationPlatform.com" class="hover:underline">support@DonationPlatform.com</a><br>Phone: +8801626681291</p>
-                </div>
-            </div>
-        </div>
-        <div class="text-center mt-8">
-            <p class="text-gray-400">© 2024 DonationPlatform. All rights reserved.</p>
-        </div>
-    </div>
+<!-- Footer -->
+<footer class="footer py-8 md:py-12 bg-gray-800 text-white">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="mb-6 md:mb-0">
+              <h4 class="text-2xl md:text-3xl font-bold footer-section-title">DonationPlatform</h4>
+              <p class="mt-2 text-gray-300">Empowering communities through compassion and generosity. Join us in making a difference today!</p>
+          </div>
+          <div>
+              <h5 class="text-xl font-semibold footer-section-title">Quick Links</h5>
+              <ul class="mt-2 space-y-2">
+                  <li><a href="./home.html" class="hover:underline text-gray-300">Home</a></li>
+                  <li><a href="./about.html" class="hover:underline text-gray-300">About</a></li>
+                  <li><a href="./campaign.html" class="hover:underline text-gray-300">Campaign</a></li>
+                  <li><a href="./contact.html" class="hover:underline text-gray-300">Contact</a></li>
+              </ul>
+          </div>
+          <div>
+              <h5 class="text-xl font-semibold footer-section-title">Contact Us</h5>
+              <p class="mt-2 text-gray-300">14 no road Rupnogor<br>Mirpur, Dhaka, 2</p>
+              <p class="text-gray-300">Email: <a href="mailto:support@DonationPlatform.com" class="hover:underline">support@DonationPlatform.com</a><br>Phone: +8801626681291</p>
+          </div>
+      </div>
+      <div class="text-center mt-8">
+          <p class="text-gray-400">© 2024 DonationPlatform. All rights reserved.</p>
+      </div>
+  </div>
 </footer>
 
  <script src="./js/home.js"></script>
   <script src="./js/logout.js"></script>
+  <script>
+
+    document.getElementById('menu-toggle').addEventListener('click', function () {
+        const menu = document.getElementById('menu');
+        menu.classList.toggle('hidden');
+    });
+</script>
   <script>
     let index = 0;
     const slides = document.querySelectorAll('.carousel-slide > div');

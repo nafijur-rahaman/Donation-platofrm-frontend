@@ -41,7 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         <h5 class="text-xl font-semibold mb-2 text-gray-800">${campaign.title}</h5>
                         <p class="text-gray-700 mb-2">${campaign.description.slice(0,50)}...</p>
                         <p class="text-gray-600 mb-2"><strong>Type:</strong> ${campaign.type}</p>
-                        <p class="text-gray-600 mb-2"><strong>Goal Amount:</strong> $${campaign.goal_amount}</p>
+                        <p class="text-gray-600 mb-2"><strong>Goal Amount:</strong> ${campaign.goal_amount}
+                         BDT</p>
                         <p class="text-gray-600 mb-4"><strong>Status:</strong> ${campaign.status}</p>
                         <a href="./campaign_details.html?id=${campaign.id}" style="text-decoration: none;" class="inline-block px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition duration-300">Details</a>
                     </div>
