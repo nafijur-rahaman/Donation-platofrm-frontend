@@ -184,15 +184,28 @@ const loadDashboard =()=>{
         }
         return res.json();
     })
-    .then(campaign =>{
+    .then(data =>{
         
         // console.log(campaign);
-
-       const dash_campaign =document.getElementById("campaign");
-       dash_campaign.innerHTML= `   <h2 class="text-white text-xl font-semibold">Active Campaign</h2>
-                                <p class="text-white text-3xl font-bold mt-2"> ${campaign.length} </p>`;
-
-
+       let activeCampaign=0;
+       let completeCampaign=0;
+       const Active_campaign =document.getElementById("campaign");
+       const Completed_campaign=document.getElementById("completed-campaigns");
+       data.forEach(campaign=>{
+        if(campaign.status==='active'){
+          activeCampaign++;
+        }else if(campaign.status==='completed'){
+        completeCampaign++;
+        }
+       })
+       Active_campaign.innerHTML= `   <h2 class="text-white text-xl font-bold">Active Campaigns</h2>
+       <p class="text-white text-3xl font-bold mt-2"> ${activeCampaign} </p>`;
+     
+       Completed_campaign.innerHTML=`
+         <h2 class="text-white text-xl font-bold">Completed Campaigns</h2>
+       <p class="text-white text-3xl font-bold mt-2"> ${completeCampaign} </p>;
+       
+       `
         
     })
     .catch(error => showAlert(error))
@@ -216,7 +229,7 @@ const loadDashboard =()=>{
             const dash_donation=document.getElementById("donation");
             dash_donation.innerHTML=`
             
-                 <h2 class="text-white text-xl font-semibold">Total Donations</h2>
+                 <h2 class="text-white text-xl font-bold">Total Donations</h2>
                 <p class="text-white text-3xl font-bold mt-2"> ${total} BDT </p>
             
             `
@@ -244,7 +257,7 @@ const loadDashboard =()=>{
         .then(users =>{
             const dash_user=document.getElementById("users")
             dash_user.innerHTML=`
-                                     <h2 class="text-white text-xl font-semibold">Registered Users</h2>
+                                     <h2 class="text-white text-xl font-bold">Registered Users</h2>
                                      <p class="text-white text-3xl font-bold mt-2"> ${users.length} </p>
                                                 `
 
@@ -336,6 +349,7 @@ function fetchUsers() {
     })
     .then(response => response.json())
     .then(data => {
+      // console.log(data)
         const userTableBody = document.getElementById('userTableBody');
         userTableBody.innerHTML = '';
 
@@ -407,21 +421,23 @@ fetchUsers();
 
 
 
-//  all reqeust users
+//  all campaign request 
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to load users');
-        }
-        return response.json();
-      })
-      .then(users => {
-        const tuitionList = document.getElementById('tuition-list').querySelector('tbody');
+  fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/")
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to load campaigns');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const tuitionList = document.getElementById('tuition-list').querySelector('tbody');
 
-        users.forEach(campaign => {
+      data.forEach(campaign => {
+        // Only add campaigns that are not completed
+        if (campaign.status !== 'completed') {
           const tr = document.createElement('tr');
           tr.classList.add('hover:bg-gray-100', 'even:bg-gray-50', 'odd:bg-white');
 
@@ -439,19 +455,14 @@ document.addEventListener('DOMContentLoaded', () => {
           const statusButton = document.createElement('button');
           statusButton.classList.add('px-4', 'py-2', 'rounded-full', 'text-white', 'transition', 'duration-300');
 
-        // console.log(campaign.status)
-          switch (campaign.status) {
+          // Normalize status to lowercase to avoid case-sensitive issues
+          switch (campaign.status.toLowerCase()) {
             case 'active':
               statusButton.classList.add('bg-green-600', 'hover:bg-green-700');
               break;
             case 'pending':
               statusButton.classList.add('bg-red-500', 'hover:bg-red-600');
               break;
-            case 'completed':
-              statusButton.classList.add('bg-blue-600', 'hover:bg-blue-700');
-              break;
-            case 'Pending':
-              statusButton.classList.add('bg-red-500', 'hover:bg-red-600');
             default:
               statusButton.classList.add('bg-gray-600', 'hover:bg-gray-700');
               break;
@@ -460,65 +471,43 @@ document.addEventListener('DOMContentLoaded', () => {
           statusButton.textContent = capitalizeFirstLetter(campaign.status);
           tdStatus.appendChild(statusButton);
 
-      
           statusButton.addEventListener('click', () => {
             if (campaign.status === 'pending') {
-                if (confirm('Are you sure you want to active this campaign?')){
-                    updateCampaignStatus(campaign.id, 'active')
-                    .then(() => {
-                      statusButton.textContent = 'Active';
-                      statusButton.classList.replace('bg-yellow-500', 'bg-green-600');
-                      statusButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-700');
-                      su_showAlert("Campaign activated successfully");
-                      setTimeout(() => window.location.reload(), 3000);
-                    })
-                    .catch(error => {
-                      showAlert("Failed to activate campaign");
-                      console.error(error);
-                    });
-                }
-         
-            }
-            else if (campaign.status === 'Pending') {
-                if (confirm('Are you sure you want to active this campaign?')){
-                    updateCampaignStatus(campaign.id, 'active')
-                    .then(() => {
-                      statusButton.textContent = 'Active';
-                      statusButton.classList.replace('bg-yellow-500', 'bg-green-600');
-                      statusButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-700');
-                      su_showAlert("Campaign activated successfully");
-                      setTimeout(() => window.location.reload(), 3000);
-                    })
-                    .catch(error => {
-                      showAlert("Failed to activate campaign");
-                      console.error(error);
-                    });
-                }
-         
-            }else if(campaign.status==='active'){
-              if (confirm('Are you sure you want to Completed this campaign?')){
-                if (campaign.goal_amount=== campaign.fund_raised){
-                  updateCampaignStatus(campaign.id, 'completed')
+              if (confirm('Are you sure you want to activate this campaign?')) {
+                updateCampaignStatus(campaign.id, 'active')
                   .then(() => {
                     statusButton.textContent = 'Active';
-                    statusButton.classList.replace('bg-yellow-500', 'bg-green-600');
-                    statusButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-700');
-                    su_showAlert("Campaign Completed successfully");
+                    statusButton.classList.replace('bg-red-500', 'bg-green-600');
+                    statusButton.classList.replace('hover:bg-red-600', 'hover:bg-green-700');
+                    su_showAlert("Campaign activated successfully");
                     setTimeout(() => window.location.reload(), 3000);
                   })
                   .catch(error => {
                     showAlert("Failed to activate campaign");
                     console.error(error);
-                  });}else{
-                      showAlert("Campaign did't achived goal amount")
-                  }
+                  });
               }
-                
-
-
-
+            } else if (campaign.status === 'active') {
+              if (confirm('Are you sure you want to complete this campaign?')) {
+                if (campaign.goal_amount === campaign.fund_raised) {
+                  updateCampaignStatus(campaign.id, 'completed')
+                    .then(() => {
+                      statusButton.textContent = 'Completed';
+                      statusButton.classList.replace('bg-green-600', 'bg-blue-600');
+                      statusButton.classList.replace('hover:bg-green-700', 'hover:bg-blue-700');
+                      su_showAlert("Campaign completed successfully");
+                      setTimeout(() => window.location.reload(), 3000);
+                    })
+                    .catch(error => {
+                      showAlert("Failed to complete campaign");
+                      console.error(error);
+                    });
                 } else {
-              showAlert("Campaign already active");
+                  showAlert("Campaign did not achieve goal amount");
+                }
+              }
+            } else {
+              showAlert("Campaign is already active");
             }
           });
 
@@ -526,10 +515,12 @@ document.addEventListener('DOMContentLoaded', () => {
           tr.appendChild(tdCreator);
           tr.appendChild(tdStatus);
           tuitionList.appendChild(tr);
-        });
-      })
-      .catch(error => console.error('Error:', error));
-  });
+        }
+      });
+    })
+    .catch(error => console.error('Error:', error));
+});
+
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
