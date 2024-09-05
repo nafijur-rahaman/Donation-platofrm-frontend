@@ -463,6 +463,9 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'pending':
               statusButton.classList.add('bg-red-500', 'hover:bg-red-600');
               break;
+            case 'Pending':
+                statusButton.classList.add('bg-red-500', 'hover:bg-red-600');
+              break;
             default:
               statusButton.classList.add('bg-gray-600', 'hover:bg-gray-700');
               break;
@@ -487,7 +490,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.error(error);
                   });
               }
-            } else if (campaign.status === 'active') {
+            }  else if (campaign.status === 'Pending') {
+              if (confirm('Are you sure you want to active this campaign?')){
+                  updateCampaignStatus(campaign.id, 'active')
+                  .then(() => {
+                    statusButton.textContent = 'Active';
+                    statusButton.classList.replace('bg-yellow-500', 'bg-green-600');
+                    statusButton.classList.replace('hover:bg-yellow-600', 'hover:bg-green-700');
+                    su_showAlert("Campaign activated successfully");
+                    setTimeout(() => window.location.reload(), 3000);
+                  })
+                  .catch(error => {
+                    showAlert("Failed to activate campaign");
+                    console.error(error);
+                  });
+              }
+            
+            }else if (campaign.status === 'active') {
               if (confirm('Are you sure you want to complete this campaign?')) {
                 if (campaign.goal_amount === campaign.fund_raised) {
                   updateCampaignStatus(campaign.id, 'completed')
