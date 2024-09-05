@@ -436,7 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const tuitionList = document.getElementById('tuition-list').querySelector('tbody');
 
       data.forEach(campaign => {
-        // Only add campaigns that are not completed
+
         if (campaign.status !== 'completed') {
           const tr = document.createElement('tr');
           tr.classList.add('hover:bg-gray-100', 'even:bg-gray-50', 'odd:bg-white');
@@ -455,7 +455,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const statusButton = document.createElement('button');
           statusButton.classList.add('px-4', 'py-2', 'rounded-full', 'text-white', 'transition', 'duration-300');
 
-          // Normalize status to lowercase to avoid case-sensitive issues
           switch (campaign.status.toLowerCase()) {
             case 'active':
               statusButton.classList.add('bg-green-600', 'hover:bg-green-700');
@@ -473,6 +472,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
           statusButton.textContent = capitalizeFirstLetter(campaign.status);
           tdStatus.appendChild(statusButton);
+
+    
+
+
+          const tdActions = document.createElement('td');
+          tdActions.classList.add('px-6', 'py-4', 'text-xl', 'font-medium', 'text-gray-900');
+          const actionButton = document.createElement('button');
+          actionButton.classList.add('px-4', 'py-2', 'rounded-full', 'text-white', 'bg-red-500', 'hover:bg-red-700', 'transition', 'duration-300','bg-blue-600', 'hover:bg-blue-700');
+          actionButton.textContent = 'Complete';
+          tdActions.appendChild(actionButton);
+
+          actionButton.addEventListener('click',()=>{
+            if (confirm('Are you sure you want to complete this Campaign?')) {
+              if (campaign.goal_amount === campaign.fund_raised) {
+
+                updateCampaignStatus(campaign.id, 'completed')
+                .then(() => {
+                    
+                  su_showAlert("Campaign Completed successfully");
+                  })
+                  .catch(error => {
+                    showAlert("Failed to reject request");
+                    console.error(error);
+                  });
+              }else {
+                      showAlert("Campaign did not achieve goal amount");
+                    }
+            }
+          })
+
+
+
 
           statusButton.addEventListener('click', () => {
             if (campaign.status === 'pending') {
@@ -506,25 +537,6 @@ document.addEventListener('DOMContentLoaded', () => {
                   });
               }
             
-            }else if (campaign.status === 'active') {
-              if (confirm('Are you sure you want to complete this campaign?')) {
-                if (campaign.goal_amount === campaign.fund_raised) {
-                  updateCampaignStatus(campaign.id, 'completed')
-                    .then(() => {
-                      statusButton.textContent = 'Completed';
-                      statusButton.classList.replace('bg-green-600', 'bg-blue-600');
-                      statusButton.classList.replace('hover:bg-green-700', 'hover:bg-blue-700');
-                      su_showAlert("Campaign completed successfully");
-                      setTimeout(() => window.location.reload(), 3000);
-                    })
-                    .catch(error => {
-                      showAlert("Failed to complete campaign");
-                      console.error(error);
-                    });
-                } else {
-                  showAlert("Campaign did not achieve goal amount");
-                }
-              }
             } else {
               showAlert("Campaign is already active");
             }
@@ -533,6 +545,7 @@ document.addEventListener('DOMContentLoaded', () => {
           tr.appendChild(tdTitle);
           tr.appendChild(tdCreator);
           tr.appendChild(tdStatus);
+          tr.appendChild(tdActions);
           tuitionList.appendChild(tr);
         }
       });
