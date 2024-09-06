@@ -90,7 +90,9 @@ document.getElementById('payment-form').addEventListener('submit', function (eve
         showAlert("You can't donate a negative amount");
     } else if (amount === 0) {
         showAlert("You can't donate 0 amount");
-    } else {
+    }else if(data.status==='cancel'){
+showAlert("The campaign is canceled");
+    }else {
         initiatePayment(amount,data.id);
     }
         }

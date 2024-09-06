@@ -32,7 +32,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const sortedData = data.sort((a, b) => {
             const order = {
                 active: 1,
-                completed: 2
+                completed: 2,
+                cancel:3,
               
             };
             return order[a.status] - order[b.status];
