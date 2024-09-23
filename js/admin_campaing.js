@@ -18,7 +18,7 @@ function showAlert(message) {
 
 
 const loadCampaign = () => {
-    fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/")
+    fetch("https://donation-platform-backend-psi.vercel.app/api/campaign/list/")
     .then(res => {
         if (!res.ok) {
             throw new Error("Campaign not found");
@@ -95,7 +95,7 @@ document.getElementById("addCampaignButton").addEventListener("click", function 
    const modal = document.getElementById("editCampaignModal");
    const form = document.getElementById("edit-campaign-form");
 
-   fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}`)
+   fetch(`https://donation-platform-backend-psi.vercel.app/api/campaign/list/${campaignId}`)
      .then((res) => {
        if (!res.ok) {
          throw new Error(`Campaign not found! status:${res.status}`);
@@ -141,7 +141,7 @@ document.getElementById("addCampaignButton").addEventListener("click", function 
             const formData = new FormData(form);
             // formData.append("creator", parseInt(creator_id));
             const campaignId = formData.get('campaign-id');
-            fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}/`,{
+            fetch(`https://donation-platform-backend-psi.vercel.app/api/campaign/list/${campaignId}/`,{
                 method:"PUT",
                 headers: {
         
@@ -181,7 +181,7 @@ document.getElementById("addCampaignButton").addEventListener("click", function 
 function deleteCampaign(campaignId){
     const token= localStorage.getItem("admin_token");
        if(confirm('Are you sure to delete campaign?')){
-           fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}/`,{
+           fetch(`https://donation-platform-backend-psi.vercel.app/api/campaign/list/${campaignId}/`,{
                method:"DELETE",
                headers: {
            
@@ -217,7 +217,7 @@ const addCampaign = (event) => {
     event.preventDefault();
     const user_id = localStorage.getItem("user_id");
     // console.log(user_id)
-    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/creator/?user_id=${user_id}`)
+    fetch(`https://donation-platform-backend-psi.vercel.app/api/campaign/creator/?user_id=${user_id}`)
         .then(res => {
             if (!res.ok) {
                 throw new Error(`You are not a fundraiser! status: ${res.status}`);
@@ -232,7 +232,7 @@ const addCampaign = (event) => {
             const formData = new FormData(form);
             const token = localStorage.getItem("admin_token");
             formData.append("creator", parseInt(creator_id));
-            fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/", {
+            fetch("https://donation-platform-backend-psi.vercel.app/api/campaign/list/", {
 
                 method: "POST",
                 headers: {

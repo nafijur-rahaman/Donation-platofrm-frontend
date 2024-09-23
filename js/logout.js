@@ -22,7 +22,7 @@ function showAlert(message) {
 const handleLogout=()=>{
     const token=localStorage.getItem("token")
     if(token){
-        fetch("https://donation-platform-backend-rmqk.onrender.com/api/users/logout/",{
+        fetch("https://donation-platform-backend-psi.vercel.app/api/users/logout/",{
             method:"GET",
             headers:{
                 'content-type':"application/json",
@@ -49,7 +49,7 @@ const handleLogout=()=>{
 const handleAdminLogout=()=>{
     const token=localStorage.getItem("admin_token")
     if(token){
-        fetch("https://donation-platform-backend-rmqk.onrender.com/api/manager/logout/",{
+        fetch("https://donation-platform-backend-psi.vercel.app/api/manager/logout/",{
             method:"GET",
             headers:{
                 'content-type':"application/json",

@@ -22,9 +22,10 @@ function showAlert(message) {
 const handleProfile = () => {
     const user_id = localStorage.getItem("user_id")
 
-    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/users/list/${user_id}`)
+    fetch(`https://donation-platform-backend-psi.vercel.app/api/users/list/${user_id}`)
         .then(res => res.json())
         .then(data => {
+            console.log(data)
             const user = data;
             
             const sideProfile = document.getElementById("side-profile")
@@ -32,7 +33,7 @@ const handleProfile = () => {
        
             sideProfile.innerHTML=`
             
-             <img class="w-32 h-32 rounded-full mx-auto border-4 border-gray-200" src=" ${user.image} " alt="Profile Picture">
+             <img class="w-32 h-32 rounded-full mx-auto border-4 border-gray-200" src=" https://res.cloudinary.com/dwsp8rft8/${user.image} " alt="Profile Picture">
               <h1 class="text-2xl font-semibold mt-2 text-gray-900">${user.first_name} ${user.last_name} </h1>
               <p class="text-gray-600">${user.profession}</</p>
             `
@@ -121,7 +122,7 @@ const handleFundraiser = (event) => {
 
 
 
-    fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/creator-request/", {
+    fetch("https://donation-platform-backend-psi.vercel.app/api/campaign/creator-request/", {
 
         method: "POST",
         body: info,
@@ -171,7 +172,7 @@ if (cancelModalBtn && fundraiserModal) {
 
 const fundRaiser = () => {
     const user_id = window.localStorage.getItem("user_id");
-    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/creator/?user_id= ${user_id}`)
+    fetch(`https://donation-platform-backend-psi.vercel.app/api/campaign/creator/?user_id= ${user_id}`)
     .then(res =>{
         if(!res.ok){
             throw new Error("You are not a creator");
@@ -229,7 +230,7 @@ const getValue = (id) => {
 
 const loadDonation=()=>{
     const user_id=localStorage.getItem("user_id");
-    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/transactions/list/?user=${user_id}`)
+    fetch(`https://donation-platform-backend-psi.vercel.app/api/transactions/list/?user=${user_id}`)
     .then(res =>{
         if(!res.ok){
             throw new Error("No user found!");  
@@ -276,7 +277,7 @@ document.getElementById('changePasswordForm').addEventListener('submit', async f
 
         if (/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(newPassword)){
           
-            fetch("https://donation-platform-backend-rmqk.onrender.com/api/users/change-password/",{
+            fetch("https://donation-platform-backend-psi.vercel.app/api/users/change-password/",{
                 method: 'PUT',
                 headers: {
                'Content-Type': 'application/json',
@@ -347,7 +348,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function fillFormWithExistingData() {
         const user_id=localStorage.getItem("user_id");
         const token=localStorage.getItem("token");
-        fetch(`https://donation-platform-backend-rmqk.onrender.com/api/users/list/${user_id}/`, {
+        fetch(`https://donation-platform-backend-psi.vercel.app/api/users/list/${user_id}/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -439,7 +440,7 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('address', address);
         formData.append('email', email); 
         formData.append('username', username); 
-        fetch(`https://donation-platform-backend-rmqk.onrender.com/api/users/list/${user_id}/`, {
+        fetch(`https://donation-platform-backend-psi.vercel.app/api/users/list/${user_id}/`, {
             method: 'PUT',
             body: formData,
             headers: {

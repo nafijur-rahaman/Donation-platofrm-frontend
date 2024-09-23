@@ -34,7 +34,7 @@ function handleLogin(event) {
     
         if (email && password){
             document.getElementById("spinner").style.display = 'block';
-            fetch("https://donation-platform-backend-rmqk.onrender.com/api/manager/login/",{
+            fetch("https://donation-platform-backend-psi.vercel.app/api/manager/login/",{
                 method:"POST",
                 headers:{"content-type":"application/json"},
                 body:JSON.stringify({email,password})
@@ -67,7 +67,7 @@ function handleLogin(event) {
      
         if (email && password){
             document.getElementById("spinner").style.display = 'block';
-            fetch("https://donation-platform-backend-rmqk.onrender.com/api/users/login/",{
+            fetch("https://donation-platform-backend-psi.vercel.app/api/users/login/",{
                 method:"POST",
                 headers:{"content-type":"application/json"},
                 body:JSON.stringify({email,password})

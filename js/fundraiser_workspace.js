@@ -19,7 +19,7 @@ function closeSuccessAlert() {
 const loadCampaign = () => {
   const user_id = window.localStorage.getItem("user_id");
   fetch(
-    `https://donation-platform-backend-rmqk.onrender.com/api/campaign/creator/?user_id=${user_id}`
+    `https://donation-platform-backend-psi.vercel.app/api/campaign/creator/?user_id=${user_id}`
   )
     .then((res) => {
       if (!res.ok) {
@@ -32,7 +32,7 @@ const loadCampaign = () => {
 
       const creator_id = data[0].id;
       fetch(
-        `https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/?creator=${creator_id}`
+        `https://donation-platform-backend-psi.vercel.app/api/campaign/list/?creator=${creator_id}`
       )
         .then((res) => {
           if (!res.ok) {
@@ -86,7 +86,7 @@ const loadCampaign = () => {
             card.innerHTML = `
         <div class="rounded overflow-hidden shadow-lg bg-white flex flex-col h-full">
             <div class="px-6 py-4 flex flex-col flex-grow">
-                <img src="${
+                <img src="https://res.cloudinary.com/dwsp8rft8/${
                   campaign.image
                 }" class="w-full h-48 object-cover" alt="${campaign.title}">
                 <div class="font-bold text-xl mb-2">${campaign.title}</div>
@@ -150,7 +150,7 @@ const loadCampaign = () => {
 function completeCampaign(campaignId) {
   token = window.localStorage.getItem("token");
 
-  fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}/`)
+  fetch(`https://donation-platform-backend-psi.vercel.app/api/campaign/list/${campaignId}/`)
   .then(res =>{
     if(!res.ok){
         throw new Error("Campaign not found");
@@ -163,7 +163,7 @@ function completeCampaign(campaignId) {
     showAlert("The campaign already completed")
   }else if(data.goal_amount===data.fund_raised){
   fetch(
-    `https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}/`,
+    `https://donation-platform-backend-psi.vercel.app/api/campaign/list/${campaignId}/`,
     {
       method: "PATCH",
       headers: {
@@ -202,7 +202,7 @@ function completeCampaign(campaignId) {
 function cancelCampaign(campaignId) {
   token = window.localStorage.getItem("token");
   fetch(
-    `https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}/`,
+    `https://donation-platform-backend-psi.vercel.app/api/campaign/list/${campaignId}/`,
     {
       method: "PATCH",
       headers: {
@@ -234,7 +234,7 @@ function openModal(campaignId) {
   const form = document.getElementById("edit-campaign-form");
 
   fetch(
-    `https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}`
+    `https://donation-platform-backend-psi.vercel.app/api/campaign/list/${campaignId}`
   )
     .then((res) => {
       if (!res.ok) {
@@ -270,7 +270,7 @@ function editCampaign(event) {
   // formData.append("creator", parseInt(creator_id));
   const campaignId = formData.get("campaign-id");
   fetch(
-    `https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}/`,
+    `https://donation-platform-backend-psi.vercel.app/api/campaign/list/${campaignId}/`,
     {
       method: "PUT",
       headers: {
@@ -306,7 +306,7 @@ function deleteCampaign(campaignId) {
   const token = window.localStorage.getItem("token");
   if (confirm("Are you sure to delete campaign?")) {
     fetch(
-      `https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}/`,
+      `https://donation-platform-backend-psi.vercel.app/api/campaign/list/${campaignId}/`,
       {
         method: "DELETE",
         headers: {
@@ -337,7 +337,7 @@ const loadDonation = () => {
   const token = window.localStorage.getItem("token");
 
   fetch(
-    `https://donation-platform-backend-rmqk.onrender.com/api/transactions/list/?user= ${user_id}`
+    `https://donation-platform-backend-psi.vercel.app/api/transactions/list/?user= ${user_id}`
   )
     .then((res) => {
       if (!res.ok) {
@@ -384,7 +384,7 @@ const loadDonation = () => {
 loadDonation();
 
 const loadUser = () => {
-  fetch("https://donation-platform-backend-rmqk.onrender.com/api/users/list/")
+  fetch("https://donation-platform-backend-psi.vercel.app/api/users/list/")
     .then((res) => {
       if (!res.ok) {
         throw new Error("No user find");

@@ -24,7 +24,7 @@ const getQueryParams = (param) => {
 const getCampaignDetails = () => {
     const campaign_id = getQueryParams("id");
     // console.log(campaign_id);
-    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaign_id}/`)
+    fetch(`https://donation-platform-backend-psi.vercel.app/api/campaign/list/${campaign_id}/`)
         .then(res => res.json())
         .then(data => {
             // console.log(data)
@@ -34,7 +34,7 @@ const getCampaignDetails = () => {
       <h1 class="text-3xl font-bold text-yellow-800">${data.title} </h1>
       <p class="text-gray-600 mt-2">Organized by <span class="font-semibold">${data.creator_name}</span></p>
       <div class="flex mt-4">
-          <img src="${data.image}" alt="Campaign Image" class="w-1/3 rounded-lg shadow-lg">
+          <img src="https://res.cloudinary.com/dwsp8rft8/${data.image}" alt="Campaign Image" class="w-1/3 rounded-lg shadow-lg">
           <div class="w-2/3 ml-6">
               <p class="text-gray-700 text-lg">${data.description}</p>
               <p><strong>Location: ${data.location}</strong></p> 
@@ -69,7 +69,7 @@ document.getElementById('payment-form').addEventListener('submit', function (eve
     event.preventDefault();
     const campaign_id = getQueryParams("id");
     // console.log(campaign_id)
-    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaign_id}/`)
+    fetch(`https://donation-platform-backend-psi.vercel.app/api/campaign/list/${campaign_id}/`)
     .then(res =>{
         if(!res.ok){
             throw new Error("Campaign not found");
@@ -120,7 +120,7 @@ function initiatePayment(amount,campaign_id) {
         headers['Authorization'] = `Token ${token}`;
     }
 
-    fetch('https://donation-platform-backend-rmqk.onrender.com/api/transactions/initiate-payment/', {
+    fetch('https://donation-platform-backend-psi.vercel.app/api/transactions/initiate-payment/', {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({
@@ -149,7 +149,7 @@ function initiatePayment(amount,campaign_id) {
 
 const loadDonation = () => {
     const campaign_id = getQueryParams("id");
-    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/transactions/list/?campaign=${campaign_id}`)
+    fetch(`https://donation-platform-backend-psi.vercel.app/api/transactions/list/?campaign=${campaign_id}`)
         .then(res => {
             if (!res.ok) {
                 throw new Error("Donation loading failed");
@@ -224,7 +224,7 @@ form.addEventListener('submit', function (event) {
 
 
 
-    fetch('https://donation-platform-backend-rmqk.onrender.com/api/campaign/review/', {
+    fetch('https://donation-platform-backend-psi.vercel.app/api/campaign/review/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -260,7 +260,7 @@ form.addEventListener('submit', function (event) {
 
 const loadReviews=()=>{
     const campaignID=getQueryParams("id");
-    fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/review/?campaign=${campaignID}`)
+    fetch(`https://donation-platform-backend-psi.vercel.app/api/campaign/review/?campaign=${campaignID}`)
     .then(res =>{
         if(!res.ok){
             throw new Error("Campaign not found");

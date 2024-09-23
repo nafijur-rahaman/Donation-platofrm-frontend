@@ -19,7 +19,7 @@ function showAlert(message) {
 document.addEventListener('DOMContentLoaded', function () {
 
     function fetchCampaigns(type = '', status = '') {
-        fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/?type=${type}&status=${status}`)
+        fetch(`https://donation-platform-backend-psi.vercel.app/api/campaign/list/?type=${type}&status=${status}`)
             .then(response => response.json())
             .then(data => {
                 sortCampaigns(data);
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
         data.forEach(campaign => {
             const card = `
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
-                    <img src="${campaign.image}" class="w-full h-48 object-cover" alt="${campaign.title}">
+                    <img src="https://res.cloudinary.com/dwsp8rft8/${campaign.image}" class="w-full h-48 object-cover" alt="${campaign.title}">
                     <div class="p-4">
                         <h5 class="text-xl font-semibold mb-2 text-gray-800">${campaign.title}</h5>
                         <p class="text-gray-700 mb-2">${campaign.description.slice(0, 50)}...</p>

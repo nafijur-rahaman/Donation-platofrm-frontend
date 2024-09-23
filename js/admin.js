@@ -19,7 +19,7 @@ function closeSuccessAlert() {
 
 function fetchUnreadCount() {
   const token=window.localStorage.getItem("admin_token");
-  fetch("https://donation-platform-backend-rmqk.onrender.com/api/notification/list/", {
+  fetch("https://donation-platform-backend-psi.vercel.app/api/notification/list/", {
       method: 'GET',
       headers: {
           'Content-Type': 'campaign/json',
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     function fetchNotifications() {
-        fetch("https://donation-platform-backend-rmqk.onrender.com/api/notification/list/", {
+        fetch("https://donation-platform-backend-psi.vercel.app/api/notification/list/", {
             method: 'GET',
             headers: {
                 'Content-Type': 'campaign/json',
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function markAsRead(notificationId, listItem) {
-        fetch(`https://donation-platform-backend-rmqk.onrender.com/api/notification/notifications/${notificationId}/read/`, {
+        fetch(`https://donation-platform-backend-psi.vercel.app/api/notification/notifications/${notificationId}/read/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'campaign/json',
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const loadDashboard =()=>{
     // campaign load
-    fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/")
+    fetch("https://donation-platform-backend-psi.vercel.app/api/campaign/list/")
     .then(res =>{
         if(!res.ok){
             throw new Error("users not found");
@@ -213,7 +213,7 @@ const loadDashboard =()=>{
 
 
     //   donation load
-        fetch("https://donation-platform-backend-rmqk.onrender.com/api/transactions/list/")
+        fetch("https://donation-platform-backend-psi.vercel.app/api/transactions/list/")
         .then(res =>{
             if(!res.ok){
                 throw new Error("Donations not found");
@@ -247,7 +247,7 @@ const loadDashboard =()=>{
 
 
         // users load
-        fetch("https://donation-platform-backend-rmqk.onrender.com/api/users/list/")
+        fetch("https://donation-platform-backend-psi.vercel.app/api/users/list/")
         .then(res =>{
             if(!res.ok){
                 throw new Error("Campaign not found");
@@ -277,7 +277,7 @@ loadDashboard()
 
 
 const loadDonation = () => {
-    fetch("https://donation-platform-backend-rmqk.onrender.com/api/transactions/list/")
+    fetch("https://donation-platform-backend-psi.vercel.app/api/transactions/list/")
       .then(res => {
         if (!res.ok) {
           throw new Error("Donations not found");
@@ -340,7 +340,7 @@ function formatDatee(datetimeString) {
 
 function fetchUsers() {
   const token = localStorage.getItem("admin_token");
-    fetch('https://donation-platform-backend-rmqk.onrender.com/api/users/list/', {
+    fetch('https://donation-platform-backend-psi.vercel.app/api/users/list/', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -379,7 +379,7 @@ function fetchUsers() {
 
 function deleteUser(userId) {
     if (confirm('Are you sure you want to delete this user?')) {
-        fetch(`https://donation-platform-backend-rmqk.onrender.com/api/users/list/${userId}/`, {
+        fetch(`https://donation-platform-backend-psi.vercel.app/api/users/list/${userId}/`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -425,7 +425,7 @@ fetchUsers();
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/")
+  fetch("https://donation-platform-backend-psi.vercel.app/api/campaign/list/")
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to load campaigns');
@@ -560,7 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateCampaignStatus(campaignId, newStatus) {
     const token = localStorage.getItem("admin_token");
-    return fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/list/${campaignId}/`, {
+    return fetch(`https://donation-platform-backend-psi.vercel.app/api/campaign/list/${campaignId}/`, {
       method: 'PATCH',
       headers: {
         "Content-Type": "application/json",
@@ -581,7 +581,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //   creator request
 
 document.addEventListener('DOMContentLoaded', () => {
-  fetch("https://donation-platform-backend-rmqk.onrender.com/api/campaign/creator-request/")
+  fetch("https://donation-platform-backend-psi.vercel.app/api/campaign/creator-request/")
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to load users');
@@ -699,7 +699,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateUserStatus(userId, newStatus) {
     const token = localStorage.getItem("admin_token");
-    return fetch(`https://donation-platform-backend-rmqk.onrender.com/api/campaign/creator-request/${userId}/`, {
+    return fetch(`https://donation-platform-backend-psi.vercel.app/api/campaign/creator-request/${userId}/`, {
       method: 'PATCH',
       headers: {
         "Content-Type": "application/json",

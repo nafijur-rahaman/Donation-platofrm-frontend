@@ -37,7 +37,7 @@ document.getElementById("password_error").innerText = "";
 if(password===confirm_password){
     if (/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(password)){
         document.getElementById("spinner").style.display = 'block';
-        fetch('https://donation-platform-backend-rmqk.onrender.com/api/users/register/',{
+        fetch('https://donation-platform-backend-psi.vercel.app/api/users/register/',{
             method:"POST",
             body:info,
         })

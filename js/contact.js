@@ -20,7 +20,7 @@ document.getElementById('contact-form').addEventListener('submit', function(even
     
     const formData = new FormData(this);
 
-    fetch('https://donation-platform-backend-rmqk.onrender.com/api/notification/list/', {
+    fetch('https://donation-platform-backend-psi.vercel.app/api/notification/list/', {
         method: 'POST',
         body: formData,
     })
