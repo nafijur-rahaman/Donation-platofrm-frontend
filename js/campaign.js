@@ -26,25 +26,35 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => console.error('Error fetching campaigns:', error));
     }
-
+    
     function sortCampaigns(data) {
-
         const sortedData = data.sort((a, b) => {
             const order = {
                 active: 1,
                 completed: 2,
-                cancel:3,
-              
+                cancel: 3,
             };
             return order[a.status] - order[b.status];
         });
-        updateCampaignList(sortedData);
+    
+        // Check if sortedData is empty
+        if (sortedData.length === 0) {
+            updateCampaignList([], true); // Pass a flag to show "Campaign Not Found"
+        } else {
+            updateCampaignList(sortedData, false);
+        }
     }
-
-    function updateCampaignList(data) {
+    
+    function updateCampaignList(data, showNotFound) {
         const campaignList = document.getElementById('campaign-list');
-        campaignList.innerHTML = '';
-
+        campaignList.innerHTML = ''; // Clear the current list
+    
+        if (showNotFound) {
+            // Show "Campaign Not Found" message
+            campaignList.innerHTML = `<div class="text-center p-4 text-gray-600">Campaign Not Found</div>`;
+            return;
+        }
+    
         data.forEach(campaign => {
             const card = `
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
@@ -62,16 +72,16 @@ document.addEventListener('DOMContentLoaded', function () {
             campaignList.insertAdjacentHTML('beforeend', card);
         });
     }
-
+    
     document.getElementById('filter-form').addEventListener('submit', function (event) {
         event.preventDefault();
-
+    
         const type = document.getElementById('typeFilter').value;
         const status = document.getElementById('statusFilter').value;
-
+    
         fetchCampaigns(type, status);
     });
-
+    
     // Initial load
     fetchCampaigns();
-});
+});    
