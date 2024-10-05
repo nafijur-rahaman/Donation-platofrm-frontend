@@ -15,7 +15,7 @@ if(userToken){
                 <a href="./about.html" class="text-gray-300 hover:text-blue-400 text-xl font-semibold transition duration-300">About</a>
                 <a href="./contact.html" class="text-gray-300 hover:text-blue-400 text-xl font-semibold transition duration-300">Contact</a>
                 <a href="./profile.html" class="text-white bg-blue-600 hover:bg-blue-700 text-xl font-semibold transition duration-300 px-4 py-2 rounded-lg shadow">Profile</a>
-                <a onclick="handleLogout()" style="cursor:pointer;" class="text-white bg-green-600 hover:bg-red-700 text-xl font-semibold transition duration-300 px-4 py-2 rounded-lg shadow">Logout</a>
+                <a onclick="handleLogout()" style="cursor:pointer;" class="text-white bg-red-600 hover:bg-red-700 text-xl font-semibold transition duration-300 px-4 py-2 rounded-lg shadow">Logout</a>
             </div>
             <div class="md:hidden flex items-center">
                 <button id="menu-toggle" class="text-white focus:outline-none">
@@ -31,7 +31,7 @@ if(userToken){
             <a href="./about.html" class="block text-gray-300 hover:text-blue-400 transition duration-300 px-4 py-2">About</a>
             <a href="./contact.html" class="block text-gray-300 hover:text-blue-400 transition duration-300 px-4 py-2">Contact</a>
             <a href="./profile.html" class="block text-white bg-blue-600 hover:bg-blue-700 transition duration-300 rounded-lg text-center py-1 px-2">Profile</a>
-            <a onclick="handleLogout()" style="cursor:pointer;" class="block text-white bg-red-600 hover:bg-green-700 transition duration-300 rounded-lg text-center py-1 px-2">Logout</a>
+            <a onclick="handleLogout()" style="cursor:pointer;" class="block text-white bg-red-600 hover:bg-red-700 transition duration-300 rounded-lg text-center py-1 px-2">Logout</a>
         </div>
   
   
@@ -51,7 +51,7 @@ if(userToken){
         <a href="./about.html" class="text-gray-300 hover:text-blue-400 text-xl font-semibold transition duration-300">About</a>
         <a href="./contact.html" class="text-gray-300 hover:text-blue-400 text-xl font-semibold transition duration-300">Contact</a>
         <a href="./admin.html" class="text-white bg-blue-600 hover:bg-blue-700 text-xl font-semibold transition duration-300 px-4 py-2 rounded-lg shadow">Profile</a>
-        <a onclick="handleAdminLogout" style="cursor:pointer;" class="text-white bg-green-600 hover:bg-red-700 text-xl font-semibold transition duration-300 px-4 py-2 rounded-lg shadow">Logout</a>
+        <a onclick="handleAdminLogout" style="cursor:pointer;" class="text-white bg-red-600 hover:bg-red-700 text-xl font-semibold transition duration-300 px-4 py-2 rounded-lg shadow">Logout</a>
     </div>
     <div class="md:hidden flex items-center">
         <button id="menu-toggle" class="text-white focus:outline-none">
@@ -67,7 +67,7 @@ if(userToken){
     <a href="./about.html" class="block text-gray-300 hover:text-blue-400 transition duration-300 px-4 py-2">About</a>
     <a href="./contact.html" class="block text-gray-300 hover:text-blue-400 transition duration-300 px-4 py-2">Contact</a>
     <a href="./admin.html" class="block text-white bg-blue-600 hover:bg-blue-700 transition duration-300 rounded-lg text-center py-1 px-2">Profile</a>
-    <a onclick="handleAdminLogout()" style="cursor:pointer;" class="block text-white bg-red-600 hover:bg-green-700 transition duration-300 rounded-lg text-center py-1 px-2">Logout</a>
+    <a onclick="handleAdminLogout()" style="cursor:pointer;" class="block text-white bg-red-600 hover:bg-red-700 transition duration-300 rounded-lg text-center py-1 px-2">Logout</a>
 </div>
 
 
