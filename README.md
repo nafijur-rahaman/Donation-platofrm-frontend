@@ -55,31 +55,59 @@ Now you can see the project use live server.
 
 
 
-## Api endpoint
-#### User Authentication:
+## API Endpoints
 
-- POST /api/register/ – Register a new user
+### User Authentication
 
-- POST /api/login/ – Log in a user
+- **Register a New User**  
+  `POST` [https://donation-platform-backend-psi.vercel.app/api/users/register/](https://donation-platform-backend-psi.vercel.app/api/users/register/)
+  
+- **Log in a User**  
+  `POST` [https://donation-platform-backend-psi.vercel.app/api/users/login/](https://donation-platform-backend-psi.vercel.app/api/users/login/)
+  
+- **Log in Admin**  
+  `POST` [https://donation-platform-backend-psi.vercel.app/api/manager/login/](https://donation-platform-backend-psi.vercel.app/api/manager/login/)
+  
+- **Log out a User**  
+  `GET` [https://donation-platform-backend-psi.vercel.app/api/users/logout/](https://donation-platform-backend-psi.vercel.app/api/users/logout/)
+  
+- **Log out Admin**  
+  `GET` [https://donation-platform-backend-psi.vercel.app/api/manager/logout/](https://donation-platform-backend-psi.vercel.app/api/manager/logout/)
 
-- POST /api/logout/ – Log out a user
-#### Campaign Management:
+### Campaign Management
 
-- GET /api/campaigns/ – List all campaigns
+- **List All Campaigns**  
+  `GET` [https://donation-platform-backend-psi.vercel.app/api/campaign/list/](https://donation-platform-backend-psi.vercel.app/api/campaign/list/)
+  
+- **Create a New Campaign**  
+  `POST` [https://donation-platform-backend-psi.vercel.app/api/campaign/list/](https://donation-platform-backend-psi.vercel.app/api/campaign/list/)
+  
+- **Update a Campaign**  
+  `PUT` [https://donation-platform-backend-psi.vercel.app/api/campaign/list/campaignId/](https://donation-platform-backend-psi.vercel.app/api/campaign/list/campaignId/)
+  
+- **Delete a Campaign**  
+  `DELETE` [https://donation-platform-backend-psi.vercel.app/api/campaign/list/campaignId/](https://donation-platform-backend-psi.vercel.app/api/campaign/list/campaignId/)
 
-- POST /api/campaigns/create/ – Create a new campaign
+### Donation Management
 
-- PUT /api/campaigns/update/<id>/ – Update a campaign
+- **Process a Donation**  
+  `POST` [https://donation-platform-backend-psi.vercel.app/api/transactions/initiate-payment/](https://donation-platform-backend-psi.vercel.app/api/transactions/initiate-payment/)
+  
+- **View Donation History**  
+  `GET` [https://donation-platform-backend-psi.vercel.app/api/transactions/list/](https://donation-platform-backend-psi.vercel.app/api/transactions/list/)
 
-- DELETE /api/campaigns/delete/<id>/ – Delete a campaign
+### Notes
 
-#### Donation Management:
+- Replace `user_id` and `tuitionId` in the URLs with the actual user or tuition post ID as required.
+- Ensure you handle authentication tokens properly in your requests.
 
-- POST /api/donations/ – Process a donation
-
-- GET /api/donations/history/ – View donation history
 
 ## Support
 
-For support, email tanjidnafis@.com 
+
+## Contact
+
+For inquiries or support, please contact:
+- **Project Developer**: Md. Nafijur Rahaman
+- **Email**: tanjidnafis@gmail.com
 
