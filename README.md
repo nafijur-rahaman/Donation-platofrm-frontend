@@ -96,9 +96,10 @@ Now you can see the project use live server.
 - **View Donation History**  
   `GET` [https://donation-platform-backend-psi.vercel.app/api/transactions/list/](https://donation-platform-backend-psi.vercel.app/api/transactions/list/)
 
+
 ### Notes
 
-- Replace `user_id` and `tuitionId` in the URLs with the actual user or tuition post ID as required.
+- Replace `user_id` and `campaignId` in the URLs with the actual user or tuition post ID as required.
 - Ensure you handle authentication tokens properly in your requests.
 
 
