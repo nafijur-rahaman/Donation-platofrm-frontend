@@ -292,11 +292,11 @@ const loadDonation = () => {
             const formattedDate = formatDatee(donation.created_at);
             const tr = document.createElement("tr");
             tr.innerHTML = `
-              <td class="border-b p-4 text-blue-600 font-semibold">${donation.donor_name}</td>
-              <td class="border-b p-4 text-purple-600 font-medium">${donation.donor_email}</td>
+              <td class="border-b p-4 text-gray-700 font-semibold">${donation.donor_name}</td>
+              <td class="border-b p-4 text-gray-700 font-medium">${donation.donor_email}</td>
               <td class="border-b p-4 text-green-600 font-semibold">${donation.amount} BDT</td>
-              <td class="border-b p-4 text-indigo-600 font-medium">${formattedDate}</td>
-              <td class="border-b p-4 text-pink-600 font-medium">${donation.campaign_name}</td>
+              <td class="border-b p-4 text-gray-700 font-medium">${formattedDate}</td>
+              <td class="border-b p-4 text-gray-700 font-medium">${donation.campaign_name}</td>
             `;
             parent.appendChild(tr);
           }
@@ -359,9 +359,9 @@ function fetchUsers() {
 
             row.innerHTML = `
                 <td class="p-3 text-gray-800">${user.first_name} ${user.last_name}</td>
-                <td class="p-3 text-blue-600 font-medium">${user.email}</td>
-                <td class="p-3 text-purple-600">${user.profession}</td>
-                <td class="p-3 text-green-600">${user.status}</td>
+                <td class="p-3 text-gray-800 font-medium">${user.email}</td>
+                <td class="p-3 text-gray-800">${user.profession}</td>
+                <td class="p-3 text-green-600 font-medium">${user.status}</td>
                 <td class="p-3">
                     <button 
                         class="bg-red-600 text-white px-4 py-2 rounded-lg shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500" 

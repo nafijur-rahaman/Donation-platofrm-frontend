@@ -31,14 +31,14 @@ const getCampaignDetails = () => {
             const div = document.getElementById('campaign-detail')
             div.innerHTML = `
   
-      <h1 class="text-3xl font-bold text-yellow-800">${data.title} </h1>
+      <h1 class="text-3xl font-bold text-blue-600">${data.title} </h1>
       <p class="text-gray-600 mt-2">Organized by <span class="font-semibold">${data.creator_name}</span></p>
       <div class="flex mt-4">
           <img src="https://res.cloudinary.com/dwsp8rft8/${data.image}" alt="Campaign Image" class="w-1/3 rounded-lg shadow-lg">
           <div class="w-2/3 ml-6">
               <p class="text-gray-700 text-lg">${data.description}</p>
-              <p><strong>Location: ${data.location}</strong></p> 
-              <p><strong>End Date: ${data.deadline}</strong>
+              <p><strong>Location: </strong><span>${data.location} </span> </p> 
+              <p><strong>End Date: </strong><span>${data.deadline}</span> </p>
 
 
               

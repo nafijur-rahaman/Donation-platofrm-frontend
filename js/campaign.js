@@ -51,14 +51,19 @@ document.addEventListener('DOMContentLoaded', function () {
     
         if (showNotFound) {
             // Show "Campaign Not Found" message
-            campaignList.innerHTML = `<div class="text-center p-4 text-gray-600">Campaign Not Found</div>`;
+            campaignList.innerHTML = `<div class="flex flex-col items-center justify-center p-8 bg-gray-100 border border-gray-300 rounded-lg shadow-md transition-transform duration-300 transform">
+    <h2 class="text-3xl font-bold text-gray-800">Campaign Not Found</h2>
+    <p class="mt-4 text-lg text-gray-500">We couldn't find any campaigns matching your search criteria.</p>
+</div>
+
+`;
             return;
         }
     
         data.forEach(campaign => {
             const card = `
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
-                    <img src="https://res.cloudinary.com/dwsp8rft8/${campaign.image}" class="w-full h-48 object-cover" alt="${campaign.title}">
+                    <img src="https://res.cloudinary.com/dwsp8rft8/${campaign.image}" class="w-full h-64 object-cover" alt="${campaign.title}">
                     <div class="p-4">
                         <h5 class="text-xl font-semibold mb-2 text-gray-800">${campaign.title}</h5>
                         <p class="text-gray-700 mb-2">${campaign.description.slice(0, 50)}...</p>

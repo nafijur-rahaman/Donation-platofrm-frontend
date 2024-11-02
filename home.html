@@ -7,7 +7,7 @@
   <title>Home</title>
 
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  
+  <link href="https://cdn.jsdelivr.net/npm/swiffy-slider@1.6.0/dist/css/swiffy-slider.min.css" rel="stylesheet" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <style>
   /* Modal Styles */
@@ -89,17 +89,7 @@
     }
 
     
-      .navbar {
-          background: linear-gradient(90deg, #4F46E5, #3B82F6);
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      }
-      .navbar a {
-          transition: color 0.4s ease, transform 0.4s ease;
-      }
-      .navbar a:hover {
-          color: gray;
-          transform: scale(1.05);
-      }
+
       .footer {
           background: #1F2937;
           color: #E5E7EB;
@@ -113,10 +103,12 @@
       .footer-section-title {
           color: #E5E7EB;
       }
+
+
   </style>
 </head>
 
-<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+<body class="bg-gray-100">
 
     <nav id="conditional-element" class="bg-gray-800 w-full shadow-lg">
     
@@ -134,98 +126,118 @@
 <!-- error alert modal -->
 <div id="customAlert" class="modal">
   <div class="modal-content">
-      <span class="close-btn" onclick="closeAlert()">&times;</span>
+      <span class="close-btn" onclick="closeErrorAlert()">&times;</span>
       <p id="alertMessage"></p>
-      <button class="ok-btn" onclick="closeAlert()">OK</button>
+      <button class="ok-btn" onclick="closeErrorAlert()">OK</button>
   </div>
 </div>
 <!-- success alert modal -->
 <div id="s-customAlert" class="modal">
   <div class="modal-content">
-      <span class="close-btn" onclick="closeAlert()">&times;</span>
+      <span class="close-btn" onclick="closeSuccessAlert()">&times;</span>
       <p id="s-alertMessage"></p>
-      <button class="ok-btn" onclick="closeAlert()">OK</button>
+      <button class="ok-btn" onclick="closeSuccessAlert()">OK</button>
   </div>
 </div>
 
 
 
+<!-- carosoul -->
 
-   <!-- banner section -->
-   <section class="bg-cover bg-center h-screen flex items-center justify-center relative" style="background-image: url('./img/img.jpg');">
-    <div class="text-center bg-black bg-opacity-60 p-10 rounded-lg max-w-2xl mx-auto">
-        <h1 class="text-6xl text-white font-bold mb-6 leading-tight">Transform Lives <br> With Your Help</h1>
-        <p class="text-xl text-gray-300 mb-8">Your contributions empower communities and create lasting change.</p>
-        <a href="./campaign.html" class="bg-yellow-500 text-white px-10 py-4 rounded-full font-bold text-lg shadow-lg hover:bg-yellow-600 transition">Donate Now</a>
-    </div>
-</section>
-
-
-<!-- carosoul section -->
-
-<div  class="relative bg-gray-200 py-12">
-  <!-- Header Section -->
-  <div class="text-center mb-8 mt-20">
-      <h1 class="text-4xl font-bold text-gray-800">Support Our Causes</h1>
-      <p class="text-lg text-gray-600 mt-2">Explore our initiatives and make a difference with your contribution.</p>
-  </div>
-
- 
-  <div  class="carousel-container relative max-w-screen-xl mx-auto overflow-hidden w-full h-screen">
-      
-      <div class="carousel relative w-full h-full overflow-hidden">
-          
-          <div class="carousel-slide flex transition-transform duration-500 ease-in-out w-full h-full">
-              
-              <div class="w-full flex-none relative h-[60vh]">
-                  <img src="./img/img1.jpg" alt="Flood Relief" class="w-full h-[500px] object-cover">
-                  <div class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-40 text-white p-8">
-                      <h2 class="text-3xl font-bold mb-4">Flood Relief</h2>
-                      <p class="text-lg mb-4">Support victims of floods and help provide essential relief services.</p>
-                     <a href="./flood.html"><button class="bg-blue-800 text-white py-2 px-4 rounded-lg shadow-lg text-lg">Learn More</button></a> 
-                  </div>
-              </div>
-              
-              <div class="w-full flex-none relative h-[60vh]">
-                  <img src="./img/img2.jpg" alt="Education Support" class="w-full h-[500px] object-cover">
-                  <div class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-40 text-white p-8">
-                      <h2 class="text-3xl font-bold mb-4">Education Support</h2>
-                      <p class="text-lg mb-4">Donate to improve educational opportunities and resources for underprivileged children.</p>
-                     <a href="./education.html"> <button class="bg-green-800 text-white py-2 px-4 rounded-lg shadow-lg text-lg">Learn More</button></a>
-                  </div>
-              </div>
-             
-              <div class="w-full flex-none relative h-[60vh]">
-                  <img src="./img/img3.jpg" alt="Health Services" class="w-full h-[500px] object-cover">
-                  <div class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-40 text-white p-8">
-                      <h2 class="text-3xl font-bold mb-4">Health Services</h2>
-                      <p class="text-lg mb-4">Contribute to providing medical care and health services to those in need.</p>
-                     <a href="./health.html"> <button class="bg-red-800 text-white py-2 px-4 rounded-lg shadow-lg text-lg">Learn More</button>
-                     </div></a>
-              </div>
-              
-              <div class="w-full flex-none relative h-[60vh]">
-                  <img src="./img/img4.jpg" alt="Food Distribution" class="w-full h-[500px] object-cover">
-                  <div class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-40 text-white p-8">
-                      <h2 class="text-3xl font-bold mb-4">Food Distribution</h2>
-                      <p class="text-lg mb-4">Help distribute food to the hungry and support food security programs.</p>
-                     <a href="./food.html"> <button class="bg-yellow-800 text-white py-2 px-4 rounded-lg shadow-lg text-lg">Learn More</button>
-                     </div></a>
-              </div>
-            
-              <div class="w-full flex-none relative h-[60vh]">
-                  <img src="./img/volunteers-holding-box-containing-donations-charity.jpg" alt="Shelter Provision" class="w-full h-[500px] object-cover">
-                  <div class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-40 text-white p-8">
-                      <h2 class="text-3xl font-bold mb-4">Shelter Provision</h2>
-                      <p class="text-lg mb-4">Provide shelter and support for those who are homeless or displaced.</p>
-                      <a href="./shelter.html"><button class="bg-purple-800 text-white py-2 px-4 rounded-lg shadow-lg text-lg">Learn More</button>
-                      </div></a>
-              </div>
+<div class="swiffy-slider slider-item-nogap slider-nav-autoplay slider-nav-autopause slider-nav-animation slider-nav-animation-fadein slider-nav-animation-slow" data-slider-nav-autoplay-interval="3000">
+  <ul class="slider-container">
+      <li>
+          <div id="slide1" class="slide-content">
+              <img src="./img/bg_1.jpg" alt="">
+              <a href="food.html" class="overlay-text">Food Relief</a>
           </div>
-        
-          <button class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow-lg text-2xl" onclick="prevSlide()">❮</button>
-          <button class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow-lg text-2xl" onclick="nextSlide()">❯</button>
-      </div>
+      </li>
+      <li>
+          <div id="slide2" class="slide-content">
+              <img src="./img/bg_2.jpg" alt="">
+              <a href="education.html" class="overlay-text">Education Support</a>
+          </div>
+      </li>
+      <li>
+          <div id="slide3" class="slide-content">
+              <img src="./img/bg_3.jpg" alt="">
+              <a href="health.html" class="overlay-text">Health Service</a>
+          </div>
+      </li>
+      <li>
+          <div id="slide4" class="slide-content">
+              <img src="./img/bg_7.jpg" alt="">
+              <a href="food.html" class="overlay-text">Food Distribution</a>
+          </div>
+      </li>
+  </ul>
+
+  <button type="button" class="slider-nav"></button>
+  <button type="button" class="slider-nav slider-nav-next"></button>
+
+  <ul class="slider-indicators">
+      <li class="active"></li>
+      <li></li>
+      <li></li>
+      <li></li>
+  </ul>
+</div>
+
+<style>
+  /* Limit the height of the slider */
+  .swiffy-slider .slider-container img {
+      max-height: 800px; /* Adjust this value as needed */
+      object-fit:fill; /* Ensures images scale nicely within the set height */
+      width: 100%; /* Ensures images take up the full width */
+  }
+
+  .slide-content {
+    position: relative;
+}
+
+.overlay-text {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none; /* Remove underline */
+}
+
+.overlay-text:hover {
+    background: rgba(0, 0, 0, 0.7); /* Darker background on hover */
+}
+</style>
+
+
+<!-- About Us Section -->
+
+
+<div class="flex flex-col items-center space-y-10 px-6 py-10 lg:space-y-16 bg-gray-100">
+  <!-- Our Mission Section -->
+  <div class="flex flex-col md:flex-row items-center bg-white shadow-md rounded-lg overflow-hidden w-full max-w-6xl transition-transform duration-300 hover:shadow-lg">
+    <img class="w-full h-40 md:h-auto md:w-1/2 object-cover transform transition-transform duration-300 hover:scale-105" src="./img/image_3.jpg" alt="Our Mission">
+    <div class="p-8 md:w-1/2 text-center md:text-left">
+      <h3 class="text-2xl font-semibold text-gray-800 mb-4">Our Mission</h3>
+      <p class="text-base text-gray-600 mb-4">Dedicated to fostering a community of learning and growth through innovative educational solutions.</p>
+      <p class="text-sm text-gray-500 mb-6">We strive to empower individuals by providing top-tier educational services that encourage lifelong learning and development.</p>
+      <button class="px-5 py-2 text-sm bg-blue-600 text-white font-medium rounded-full shadow hover:bg-blue-700 transition duration-200">Learn More</button>
+    </div>
+  </div>
+
+  <!-- Our Vision Section -->
+  <div class="flex flex-col md:flex-row-reverse items-center bg-white shadow-md rounded-lg overflow-hidden w-full max-w-6xl transition-transform duration-300 hover:shadow-lg">
+    <img class="w-full h-40 md:h-auto md:w-1/2 object-cover transform transition-transform duration-300 hover:scale-105" src="./img/image_5.jpg" alt="Our Vision">
+    <div class="p-8 md:w-1/2 text-center md:text-left">
+      <h3 class="text-2xl font-semibold text-gray-800 mb-4">Our Vision</h3>
+      <p class="text-base text-gray-600 mb-4">Inspiring the future with a commitment to excellence and innovation in education.</p>
+      <p class="text-sm text-gray-500 mb-6">Our vision is to be a transformative force in education, building a world where knowledge is accessible and impactful for everyone.</p>
+      <button class="px-5 py-2 text-sm bg-blue-600 text-white font-medium rounded-full shadow hover:bg-blue-700 transition duration-200">Discover More</button>
+    </div>
   </div>
 </div>
 
@@ -235,96 +247,188 @@
 
 
 
-  <!-- How It Works -->
-  <section  class=" py-12 mt-20">
-    <div class="container mx-auto p-6">
-      <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center">How It Works</h2>
-      <div class="flex flex-wrap justify-center gap-12">
-        <!-- Step 1 -->
-        <div class="bg-white p-6 rounded-lg shadow-lg text-center w-full md:w-1/3">
-          <div class="text-5xl mb-4 text-green-500">
+
+
+
+
+
+
+<!-- How It Works -->
+<section class="py-12 mt-20 bg-gray-100 bg-fixed bg-cover bg-center" style="background-image: url('./img/pexels-brandaohh-3959485.jpg'); background-size: cover;">
+  <div class="container mx-auto p-6 rounded-lg">
+    <h2 class="text-4xl font-bold text-white mb-12 text-center">How It Works</h2>
+    <div class="flex flex-wrap justify-center gap-8">
+      <!-- Step 1 -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden w-full md:w-1/3 transform transition hover:-translate-y-2">
+        <div class="p-6 text-center">
+          <div class="text-4xl mb-4 text-blue-600">
             <i class="fas fa-search"></i>
           </div>
-          <h3 class="text-xl font-semibold text-gray-800 mb-3">Discover Causes</h3>
-          <p class="text-gray-600">Browse our list of impactful campaigns and find the ones that resonate with your
-            values.</p>
+          <h3 class="text-2xl font-semibold text-gray-800 mb-3">Discover Causes</h3>
+          <p class="text-gray-600">Browse our list of impactful campaigns and find the ones that resonate with your values.</p>
         </div>
-        <!-- Step 2 -->
-        <div class="bg-white p-6 rounded-lg shadow-lg text-center w-full md:w-1/3">
-          <div class="text-5xl mb-4 text-green-500">
+      </div>
+      <!-- Step 2 -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden w-full md:w-1/3 transform transition hover:-translate-y-2">
+        <div class="p-6 text-center">
+          <div class="text-4xl mb-4 text-green-500">
             <i class="fas fa-donate"></i>
           </div>
-          <h3 class="text-xl font-semibold text-gray-800 mb-3">Contribute</h3>
-          <p class="text-gray-600">Make a donation easily and securely. Every contribution makes a significant impact.
-          </p>
+          <h3 class="text-2xl font-semibold text-gray-800 mb-3">Contribute</h3>
+          <p class="text-gray-600">Make a donation easily and securely. Every contribution makes a significant impact.</p>
         </div>
-        <!-- Step 3 -->
-        <div class="bg-white p-6 rounded-lg shadow-lg text-center w-full md:w-1/3">
-          <div class="text-5xl mb-4 text-green-500">
+      </div>
+      <!-- Step 3 -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden w-full md:w-1/3 transform transition hover:-translate-y-2">
+        <div class="p-6 text-center">
+          <div class="text-4xl mb-4 text-red-500">
             <i class="fas fa-heart"></i>
           </div>
-          <h3 class="text-xl font-semibold text-gray-800 mb-3">See the Impact</h3>
+          <h3 class="text-2xl font-semibold text-gray-800 mb-3">See the Impact</h3>
           <p class="text-gray-600">Track the progress of campaigns and see the difference your donations are making.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 
+<!-- dashboard and campaigns -->
 
+<hr>
 
+<div class="bg-gray-100 min-h-screen py-10 px-6 lg:px-20">
+  <!-- Header Section -->
+  <header class="mb-14 text-center">
+    <h1 class="text-5xl font-bold text-gray-700">Our Impact</h1>
+    <p class="text-lg text-gray-700 mt-2">Explore the completed donation campaigns and the difference they’ve made.</p>
+  </header>
 
+  <!-- Overview Stats Section -->
+  <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+    <div id="donation" class="bg-white shadow-lg rounded-lg p-8 text-center transform transition hover:scale-105 hover:shadow-xl">
 
-  <section class="bg-gray-100 py-12 px-4 md:px-8">
-    <div class="container mx-auto">
-        <h2 class="text-3xl font-semibold text-gray-800 mb-8 text-center">Frequently Asked Questions</h2>
-        <div class="space-y-4">
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <button class="w-full text-left px-6 py-4 font-medium text-gray-900 bg-gray-50 border-b border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="question1">
-                    What is our mission?
-                </button>
-                <div class="px-6 py-4 border-b border-gray-200 hidden" id="answer1">
-                    <p>Our mission is to connect donors with meaningful causes, making it easy to contribute to the betterment of our world through a streamlined and impactful donation process.</p>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <button class="w-full text-left px-6 py-4 font-medium text-gray-900 bg-gray-50 border-b border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="question2">
-                    How can I donate?
-                </button>
-                <div class="px-6 py-4 border-b border-gray-200 hidden" id="answer2">
-                    <p>To donate, simply navigate to our donation page, select the cause you wish to support, and follow the prompts to complete your donation securely.</p>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <button class="w-full text-left px-6 py-4 font-medium text-gray-900 bg-gray-50 border-b border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="question3">
-                    Can I track my donation?
-                </button>
-                <div class="px-6 py-4 border-b border-gray-200 hidden" id="answer3">
-                    <p>Yes, once you’ve made a donation, you will receive an email confirmation with a tracking link to view the status of your donation.</p>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <button class="w-full text-left px-6 py-4 font-medium text-gray-900 bg-gray-50 border-b border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="question4">
-                    Are donations tax-deductible?
-                </button>
-                <div class="px-6 py-4 border-b border-gray-200 hidden" id="answer4">
-                    <p>Yes, donations made through our platform are tax-deductible. Please consult with your tax advisor for detailed information regarding your specific tax situation.</p>
-                </div>
-            </div>
-        </div>
+    </div>
+    <div id="completed-campaigns" class="bg-white shadow-lg rounded-lg p-8 text-center transform transition hover:scale-105 hover:shadow-xl text-white">
+  
+    </div>
+    <div id="users" class="bg-white shadow-lg rounded-lg p-8 text-center transform transition hover:scale-105 hover:shadow-xl text-white">
+  
     </div>
 </section>
 
-<section class="bg-indigo-600 py-12 px-4 md:px-8 text-white">
-  <div class="container mx-auto text-center">
-      <h2 class="text-3xl font-semibold mb-4">Make a Difference Today</h2>
-      <p class="text-lg mb-6">Your support can help change lives. Join us in making a positive impact in our community.</p>
-      <a href="./campaign.html" class="bg-white text-indigo-600 py-3 px-6 rounded-lg font-semibold hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">Donate Now</a>
+
+  <!-- Campaigns Section -->
+  <section>
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">Highlighted Campaigns</h2>
+    <div id="campaigns" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
+  
+    <!-- View All Campaigns Button -->
+    <div class="mt-10 text-center">
+      <button class="px-6 py-3 bg-purple-600 text-white text-lg font-semibold rounded-full shadow-lg hover:bg-purple-700 transition duration-300">
+        View All Campaigns
+      </button>
+    </div>
+  </section>
+</div>
+
+
+<hr>
+
+
+
+
+<section class="py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col justify-center items-center gap-x-16 gap-y-5 xl:gap-28 lg:flex-row lg:justify-between max-lg:max-w-2xl mx-auto max-w-full">
+      <div class="w-full lg:w-1/2">
+        <img src="./img/Charity-bro.png" alt="FAQ tailwind section" class="w-full rounded-xl object-cover" />
+      </div>
+      <div class="w-full lg:w-1/2">
+        <div class="lg:max-w-xl">
+          <div class="mb-6 lg:mb-16">
+            <h6 class="text-lg text-center font-medium text-indigo-600 mb-2 lg:text-left">FAQs</h6>
+            <h2 class="text-4xl text-center font-bold text-gray-900 leading-[3.25rem] mb-5 lg:text-left">Looking for answers?</h2>
+          </div>
+          <div class="accordion-group" data-accordion="default-accordion">
+            <div class="accordion pb-8 border-b border-solid border-gray-200">
+              <button class="accordion-toggle group inline-flex items-center justify-between text-xl font-normal leading-8 text-gray-600 w-full transition duration-500 hover:text-indigo-600" aria-controls="basic-collapse-one">
+                <h5>How to create an account?</h5>
+                <svg class="text-gray-900 transition duration-500 group-hover:text-indigo-600" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.5 8.25L12.4142 12.3358C11.7475 13.0025 11.4142 13.3358 11 13.3358C10.5858 13.3358 10.2525 13.0025 9.58579 12.3358L5.5 8.25" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </button>
+              <div id="basic-collapse-one" class="accordion-content w-full px-0 overflow-hidden pr-4 hidden" aria-labelledby="basic-heading-one">
+                <p class="text-base font-normal text-gray-600">To create an account, find the 'Sign up' or 'Create account' button, fill out the registration form with your personal information, and click 'Create account' or 'Sign up.' Verify your email address if needed, and then log in to start using the platform.</p>
+              </div>
+            </div>
+
+            <div class="accordion py-8 border-b border-solid border-gray-200">
+              <button class="accordion-toggle group inline-flex items-center justify-between text-xl font-normal leading-8 text-gray-600 w-full transition duration-500 hover:text-indigo-600" aria-controls="basic-collapse-two">
+                <h5>Have any trust issue?</h5>
+                <svg class="text-gray-900 transition duration-500 group-hover:text-indigo-600" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.5 8.25L12.4142 12.3358C11.7475 13.0025 11.4142 13.3358 11 13.3358C10.5858 13.3358 10.2525 13.0025 9.58579 12.3358L5.5 8.25" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </button>
+              <div id="basic-collapse-two" class="accordion-content w-full px-0 overflow-hidden pr-4 hidden" aria-labelledby="basic-heading-two">
+                <p class="text-base text-gray-500 font-normal">Our focus on providing robust and user-friendly content management capabilities ensures that you can manage your content with confidence, and achieve your content marketing goals with ease.</p>
+              </div>
+            </div>
+
+            <div class="accordion py-8">
+              <button class="accordion-toggle group inline-flex items-center justify-between text-xl font-normal leading-8 text-gray-600 w-full transition duration-500 hover:text-indigo-600" aria-controls="basic-collapse-three">
+                <h5>What is the payment process?</h5>
+                <svg class="text-gray-900 transition duration-500 group-hover:text-indigo-600" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.5 8.25L12.4142 12.3358C11.7475 13.0025 11.4142 13.3358 11 13.3358C10.5858 13.3358 10.2525 13.0025 9.58579 12.3358L5.5 8.25" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </button>
+              <div id="basic-collapse-three" class="accordion-content w-full px-0 overflow-hidden pr-4 hidden" aria-labelledby="basic-heading-three">
+                <p class="text-base text-gray-500 font-normal">Our focus on providing robust and user-friendly content management capabilities ensures that you can manage your content with confidence, and achieve your content marketing goals with ease.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
+
+<script>
+  document.querySelectorAll('.accordion-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+      const accordionContent = button.nextElementSibling;
+
+      // Toggle the visibility of the content
+      accordionContent.classList.toggle('hidden');
+
+      // Optionally, toggle an 'active' class for styling purposes
+      button.classList.toggle('accordion-active');
+
+      // Close other open accordion items
+      document.querySelectorAll('.accordion-content').forEach(content => {
+        if (content !== accordionContent) {
+          content.classList.add('hidden');
+        }
+      });
+
+      // Optionally, adjust the rotation of the arrow icon
+      document.querySelectorAll('.accordion-toggle').forEach(otherButton => {
+        if (otherButton !== button) {
+          otherButton.classList.remove('accordion-active');
+        }
+      });
+    });
+  });
+</script>
+
+                                        
+
+
+
+
+
+
+
 
 
 
@@ -356,43 +460,10 @@
       </div>
   </div>
 </footer>
-
+<script src="https://cdn.jsdelivr.net/npm/swiffy-slider@1.6.0/dist/js/swiffy-slider.min.js" crossorigin="anonymous" defer></script>
  <script src="./js/home.js"></script>
   <script src="./js/logout.js"></script>
-
-  <script>
-    let index = 0;
-    const slides = document.querySelectorAll('.carousel-slide > div');
-    const totalSlides = slides.length;
-    const slideInterval = 5000; // 5 seconds
-
-    function showSlide(slideIndex) {
-        const slideWidth = slides[0].offsetWidth;
-        document.querySelector('.carousel-slide').style.transform = `translateX(${-slideWidth * slideIndex}px)`;
-    }
-
-    function nextSlide() {
-        index = (index + 1) % totalSlides;
-        showSlide(index);
-    }
-
-    function prevSlide() {
-        index = (index - 1 + totalSlides) % totalSlides;
-        showSlide(index);
-    }
-
-    setInterval(nextSlide, slideInterval);
-
-
-      document.querySelectorAll('button[id^="question"]').forEach(button => {
-          button.addEventListener('click', () => {
-              const answerId = `answer${button.id.replace('question', '')}`;
-              const answer = document.getElementById(answerId);
-  
-              answer.classList.toggle('hidden');
-          });
-      });
-  </script>
+  <script src="./js/script.js"></script>
 
 </body>
 

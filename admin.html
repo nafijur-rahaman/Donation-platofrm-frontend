@@ -140,15 +140,26 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
       }
-      
+        /* Ensures the sidebar overlays the content on small screens */
+  @media (max-width: 768px) {
+    #sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        z-index: 50;
+        width: 75%;
+    }
+    .flex-1 {
+        margin-left: 0 !important;
+    }
+}
   </style>
 </head>
 
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 
-
  <!-- Main Content -->
- <section>
+ <section class="main">
 
 
 <!-- error alert modal -->
@@ -178,311 +189,250 @@
   
   
   
-      <!-- Sidebar -->
-      <div class="flex flex-wrap">
-        <div class="w-1/5 bg-gray-900 text-white min-h-screen p-6">
-          <h2 class="text-2xl font-bold mb-6">Manager Workspace</h2>
-          <ul class="space-y-4">
-            <li>
-              <a
-                style="text-decoration: none"
-                href="#"
-                class="sidebar-item p-4 block"
-                >Dashboard</a
-              >
-            </li>
-            
-            <li>
-                  <a
-                style="text-decoration: none"
-                href="admin_campaign.html"
-                class="sidebar-item p-4 block"
-                >View Campaigns</a>
-            </li>
-        
-              <a
-                style="text-decoration: none"
-                href="#"
-                onclick="handleAdminLogout()"
-                class="sidebar-item p-4 block"
-                >Logout</a
-              >
-            </li>
+<div class="flex flex-wrap min-h-screen">
+  <!-- Sidebar -->
+  <div id="sidebar" class="w-full md:w-1/5 bg-gray-900 text-white min-h-screen p-6 fixed md:relative transform md:transform-none transition-transform duration-200 -translate-x-full md:translate-x-0">
+      <h2 class="text-2xl font-bold mb-6">Manager Workspace</h2>
+      <ul class="space-y-4">
+          <li><a href="#" class="sidebar-item p-4 block text-white">Dashboard</a></li>
+          <li><a href="admin_campaign.html" class="sidebar-item p-4 block text-white">View Campaigns</a></li>
+          <li><a href="#" onclick="handleAdminLogout()" class="sidebar-item p-4 block text-white">Logout</a></li>
+      </ul>
+  </div>
+
+  <!-- Mobile Hamburger Icon -->
+  <div class="md:hidden p-4 bg-gray-900 text-white w-full flex justify-between items-center">
+      <h2 class="text-xl font-bold">Manager Workspace</h2>
+      <button id="menuToggle" class="focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+      </button>
+  </div>
+
+
+  <!-- Main Content -->
+  <div class="w-4/5 p-6">
+    <!-- Topbar -->
+    <header
+    style="margin-bottom: 25px"
+    class="bg-white shadow-md p-4 flex flex-col md:flex-row items-center justify-between"
+  >
+    <h2 class="text-xl font-semibold mb-2 md:mb-0">Welcome, Manager</h2>
+    <div class="flex flex-col md:flex-row space-x-0 md:space-x-4">
+      <!-- Notifications Button -->
+      <button
+        id="notificationsButton"
+        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-2 md:mb-0"
+      >
+        Notifications (<span id="notificationCount">0</span>)
+      </button>
+      <span
+        class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+        id="unreadCount"
+        >Unread: 0</span
+      >
+  
+      <!-- Notifications Dropdown -->
+      <div class="relative">
+        <div id="notificationsDropdown" class="absolute right-0 mt-2 w-64 bg-white border border-gray-300 rounded-lg shadow-lg hidden z-50">
+          <ul id="notificationsList" class="max-h-64 overflow-y-auto list-none p-0 m-0">
+            <!-- Notifications will be dynamically added here -->
           </ul>
         </div>
+      </div>
+    </div>
+  </header>
   
-        <!-- Main Content -->
-        <div class="w-4/5 p-6">
-          <!-- Topbar -->
-          <header
-            style="margin-bottom: 25px"
-            class="bg-white shadow-md p-4 flex items-center justify-between"
-          >
-            <h2 class="text-xl font-semibold">Welcome, Manager</h2>
-            <div class="space-x-4">
-              <!-- Notifications Button -->
-              <button
-                id="notificationsButton"
-                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              >
-                Notifications (<span id="notificationCount">0</span>)
-              </button>
-              <span
-                class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                id="unreadCount"
-                >Unread: 0</span
-              >
-  
-              <!-- Notifications Dropdown -->
-              <div class="relative">
-                <div id="notificationsDropdown" class="absolute right-0 mt-2 w-64 bg-white border border-gray-300 rounded-lg shadow-lg hidden z-50">
-                    <ul id="notificationsList" class="max-h-64 overflow-y-auto list-none p-0 m-0">
-                        <!-- Notifications will be dynamically added here -->
-                    </ul>
-                </div>
-            </div>
-            
-            
-            </div>
-          </header>
-  
-          <!-- dashboard -->
-          <div class="text-center my-8">
-            <h1 class="text-4xl font-bold text-gray-800">Manager Dashboard</h1>
-            <p class="text-lg text-gray-500 mt-2">
-              Overview of platform metrics and management tools
-            </p>
-          </div>
-  
-          <div
-          style="margin-bottom: 20px"
-          class="flex justify-center items-center bg-gray-100 p-4"
-        >
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-6 w-full max-w-5xl">
-            <div
-              id="donation"
-              class="bg-blue-500 shadow-lg rounded-lg p-4 transform transition-transform duration-300 hover:bg-blue-700 hover:scale-105 hover:shadow-xl"
-            >
-              <!-- donation -->
-            </div>
-            <div
-              id="campaign"
-              class="bg-purple-500 shadow-lg rounded-lg p-4 transform transition-transform duration-300 hover:bg-purple-700 hover:scale-105 hover:shadow-xl"
-            >
-              <!-- dynamic -->
-            </div>
-            <div
-              id="users"
-              class="bg-gray-600 shadow-lg rounded-lg p-4 transform transition-transform duration-300 hover:bg-gray-800 hover:scale-105 hover:shadow-xl"
-            >
-              <!-- dynamic -->
-            </div>
-            <div
-              id="completed-campaigns"
-              class="bg-green-500 shadow-lg rounded-lg p-4 transform transition-transform duration-300 hover:bg-green-700 hover:scale-105 hover:shadow-xl"
-            >
-              <!-- dynamic -->
-            </div>
-          </div>
-        </div>
-        
-  
-  
-  <!-- campaign request  -->
-  <div class="text-center my-8">
-    <h1 class="text-4xl font-bold text-gray-900">Campaign Request Management</h1>
-    <p class="text-lg text-gray-600 mt-2">Overview of users request for campaign and management</p>
-  </div>
-  
-  
-  
-  
-  
-  
-  
-  
-  <section class="container mx-auto p-6 bg-gradient-to-r from-blue-500 via-purple-500 to-purple-500 rounded-lg shadow-lg overflow-x-auto">
-    <div style="margin-bottom: 50px; max-height: 400px; overflow-y: auto;" class="relative">
-       <table id="tuition-list" class="min-w-full bg-white rounded-lg shadow-md">
-         <thead class="bg-gradient-to-r from-purple-600 to-blue-600 text-white sticky top-0">
-           <tr>
-             <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Title</th>
-             <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Creator</th>
-             <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Status</th>
-             <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Actions</th>
-           </tr>
-         </thead>
-         <tbody class="bg-white divide-y divide-gray-200">
-           <!-- Rows will be dynamically inserted here -->
-         </tbody>
-       </table>
-     </div>
-  </section>
-  
-  <!-- campaign request  -->
-  <div class="text-center my-8">
-    <h1 class="text-4xl font-bold text-gray-900">Campaign Creator Request Management</h1>
-    <p class="text-lg text-gray-600 mt-2">Overview of users request for campaign creator and management</p>
-  </div>
-  
-  
-  <section class="container mx-auto p-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-purple-500 rounded-lg shadow-lg overflow-x-auto">
-    <div style="margin-bottom: 50px; max-height: 400px; overflow-y: auto;" class="relative">
-       <table id="request-list" class="min-w-full bg-white rounded-lg shadow-md">
-         <thead class="bg-gradient-to-r from-purple-600 to-blue-600 text-white sticky top-0">
-           <tr>
-             <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">User</th>
-             <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Message</th>
-             <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Status</th>
-             <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Actions</th>
-           </tr>
-         </thead>
-         <tbody class="bg-white divide-y divide-gray-200">
-           <!-- Rows will be dynamically inserted here -->
-         </tbody>
-       </table>
-     </div>
-  </section>
-  
-  
-  
-  
-  
-  <section id="donations" class="mb-12">
+
+    <!-- dashboard -->
     <div class="text-center my-8">
-      <h1 class="text-4xl font-bold text-gray-800">Donation Management</h1>
+      <h1 class="text-4xl font-bold text-gray-800">Manager Dashboard</h1>
       <p class="text-lg text-gray-500 mt-2">
-        Overview of donation and management
+        Overview of platform metrics and management tools
       </p>
     </div>
-    <div class="bg-white p-6 rounded-lg shadow-md">
-      <h2 class="text-xl font-semibold mb-4">View Donations</h2>
-      <div class="overflow-x-auto max-h-96">
-        <table class="w-full border-collapse">
-          <thead class="bg-gradient-to-r from-blue-500 to-indigo-500 text-white">
-            <tr>
-              <th class="border-b p-4 text-left">Donor Name</th>
-              <th class="border-b p-4 text-left">Email</th>
-              <th class="border-b p-4 text-left">Amount</th>
-              <th class="border-b p-4 text-left">Date</th>
-              <th class="border-b p-4 text-left">Campaign</th>
-            </tr>
-          </thead>
-          <tbody id="donate-body" class="bg-white divide-y divide-gray-200">
-          </tbody>
-        </table>
+
+    <div
+    style="margin-bottom: 20px"
+    class="flex justify-center items-center bg-gray-100 p-4"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 w-full max-w-5xl">
+      <div
+        id="donation"
+        class="bg-blue-500 shadow-lg rounded-lg p-4 transform transition-transform duration-300 hover:bg-blue-700 hover:scale-105 hover:shadow-xl"
+      >
+        <!-- donation -->
       </div>
-    </div>
-  </section>
-          
-        
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <div class="text-center my-8">
-    <h1 class="text-4xl font-bold text-gray-900">User Management</h1>
-    <p class="text-lg text-gray-600 mt-2">Overview of users and management</p>
-  </div>
-  
-  <div class="container mx-auto my-8 p-6 bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg rounded-lg border border-gray-300">
-    <h1 class="text-2xl font-semibold text-white mb-6">User View</h1>
-  
-    <!-- Search Bar -->
-    <div class="mb-6">
-        <input 
-            type="text" 
-            id="searchInput" 
-            class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300" 
-            placeholder="Search users by name or email">
-    </div>
-  
-    <!-- User Table -->
-    <div class="overflow-x-auto max-h-96">
-        <table class="w-full bg-white border border-gray-200 rounded-lg shadow-lg">
-            <thead>
-                <tr class="bg-gradient-to-r from-purple-600 to-blue-500 text-white">
-                    <th class="p-3 text-left font-semibold">Name</th>
-                    <th class="p-3 text-left font-semibold">Email</th>
-                    <th class="p-3 text-left font-semibold">Profession</th>
-                    <th class="p-3 text-left font-semibold">Status</th>
-                    <th class="p-3 text-left font-semibold">Actions</th>
-                </tr>
-            </thead>
-            <tbody id="userTableBody">
-                <!-- User rows will be dynamically inserted here -->
-            </tbody>
-        </table>
+      <div
+        id="campaign"
+        class="bg-purple-500 shadow-lg rounded-lg p-4 transform transition-transform duration-300 hover:bg-purple-700 hover:scale-105 hover:shadow-xl"
+      >
+        <!-- dynamic -->
+      </div>
+      <div
+        id="users"
+        class="bg-gray-600 shadow-lg rounded-lg p-4 transform transition-transform duration-300 hover:bg-gray-800 hover:scale-105 hover:shadow-xl"
+      >
+        <!-- dynamic -->
+      </div>
+      <div
+        id="completed-campaigns"
+        class="bg-green-500 shadow-lg rounded-lg p-4 transform transition-transform duration-300 hover:bg-green-700 hover:scale-105 hover:shadow-xl"
+      >
+        <!-- dynamic -->
+      </div>
     </div>
   </div>
   
+
+
+<!-- campaign request  -->
+<div style="margin-top: 100px;"  class="text-center my-8">
+<h1 class="text-4xl font-bold text-gray-900">Campaign Request Management</h1>
+<p class="text-lg text-gray-600 mt-2">Overview of users request for campaign and management</p>
+</div>
+
+
+
+<section class="container mx-auto p-6 bg-blue-100 rounded-lg shadow-lg overflow-x-auto">
+  <div class="relative" style="margin-bottom: 50px; max-height: 400px; overflow-y: auto;">
+    <table id="tuition-list" class="min-w-full bg-white rounded-lg shadow-md">
+      <thead class="bg-blue-600 text-white sticky top-0">
+        <tr>
+          <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Title</th>
+          <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Creator</th>
+          <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Status</th>
+          <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <!-- Rows will be dynamically inserted here -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- campaign creator  request  -->
+<div style="margin-top: 100px;"  class="text-center my-8">
+<h1 class="text-4xl font-bold text-gray-900">Campaign Creator Request Management</h1>
+<p class="text-lg text-gray-600 mt-2">Overview of users request for campaign creator and management</p>
+</div>
+
+
+<section class="container mx-auto p-6 bg-blue-100 rounded-lg shadow-lg overflow-x-auto">
+<div style="margin-bottom: 50px; max-height: 400px; overflow-y: auto;" class="relative">
+ <table id="request-list" class="min-w-full bg-white rounded-lg shadow-md">
+   <thead class="bg-purple-600 text-white sticky top-0">
+     <tr>
+       <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">User</th>
+       <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Message</th>
+       <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Status</th>
+       <th class="px-4 py-2 text-left text-lg font-medium uppercase tracking-wider">Actions</th>
+     </tr>
+   </thead>
+   <tbody class="bg-white divide-y divide-gray-200">
+     <!-- Rows will be dynamically inserted here -->
+   </tbody>
+ </table>
+</div>
+</section>
+
+<!-- donation manage -->
+
+
+<section style="margin-top: 100px;" id="donations" class="mb-12">
+<div class="text-center my-8">
+<h1 class="text-4xl font-bold text-gray-800">Donation Management</h1>
+<p class="text-lg text-gray-500 mt-2">
+  Overview of donation and management
+</p>
+</div>
+
+
+
+<div class="bg-blue-100 p-6 rounded-lg shadow-md">
+<h2 class="text-xl font-semibold mb-4">View Donations</h2>
+<div class="overflow-x-auto max-h-96">
+  <table class="w-full border-collapse">
+    <thead class="bg-blue-600  text-white">
+      <tr>
+        <th class="border-b p-4 text-left">Donor Name</th>
+        <th class="border-b p-4 text-left">Email</th>
+        <th class="border-b p-4 text-left">Amount</th>
+        <th class="border-b p-4 text-left">Date</th>
+        <th class="border-b p-4 text-left">Campaign</th>
+      </tr>
+    </thead>
+    <tbody id="donate-body" class="bg-white divide-y divide-gray-200">
+    </tbody>
+  </table>
+</div>
+</div>
+</section>
+    
   
-  
-        </div>
-      </div>
-  
-  
+<!-- user manage -->
 
-  
+<div style="margin-top: 100px;"  class="text-center my-8">
+<h1 class="text-4xl font-bold text-gray-900">User Management</h1>
+<p class="text-lg text-gray-600 mt-2">Overview of users and management</p>
+</div>
+
+<div class="container mx-auto my-8 p-6 bg-blue-100  shadow-lg rounded-lg border border-gray-300">
+<h1 class="text-2xl font-semibold text-gray-700 mb-6">User View</h1>
+
+<!-- Search Bar -->
+<div class="mb-6">
+  <input 
+      type="text" 
+      id="searchInput" 
+      class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-700" 
+      placeholder="Search users by name or email">
+</div>
+
+<!-- User Table -->
+<div class="overflow-x-auto max-h-96">
+  <table class="w-full bg-white border border-gray-200 rounded-lg shadow-lg">
+      <thead>
+          <tr class="bg-purple-600  text-white">
+              <th class="p-3 text-left font-semibold">Name</th>
+              <th class="p-3 text-left font-semibold">Email</th>
+              <th class="p-3 text-left font-semibold">Profession</th>
+              <th class="p-3 text-left font-semibold">Status</th>
+              <th class="p-3 text-left font-semibold">Actions</th>
+          </tr>
+      </thead>
+      <tbody id="userTableBody">
+          <!-- User rows will be dynamically inserted here -->
+      </tbody>
+  </table>
+</div>
+</div>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  </div>
+</div>
 
 
  </section>
-   <!-- Footer -->
-   <footer class="footer py-12">
-    <div class="container mx-auto px-6">
-        <div class="flex flex-col md:flex-row md:justify-between">
-            <div class="mb-6 md:mb-0">
-                <h4 class="text-3xl font-bold footer-section-title">DonationPlatform</h4>
-                <p class="mt-2">Empowering communities through compassion and generosity. Join us in making a difference today!</p>
-            </div>
-            <div class="flex flex-col md:flex-row md:space-x-8">
-                <div class="mb-6 md:mb-0">
-                    <h5 class="text-xl font-semibold footer-section-title">Quick Links</h5>
-                    <ul class="mt-2 space-y-2">
-                        <li><a href="./home.html" class="hover:underline">Home</a></li>
-                        <li><a href="./about.html" class="hover:underline">About</a></li>
-                        <li><a href="./campaign.html" class="hover:underline">Campaign</a></li>
-                        <li><a href="./contact.html" class="hover:underline">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="text-xl font-semibold footer-section-title">Contact Us</h5>
-                    <p class="mt-2">14 no road Rupnogor<br>mirpur, Dhaka, 2</p>
-                    <p>Email: <a href="mailto:support@DonationPlatform.com" class="hover:underline">support@DonationPlatform.com</a><br>Phone: +8801626681291</p>
-                </div>
-            </div>
-        </div>
-        <div class="text-center mt-8">
-            <p class="text-gray-400">© 2024 DonationPlatform. All rights reserved.</p>
-        </div>
-    </div>
-</footer>
+ <script>
+  // Sidebar toggle functionality for mobile
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  const mainContent = document.querySelector('.flex-1');
+
+  menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('-translate-x-full');
+      sidebar.classList.toggle('translate-x-0');
+      mainContent.classList.toggle('ml-0');
+      mainContent.classList.toggle('ml-64');
+  });
+</script>
 <script src="./js/admin.js"></script>
 <script src="./js/login.js"></script>
- <script src="./js/home.js"></script>
   <script src="./js/logout.js"></script>
 </body>
 

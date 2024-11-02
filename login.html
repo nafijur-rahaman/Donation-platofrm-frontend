@@ -151,7 +151,7 @@
     </nav>
 
  <!-- Main Content -->
- <section class="pt-20">
+ <section>
 
 
 
@@ -183,18 +183,19 @@
 <div id="spinner" class="spinner"></div>
 
   <!-- login card -->
-
-  <div class="flex items-center justify-center min-h-screen bg-gray-300">
-    <div class="bg-white shadow-lg rounded-lg w-full max-w-md">
-      <div class="p-6 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-t-lg">
-        <h2 class="text-3xl font-bold text-center"><i class="fas fa-sign-in-alt mr-2"></i>Login</h2>
+  <div class="flex items-center justify-center min-h-screen">
+    <div class="bg-white rounded-lg w-full max-w-md p-6">
+      <div class="bg-blue-600 text-white rounded-t-lg p-4">
+        <h2 class="text-3xl font-bold text-center">
+          <i class="fas fa-sign-in-alt mr-2"></i>Login
+        </h2>
         <p class="text-center text-base mt-2 opacity-90">Please enter your credentials</p>
       </div>
-      <div class="px-6 py-8">
+      <div class="py-8">
         <form>
           <div class="mb-4">
             <label for="role" class="block text-gray-700 font-medium text-base">Login As</label>
-            <select class="block w-full border border-gray-300 rounded-lg py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400" id="role" required>
+            <select class="block w-full border border-gray-300 rounded-lg py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-700" id="role" required>
               <option value="" disabled selected>Select Role</option>
               <option value="manager">Manager</option>
               <option value="user">User</option>
@@ -202,20 +203,35 @@
           </div>
           <div class="mb-4">
             <label for="email" class="block text-gray-700 font-medium text-base">Email Address</label>
-            <input type="email" class="block w-full border border-gray-300 rounded-lg py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400" id="email" placeholder="Enter your email" required>
+            <input type="email" class="block w-full border border-gray-300 rounded-lg py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-700" id="email" placeholder="Enter your email" required>
           </div>
           <div class="mb-6">
             <label for="password" class="block text-gray-700 font-medium text-base">Password</label>
-            <input type="password" class="block w-full border border-gray-300 rounded-lg py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400" id="password" placeholder="Enter your password" required>
+            <input type="password" class="block w-full border border-gray-300 rounded-lg py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-700" id="password" placeholder="Enter your password" required>
           </div>
-          <button onclick="handleLogin(event)" type="submit" class="w-full bg-purple-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 transition duration-300 ease-in-out">Login</button>
+          <button onclick="handleLogin(event)" type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out">Login</button>
         </form>
+        <!-- Dummy login credentials -->
+        <div class="mt-6 text-center">
+          <h3 class="text-lg font-semibold">Dummy Login Credentials</h3>
+          <p class="text-sm text-gray-600">User:</p>
+          <p class="text-gray-700">Email: <strong>t6907169@gmail.com</strong></p>
+          <p class="text-gray-700">Password: <strong>123456na@@@</strong></p>
+          <p class="text-sm text-gray-600">Manager:</p>
+          <p class="text-gray-700">Email: <strong>mafi26291@gmail.com</strong></p>
+          <p class="text-gray-700">Password: <strong>123456na@@@</strong></p>
+        </div>
       </div>
-      <div class="p-4 text-center bg-gray-50 rounded-b-lg">
+      <div class="p-4 text-center">
         <p class="text-base text-gray-600">Don't have an account? <a href="./register.html" class="text-cyan-600 font-semibold hover:underline">Sign up</a></p>
       </div>
     </div>
+    <div class="hidden md:block w-1/2">
+      <img src="./img/Charity-cuate.png" alt="Login Image" class="w-full h-full object-cover rounded-lg">
+    </div>
   </div>
+  
+  
   
   
 

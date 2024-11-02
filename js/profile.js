@@ -40,12 +40,6 @@ const handleProfile = () => {
 
 
 
-
-
-
-           
-            
-
             profileDetails.innerHTML=`
             
             
@@ -194,14 +188,14 @@ const fundRaiser = () => {
                 "block",
                 "w-full",
                 "text-white",
-                "bg-green-500",
+                "bg-blue-600",
                 "text-lg",
                 "font-bold",
                 "rounded-lg",
-                "hover:bg-green-700",
+                "hover:bg-blue-700",
                 "focus:outline-none",
                 "focus:shadow-outline",
-                "focus:bg-green-700",
+                "focus:bg-blue-700",
                 "hover:shadow-xs",
                 "p-3",
                 "my-2"
@@ -247,7 +241,7 @@ const loadDonation=()=>{
                 const li=document.createElement("li")
                 li.innerHTML=`
                 
-                              <div class="text-blue-500"> Campaign Title: ${donation.campaign_name} </div>
+                              <div class="text-purple-600 font-bold"> Campaign Title: ${donation.campaign_name} </div>
                               <div class="text-gray-500 text-sm font-bold">Donated: ${donation.amount} | Date: ${donation.created_at} </div>
                
                 `
